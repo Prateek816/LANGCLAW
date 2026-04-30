@@ -1,53 +1,52 @@
-"""Abstract base class for LLM providers."""
+import logging
+from abc import ABC , abstractmethod
+from typing import Any, Dict, Literal, Type
 
-from __future__ import annotations
-from abc import ABC, abstractmethod
-from collections.abc import Generator
-from typing import Any
+# Added "groq" and "gemini" to the supported literal types
+PROVIDER_TYPE = Literal["groq", "gemini"]
 
-class LLMProvider(ABC):
-    supports_images: bool = False
+class BaseProvider(ABC):
+    """Abstract provider interface.
 
+    Each provider implements `create_client()` to return a fully initialized LLM."""
     @abstractmethod
-    def chat(
-        self,
-        messages: list[dict[str, Any]],
-        tools: list[dict[str, Any]] | None = None,
-        tool_choice: Any = "auto",
-        **kwargs: Any,
-    ) -> Any:
+    def create_client(self, **kwargs: Any) -> Any:
+        """Return a fully initialized LLM client."""
+    
+class LLMFactory:    """Central registry & factory for all supported providers. Provides a unified entry point
+    to construct an LLM client dynamically based on a provider type.
+    """
+
+    _providers: Dict[str, Type[BaseProvider]] = {}
+
+    @classmethod
+    def register_provider(cls, name: str, provider_cls: Type[BaseProvider]) -> None:
+        """Register a provider implementation.
+
+        Args:
+            name: The LLM provider type (e.g., "openai", "azure", "groq", "gemini").
+            provider_cls: The provider class implementing BaseProvider.
         """
-        Send a chat request to the LLM.
+        cls._providers[name.lower()] = provider_cls
+        logging.info(f"Registered LLM provider: {name}")
 
-        All providers must return an object compatible with OpenAI's response
-        structure: ``response.choices[0].message.content`` and
-        ``response.choices[0].message.tool_calls``.
+    @classmethod
+    def get_provider(cls, name: PROVIDER_TYPE) -> BaseProvider:
+        """Return an instantiated provider."""
+        provider_cls = cls._providers.get(name.lower())
+        if not provider_cls:
+            raise ValueError(f"Provider not registered: {name}")
+        return provider_cls()
 
-        Non-OpenAI providers should use the Mock* dataclasses from
-        ``llm.response`` to build compatible return values.
-        """
+    @classmethod
+    def create_llm(cls, provider: PROVIDER_TYPE, **kwargs: Any) -> Any:
+        """Create an LLM client for the requested provider."""
+        provider_instance = cls.get_provider(provider)
+        client = provider_instance.create_client(**kwargs)
+        logging.info(f"Created {provider.capitalize()} LLM client successfully.")
+        return client
 
-    def chat_stream(
-        self,
-        messages: list[dict[str, Any]],
-        tools: list[dict[str, Any]] | None = None,
-        tool_choice: Any = "auto",
-        **kwargs: Any,
-    ) -> Generator[dict[str, Any], None, Any]:
-        """Stream chat responses.
 
-        Yields dicts with ``{"type": "text_delta", "text": "..."}``
-        or ``{"type": "tool_use", ...}`` events.
-
-        Returns the final assembled MockResponse (accessible via
-        ``generator.send(None)`` / StopIteration.value).
-
-        Default implementation falls back to non-streaming ``chat()``.
-        """
-        result = self.chat(
-            messages, tools=tools, tool_choice=tool_choice, **kwargs
-        )
-        msg = result.choices[0].message
-        if msg.content:
-            yield {"type": "text_delta", "text": msg.content}
-        return result
+def get_llm(provider: PROVIDER_TYPE, **kwargs: Any):
+    """Shortcut to create an LLM client."""
+    return LLMFactory.create_llm(provider, **kwargs)
