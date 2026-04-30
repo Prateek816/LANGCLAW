@@ -21,8 +21,6 @@ from typing import TYPE_CHECKING
 from retrieval.chunker import load_corpus_from_directory
 from retrieval.retriever import HybridRetriever
 
-if TYPE_CHECKING:
-    from ..llm.base import LLMProvider
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +43,6 @@ class KnowledgeRAG:
     def __init__(
         self,
         knowledge_dir: str,
-        provider: "LLMProvider | None" = None,
         use_sparse: bool = True,
         use_dense: bool = True,
         use_reranker: bool = True,
@@ -54,7 +51,6 @@ class KnowledgeRAG:
         self.knowledge_dir = knowledge_dir
 
         self._retriever = HybridRetriever(
-            provider=provider,
             use_sparse=use_sparse,
             use_dense=use_dense,
             use_reranker=use_reranker,

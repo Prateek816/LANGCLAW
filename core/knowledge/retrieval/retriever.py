@@ -61,7 +61,6 @@ class HybridRetriever:
 
     Parameters
     ----------
-    provider     : LLMProvider instance (required for use_reranker=True).
     use_sparse   : include BM25 retrieval.
     use_dense    : include embedding retrieval.
     use_reranker : re-rank fused candidates with the LLM.
