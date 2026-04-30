@@ -1,10 +1,10 @@
 """
-Centralised configuration for PythonClaw.
+Centralised configuration for LangCLAW.
 
-All runtime data lives under ``~/.pythonclaw/`` (the *home* directory):
+All runtime data lives under ``~/.langclaw/`` (the *home* directory):
 
-    ~/.pythonclaw/
-      pythonclaw.json          ← config file
+    ~/.langclaw/
+      langclaw.json          ← config file
       context/                 ← sessions, logs, memory, skills, …
       daemon.log               ← daemon output
       pythonclaw.pid           ← daemon PID
@@ -22,7 +22,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-PYTHONCLAW_HOME = Path(os.environ.get("PYTHONCLAW_HOME", Path.home() / ".pythonclaw"))
+PYTHONCLAW_HOME = Path(os.environ.get("LANGCLAW_HOME", Path.home() / ".langclaw"))
 
 _TRAILING_COMMA_RE = re.compile(r",\s*([}\]])")
 
@@ -31,7 +31,7 @@ _config_path: Path | None = None
 
 
 def home() -> Path:
-    """Return the PythonClaw home directory (``~/.pythonclaw`` by default)."""
+    """Return the LangClaw home directory (``~/.langclaw`` by default)."""
     return PYTHONCLAW_HOME
 
 
@@ -203,7 +203,7 @@ def group_context_dir(session_id: str) -> Path:
     """Return the per-group context directory for *session_id*.
 
     Maps ``session_id`` (e.g. ``telegram:123``) to a safe filesystem path
-    under ``~/.pythonclaw/context/groups/<safe_id>/``.
+    under ``~/.langclaw/context/groups/<safe_id>/``.
     """
     safe = re.sub(r"[^\w\-]", "_", session_id)
     return PYTHONCLAW_HOME / "context" / "groups" / safe
