@@ -1,1 +1,4 @@
 google.generativeai
+langchain_groq
+langchain_core
+rank_bm25
