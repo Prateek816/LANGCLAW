@@ -10,7 +10,7 @@ All runtime data lives under ``~/.langclaw/`` (the *home* directory):
       pythonclaw.pid           ← daemon PID
 
 Load order (later sources override earlier ones):
-  1. ~/.pythonclaw/pythonclaw.json
+  1. ~/.langclaw/langclaw.json
   2. Environment variables (highest priority)
 """
 
@@ -32,7 +32,7 @@ _config_path: Path | None = None
 
 def home() -> Path:
     """Return the LangClaw home directory (``~/.langclaw`` by default)."""
-    return PYTHONCLAW_HOME
+    return LANGCLAW_HOME
 
 
 def _strip_json5(text: str) -> str:
@@ -72,8 +72,8 @@ def _strip_json5(text: str) -> str:
 
 def _find_config_file() -> Path | None:
     candidates = [
-        PYTHONCLAW_HOME / "pythonclaw.json",
-        Path.cwd() / "pythonclaw.json",
+        LANGCLAW_HOME / "langclaw.json",
+        Path.cwd() / "langclaw.json",
     ]
     for p in candidates:
         if p.is_file():
