@@ -22,7 +22,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-PYTHONCLAW_HOME = Path(os.environ.get("LANGCLAW_HOME", Path.home() / ".langclaw"))
+LANGCLAW_HOME = Path(os.environ.get("LANGCLAW_HOME", Path.home() / ".langclaw"))
 
 _TRAILING_COMMA_RE = re.compile(r",\s*([}\]])")
 
