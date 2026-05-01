@@ -242,7 +242,6 @@ def _fn(name: str, description: str, properties: dict, required: list[str]) -> d
 # ── Primitive tool schemas ────────────────────────────────────────────────────
 
 
-
 PRIMITIVE_TOOLS: list[dict] = [
     _fn(
         "run_command",
