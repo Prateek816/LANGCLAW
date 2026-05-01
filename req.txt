@@ -1,4 +1,5 @@
 google.generativeai
 langchain_groq
 langchain_core
+tavily-python
 rank_bm25

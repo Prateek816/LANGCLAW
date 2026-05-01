@@ -1,16 +1,16 @@
 """
-Centralised configuration for LangCLAW.
+Centralised configuration for PythonClaw.
 
-All runtime data lives under ``~/.langclaw/`` (the *home* directory):
+All runtime data lives under ``~/.pythonclaw/`` (the *home* directory):
 
-    ~/.langclaw/
-      langclaw.json          ← config file
+    ~/.pythonclaw/
+      pythonclaw.json          ← config file
       context/                 ← sessions, logs, memory, skills, …
       daemon.log               ← daemon output
       pythonclaw.pid           ← daemon PID
 
 Load order (later sources override earlier ones):
-  1. ~/.langclaw/langclaw.json
+  1. ~/.pythonclaw/pythonclaw.json
   2. Environment variables (highest priority)
 """
 
@@ -22,7 +22,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-LANGCLAW_HOME = Path(os.environ.get("LANGCLAW_HOME", Path.home() / ".langclaw"))
+PYTHONCLAW_HOME = Path(os.environ.get("PYTHONCLAW_HOME", Path.home() / ".pythonclaw"))
 
 _TRAILING_COMMA_RE = re.compile(r",\s*([}\]])")
 
@@ -31,8 +31,8 @@ _config_path: Path | None = None
 
 
 def home() -> Path:
-    """Return the LangClaw home directory (``~/.langclaw`` by default)."""
-    return LANGCLAW_HOME
+    """Return the PythonClaw home directory (``~/.pythonclaw`` by default)."""
+    return PYTHONCLAW_HOME
 
 
 def _strip_json5(text: str) -> str:
@@ -72,8 +72,8 @@ def _strip_json5(text: str) -> str:
 
 def _find_config_file() -> Path | None:
     candidates = [
-        LANGCLAW_HOME / "langclaw.json",
-        Path.cwd() / "langclaw.json",
+        PYTHONCLAW_HOME / "pythonclaw.json",
+        Path.cwd() / "pythonclaw.json",
     ]
     for p in candidates:
         if p.is_file():
@@ -203,7 +203,7 @@ def group_context_dir(session_id: str) -> Path:
     """Return the per-group context directory for *session_id*.
 
     Maps ``session_id`` (e.g. ``telegram:123``) to a safe filesystem path
-    under ``~/.langclaw/context/groups/<safe_id>/``.
+    under ``~/.pythonclaw/context/groups/<safe_id>/``.
     """
     safe = re.sub(r"[^\w\-]", "_", session_id)
     return PYTHONCLAW_HOME / "context" / "groups" / safe
