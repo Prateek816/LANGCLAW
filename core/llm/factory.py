@@ -106,10 +106,27 @@ def _build_ollama(config: LLMConfig) -> BaseChatModel:
         **config.extra,
     )
 
+def _build_groq(config: LLMConfig) -> BaseChatModel:
+    from langchain_groq import ChatGroq
+
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise LLMConfigurationError("GROQ_API_KEY is not set.")
+
+    return ChatGroq(
+        model=config.model,
+        temperature=config.temperature,
+        max_tokens=config.max_tokens,
+        streaming=config.streaming,
+        groq_api_key=api_key,
+        **config.extra,
+    )
+
 
 _BUILDERS = {
     "openai":    _build_openai,
     "gemini":    _build_gemini,
     "anthropic": _build_anthropic,
     "ollama":    _build_ollama,
+    "groq":      _build_groq,
 }

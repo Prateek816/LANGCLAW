@@ -3,3 +3,7 @@ langchain_groq
 langchain_core
 tavily-python
 rank_bm25
+langchain_anthropic
+langchain_openai
+langchain_google_genai
+langchain_ollama
