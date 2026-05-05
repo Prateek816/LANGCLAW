@@ -8,12 +8,14 @@ Strategy
    window of size `chunk_size` and overlap `overlap`.
 3. Each chunk carries metadata: source filename, chunk index, character offset.
 
-Supported file extensions: .txt  .md
+Supported file extensions: .txt  .wmd
 """
 
 from __future__ import annotations
 import os
 import re
+
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def chunk_text(
     text: str,
@@ -21,34 +23,21 @@ def chunk_text(
     chunk_size: int = 400,
     overlap: int = 80
 ) -> list[dict]:
-    
     """Returns a list of dicts:
         {"source": str, "content": str, "chunk_idx": int}"""
 
-    raw_paragraphs = re.split(r"\n{2,}", text)
-    paragraphs = [p.strip() for p in raw_paragraphs if p.strip()]
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=overlap,
+        strip_whitespace=True,
+    )
 
-    chunks: list[dict] = []
-    idx = 0
+    chunks = splitter.split_text(text)
 
-    for para in paragraphs:
-        if len(para) <= chunk_size:
-            chunks.append({"source": source, "content": para, "chunk_idx": idx})
-            idx += 1
-        else:
-            # Sliding-window split for long paragraphs
-            start = 0
-            while start < len(para):
-                end = min(start + chunk_size, len(para))
-                window = para[start:end].strip()
-                if window:
-                    chunks.append({"source": source, "content": window, "chunk_idx": idx})
-                    idx += 1
-                if end == len(para):
-                    break
-                start += chunk_size - overlap
-
-    return chunks
+    return [
+        {"source": source, "content": chunk, "chunk_idx": idx}
+        for idx, chunk in enumerate(chunks)
+    ]
 
 def load_corpus_from_directory(directory: str) -> list[dict]:
     """
