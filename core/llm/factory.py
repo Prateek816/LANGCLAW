@@ -73,7 +73,7 @@ def _build_gemini(config: LLMConfig) -> BaseChatModel:
         temperature=config.temperature,
         max_output_tokens=config.max_tokens,
         streaming=config.streaming,
-        google_api_key=api_key,
+        api_key=api_key,
         **config.extra,
     )
 
@@ -90,7 +90,7 @@ def _build_anthropic(config: LLMConfig) -> BaseChatModel:
         temperature=config.temperature,
         max_tokens=config.max_tokens,
         streaming=config.streaming,
-        anthropic_api_key=api_key,
+        api_key=api_key,
         **config.extra,
     )
 
@@ -118,7 +118,7 @@ def _build_groq(config: LLMConfig) -> BaseChatModel:
         temperature=config.temperature,
         max_tokens=config.max_tokens,
         streaming=config.streaming,
-        groq_api_key=api_key,
+        api_key=api_key,
         **config.extra,
     )
 
