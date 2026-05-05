@@ -1,29 +1,14 @@
-"""
-Knowledge-base RAG wrapper.
-
-Replaces the old SimpleRAG (keyword-only) with a HybridRetriever that
-combines BM25 sparse retrieval, dense embedding retrieval, RRF fusion,
-and an optional LLM re-ranker.
-
-Backwards-compatible API:
-    rag = KnowledgeRAG(knowledge_dir, provider=llm_provider)
-    hits = rag.retrieve("my query", top_k=5)
-    # hits = [{"source": "filename.txt", "content": "..."}, ...]
-
-Old SimpleRAG is kept as an alias for scripts that import it directly.
-"""
-
 from __future__ import annotations
 
 import logging
 from typing import TYPE_CHECKING
 
-from retrieval.chunker import load_corpus_from_directory
-from retrieval.retriever import HybridRetriever
+from core.RAG.chunker import load_corpus_from_directory
+from core.RAG.retriever import HybridRetriever
+from core.RAG.ingestion import ingest_chunks
 
 
 logger = logging.getLogger(__name__)
-
 
 class KnowledgeRAG:
     """
@@ -54,11 +39,11 @@ class KnowledgeRAG:
             use_sparse=use_sparse,
             use_dense=use_dense,
             use_reranker=use_reranker,
-            dense_model=dense_model,
         )
 
         corpus = load_corpus_from_directory(knowledge_dir)
-        self._retriever.fit(corpus)
+        ingest_chunks(corpus)
+        
         logger.info(
             "[KnowledgeRAG] Loaded %d chunks from '%s'", len(corpus), knowledge_dir
         )
@@ -71,19 +56,3 @@ class KnowledgeRAG:
             {"source": str, "content": str}
         """
         return self._retriever.retrieve(query, top_k=top_k)
-
-    def reload(self) -> None:
-        """Re-scan the knowledge directory and re-index (hot reload)."""
-        corpus = load_corpus_from_directory(self.knowledge_dir)
-        self._retriever.fit(corpus)
-        logger.info("[KnowledgeRAG] Reloaded %d chunks.", len(corpus))
-
-    def __len__(self) -> int:
-        return len(self._retriever)
-
-    def __bool__(self) -> bool:
-        return bool(self._retriever)
-
-
-# Backwards-compatibility alias
-SimpleRAG = KnowledgeRAG

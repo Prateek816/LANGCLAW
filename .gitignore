@@ -6,7 +6,6 @@ __pycache__
 temp/
 context/
 data/
-RAG/
 test_data/
 .mypy_cache
 .DS_Store
