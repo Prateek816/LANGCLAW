@@ -7,3 +7,5 @@ langchain_anthropic
 langchain_openai
 langchain_google_genai
 langchain_ollama
+langchain_community
+pickle
