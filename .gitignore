@@ -8,3 +8,10 @@ context/
 data/
 RAG/
 test_data/
+.mypy_cache
+.DS_Store
+__MACOSX/
+
+.cache
+
+*.onnx
