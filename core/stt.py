@@ -1,9 +1,25 @@
+"""
+Speech-to-text via Deepgram Nova-2.
+
+Provides both sync and async helpers so every channel can call
+``transcribe_audio`` without worrying about event-loop differences.
+
+Returns the transcript string on success, or ``None`` when the Deepgram
+API key is not configured.
+
+Language is configurable via ``deepgram.language`` in pythonclaw.json:
+  - ``"multi"`` (default) — multilingual mode, works for any language
+  - ``"zh"``/``"en"``/``"ja"``/… — force a specific language
+  - ``"auto"`` — auto-detect (needs ~5 s+ of audio to be reliable)
+"""
+
 from __future__ import annotations
 
 import logging
-
+import os
+from dotenv import load_dotenv
 logger = logging.getLogger(__name__)
-"""Needs api key from config.py"""
+
 _DEEPGRAM_BASE = "https://api.deepgram.com/v1/listen"
 
 _NO_KEY_MSG = (
@@ -18,8 +34,8 @@ _NO_KEY_MSG = (
 
 
 def _get_key() -> str | None:
-    from .. import config
-    return config.get("deepgram", "apiKey", env="DEEPGRAM_API_KEY") or None
+    load_dotenv()
+    return os.environ.get("DEEPGRAM_API_KEY") or os.environ.get("DEEPGRAM_KEY") or None
 
 
 def _build_url() -> str:

@@ -381,8 +381,9 @@ _tavily_api_key = None
 def _get_tavily_client():
     """Return a cached TavilyClient, rebuilding only when the API key changes."""
     global _tavily_client, _tavily_api_key
-    from .. import config
-    api_key = config.get_str("tavily", "apiKey", env="TAVILY_API_KEY")
+    #change here to get the api key from config
+    _tavily_api_key = os.getenv("TAVILY_API_KEY") or _tavily_api_key
+    api_key = os.getenv("TAVILY_API_KEY") or _tavily_api_key
     if not api_key:
         return None
     if _tavily_client is None or _tavily_api_key != api_key:

@@ -32,8 +32,10 @@ from __future__ import annotations
 
 import logging
 
-from ..knowledge.retrieval.retriever import HybridRetriever
+from core.RAG.retriever import HybridRetriever
 from .storage import MemoryStorage
+from core.RAG.chunker import load_corpus_from_directory
+from core.RAG.chunker import chunk_text
 
 logger = logging.getLogger(__name__)
 
@@ -115,12 +117,22 @@ class MemoryManager:
             for k, v in all_memories.items()
         ]
 
-        retriever = HybridRetriever( #check out for this
-            provider=None,
+        retriever = HybridRetriever( 
             use_sparse=True,
             use_dense=self._use_dense,
             use_reranker=False,
         )
+        chunks: list[dict] = []
+        #load in in-memory all the memories as chunks for retrieval
+        for entry in corpus:
+            entry_chunks = chunk_text(
+                text=entry["content"],
+                source=entry["source"],
+                chunk_size=400,
+                overlap=80
+            )
+        chunks.extend(entry_chunks)
+
         retriever.fit(corpus)
         hits = retriever.retrieve(query, top_k=top_k)
 
