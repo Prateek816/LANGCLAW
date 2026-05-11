@@ -1,19 +1,32 @@
-from __future__ import annotations
+"""
+LangChain-compatible wrappers for all built-in tools.
 
-"""LangChain-wrapped versions of all PythonClaw tools.
+Usage
+-----
+    from langchain_tools import get_all_langchain_tools
 
-Each tool is exposed as a @tool-decorated function (or a StructuredTool where
-multiple inputs are required) and collected in ALL_TOOLS / by category.
+    tools = get_all_langchain_tools()          # all tools
+    agent = create_react_agent(llm, tools, prompt)
+
+You can also import individual tools or groups:
+    from langchain_tools import (
+        primitive_tools,
+        memory_tools,
+        web_search_tool,
+        skill_tools,
+        cron_tools,
+        meta_skill_tools,
+    )
 """
 
-import logging
-from typing import Optional
+from __future__ import annotations
 
-from langchain_core.tools import tool, StructuredTool
-from pydantic import BaseModel, Field
+from typing import Optional, List, Dict, Any
+from langchain_core.tools import tool
 
-# Import the original implementations
-from .tools import (
+# ── Import all implementation functions from your tools module ────────────────
+# Adjust this import path to wherever your tools.py lives.
+from tools import (
     run_command,
     read_file,
     write_file,
@@ -23,320 +36,254 @@ from .tools import (
     create_skill,
 )
 
-logger = logging.getLogger(__name__)
-
+# Memory functions may live in a separate module — adjust as needed.
+# from memory import remember, recall, memory_get, memory_list_files, forget, update_index
 
 # ── Primitive Tools ───────────────────────────────────────────────────────────
 
 @tool
 def lc_run_command(command: str) -> str:
-    """Execute a shell command and return combined stdout/stderr.
-
-    The command inherits the project's virtual environment so that
-    ``python``, ``pip``, and any installed CLI tools resolve correctly.
-    The working directory is set to ``~/.pythonclaw/context/files/`` so
-    that any files created or downloaded by the command land there.
-    """
+    """Execute a shell command. Use to run scripts, install packages, or perform system operations."""
     return run_command(command)
 
 
 @tool
 def lc_read_file(path: str) -> str:
-    """Read and return the contents of a file at the given path."""
+    """Read the contents of a file. Use to inspect code, logs, or data."""
     return read_file(path)
 
 
-class WriteFileInput(BaseModel):
-    path: str = Field(description="Path to the file to write (must be within project root).")
-    content: str = Field(description="The content to write.")
-
-
-lc_write_file = StructuredTool.from_function(
-    func=write_file,
-    name="write_file",
-    description=(
-        "Write content to a file, creating parent directories as needed. "
-        "Writes are restricted to sandbox directories."
-    ),
-    args_schema=WriteFileInput,
-)
+@tool
+def lc_write_file(path: str, content: str) -> str:
+    """Write content to a file (must be within the project directory). Creates parent directories automatically."""
+    return write_file(path, content)
 
 
 @tool
 def lc_list_files(path: str = ".") -> str:
-    """List files in a directory, one per line. Defaults to the current directory."""
+    """List files in a directory. Use to discover available scripts or files."""
     return list_files(path)
 
 
-class SendFileInput(BaseModel):
-    path: str = Field(description="Absolute or relative path to the file to send.")
-    caption: str = Field(default="", description="Optional caption or description for the file.")
-
-
-lc_send_file = StructuredTool.from_function(
-    func=send_file,
-    name="send_file",
-    description=(
-        "Send a file to the user via the active channel (Telegram/Discord/WhatsApp/Web). "
-        "Max 100 MB. Use when the user asks to download or receive a file."
-    ),
-    args_schema=SendFileInput,
-)
+@tool
+def lc_send_file(path: str, caption: str = "") -> str:
+    """Send a file to the user via the active channel. Max 100 MB. Use when the user asks to download or receive a file."""
+    return send_file(path, caption)
 
 
 # ── Web Search Tool ───────────────────────────────────────────────────────────
 
-class WebSearchInput(BaseModel):
-    query: str = Field(description="The search query. Be specific for better results.")
-    search_depth: str = Field(
-        default="basic",
-        description="Search depth: 'basic' (fast) or 'advanced' (more thorough).",
-    )
-    topic: str = Field(
-        default="general",
-        description="Search category: 'general', 'news', or 'finance'.",
-    )
-    max_results: int = Field(
-        default=3,
-        description="Number of results to return (1-10). Use 2-3 for most queries.",
-    )
-    time_range: Optional[str] = Field(
-        default=None,
-        description="Filter results by recency: 'day', 'week', 'month', or 'year'. Omit for no filter.",
-    )
-    include_domains: Optional[list[str]] = Field(
-        default=None,
-        description="Restrict results to these domains.",
-    )
-    exclude_domains: Optional[list[str]] = Field(
-        default=None,
-        description="Exclude results from these domains.",
-    )
-
-
-lc_web_search = StructuredTool.from_function(
-    func=web_search,
-    name="web_search",
-    description=(
-        "Search the web for real-time information using the Tavily API. "
-        "Use this when you need up-to-date information, current events, "
-        "facts you're unsure about, or anything that benefits from live web data."
-    ),
-    args_schema=WebSearchInput,
-)
-
-
-# ── Meta-Skill Tool ───────────────────────────────────────────────────────────
-
-class CreateSkillInput(BaseModel):
-    name: str = Field(
-        description="Skill name (lowercase, underscores). E.g. 'weather_forecast'."
-    )
-    description: str = Field(
-        description="One-line description of what the skill does and when to use it."
-    )
-    instructions: str = Field(
-        description=(
-            "Full Markdown instructions for the skill body (content after the YAML frontmatter). "
-            "Include ## Instructions, usage examples, and ## Resources sections."
-        )
-    )
-    category: str = Field(
-        default="",
-        description="Optional category folder (e.g. 'data', 'dev', 'web'). Empty for flat layout.",
-    )
-    resources: Optional[dict[str, str]] = Field(
-        default=None,
-        description=(
-            "Map of filename → file content for bundled scripts. "
-            "E.g. {'fetch.py': 'import requests\\n...', 'config.yaml': '...'}."
-        ),
-    )
-    dependencies: Optional[list[str]] = Field(
-        default=None,
-        description="List of pip packages to install. E.g. ['requests', 'beautifulsoup4'].",
-    )
-
-
-lc_create_skill = StructuredTool.from_function(
-    func=create_skill,
-    name="create_skill",
-    description=(
-        "Create a brand-new skill on the fly when no existing skill can handle the user's request. "
-        "Writes a SKILL.md and optional resource scripts to the skills directory, "
-        "installs pip dependencies, and makes the skill immediately available. "
-        "Use this when you need a capability that doesn't exist yet."
-    ),
-    args_schema=CreateSkillInput,
-)
-
-
-# ── Memory Tools ──────────────────────────────────────────────────────────────
-# Memory operations delegate to the MemoryManager; the LC wrappers here
-# call through the AVAILABLE_TOOLS registry so the real implementations
-# are resolved at runtime (keeping this module decoupled from memory internals).
-
-def _memory_dispatch(tool_name: str, **kwargs) -> str:
-    """Resolve and call a memory tool from AVAILABLE_TOOLS at runtime."""
-    from .tools import AVAILABLE_TOOLS  # late import to avoid circular deps
-    fn = AVAILABLE_TOOLS.get(tool_name)
-    if fn is None:
-        return f"Error: memory tool '{tool_name}' is not registered."
-    try:
-        return fn(**kwargs)
-    except Exception as exc:
-        return f"Memory error: {exc}"
-
-
-class RememberInput(BaseModel):
-    key: str = Field(description="Topic or category to store the information under.")
-    content: str = Field(description="The information to remember.")
-
-
-lc_remember = StructuredTool.from_function(
-    func=lambda key, content: _memory_dispatch("remember", key=key, content=content),
-    name="remember",
-    description="Store a piece of information in long-term memory.",
-    args_schema=RememberInput,
-)
-
-
 @tool
-def lc_recall(query: str) -> str:
-    """Search long-term memory using semantic + keyword retrieval.
+def lc_web_search(
+    query: str,
+    search_depth: str = "basic",
+    topic: str = "general",
+    max_results: int = 3,
+    time_range: Optional[str] = None,
+) -> str:
+    """Search the web for real-time information using the Tavily API.
+    Use this when you need up-to-date information, current events,
+    facts you're unsure about, or anything that benefits from live web data.
 
-    Pass a descriptive query to get the most relevant memories.
-    Use query='*' to retrieve ALL memories.
+    Args:
+        query: The search query. Be specific for better results.
+        search_depth: 'basic' (fast) or 'advanced' (more thorough).
+        topic: 'general', 'news', or 'finance'.
+        max_results: Number of results to return (1-10). Use 2-3 for most queries.
+        time_range: Filter by recency — 'day', 'week', 'month', or 'year'. Leave None for no filter.
     """
-    return _memory_dispatch("recall", query=query)
-
-
-@tool
-def lc_memory_get(path: str) -> str:
-    """Read a specific memory file by path.
-
-    Use 'MEMORY.md' for long-term memory or 'YYYY-MM-DD.md' for daily logs.
-    """
-    return _memory_dispatch("memory_get", path=path)
-
-
-@tool
-def lc_memory_list_files() -> str:
-    """List all memory files (MEMORY.md + daily logs)."""
-    return _memory_dispatch("memory_list_files")
-
-
-@tool
-def lc_forget(key: str) -> str:
-    """Delete a memory entry by key from long-term memory."""
-    return _memory_dispatch("forget", key=key)
-
-
-@tool
-def lc_update_index(content: str) -> str:
-    """Update the INDEX.md system info file.
-
-    Use this to store curated environment info, API notes, and configuration
-    that should persist across sessions.
-    """
-    return _memory_dispatch("update_index", content=content)
+    return web_search(
+        query,
+        search_depth=search_depth,
+        topic=topic,
+        max_results=max_results,
+        time_range=time_range,
+    )
 
 
 # ── Skill Tools ───────────────────────────────────────────────────────────────
-
-def _skill_dispatch(tool_name: str, **kwargs) -> str:
-    from .tools import AVAILABLE_TOOLS
-    fn = AVAILABLE_TOOLS.get(tool_name)
-    if fn is None:
-        return f"Error: skill tool '{tool_name}' is not registered."
-    try:
-        return fn(**kwargs)
-    except Exception as exc:
-        return f"Skill error: {exc}"
-
+# These call back into your agent's skill system.
+# Replace the stubs below with real imports once your skill runner is importable.
 
 @tool
 def lc_use_skill(skill_name: str) -> str:
-    """Activate a skill by name.
-
-    This loads the skill's detailed instructions and workflow into context.
-    Only call this when you've identified the right skill from the catalog
-    in the system prompt.
-    """
-    return _skill_dispatch("use_skill", skill_name=skill_name)
+    """Activate a skill by name. This loads the skill's detailed instructions
+    and workflow into context. Only call this when you've identified the right
+    skill from the catalog in the system prompt."""
+    # Replace with: from skills import use_skill; return use_skill(skill_name)
+    raise NotImplementedError(
+        f"lc_use_skill: wire up your skill runner for '{skill_name}'"
+    )
 
 
 @tool
 def lc_list_skill_resources(skill_name: str) -> str:
     """List resource files bundled with a skill (scripts, schemas, reference docs).
-
-    Use after activating a skill to discover what files are available.
-    """
-    return _skill_dispatch("list_skill_resources", skill_name=skill_name)
-
-
-# ── Cron Tools ────────────────────────────────────────────────────────────────
-
-def _cron_dispatch(tool_name: str, **kwargs) -> str:
-    from .tools import AVAILABLE_TOOLS
-    fn = AVAILABLE_TOOLS.get(tool_name)
-    if fn is None:
-        return f"Error: cron tool '{tool_name}' is not registered."
-    try:
-        return fn(**kwargs)
-    except Exception as exc:
-        return f"Cron error: {exc}"
-
-
-class CronAddInput(BaseModel):
-    job_id: str = Field(description="Unique job identifier (no spaces).")
-    cron: str = Field(description="5-field cron expression, e.g. '0 9 * * *'.")
-    prompt: str = Field(description="The prompt the agent will run on each trigger.")
-    deliver_to_chat_id: Optional[int] = Field(
-        default=None,
-        description="Optional Telegram chat_id to deliver the result to.",
+    Use after activating a skill to discover what files are available."""
+    # Replace with: from skills import list_skill_resources; return list_skill_resources(skill_name)
+    raise NotImplementedError(
+        f"lc_list_skill_resources: wire up your skill runner for '{skill_name}'"
     )
 
 
-lc_cron_add = StructuredTool.from_function(
-    func=lambda **kw: _cron_dispatch("cron_add", **kw),
-    name="cron_add",
-    description=(
-        "Schedule a recurring LLM task. "
-        "Use standard 5-field cron syntax: 'min hour day month weekday'. "
-        "Example: '0 9 * * *' = 9 am daily."
-    ),
-    args_schema=CronAddInput,
-)
+# ── Memory Tools ──────────────────────────────────────────────────────────────
+# Stubs — replace `raise NotImplementedError` bodies with real calls once
+# your memory module is importable, e.g.:
+#   from memory import remember as _remember
+#   return _remember(key, content)
+
+@tool
+def lc_remember(key: str, content: str) -> str:
+    """Store a piece of information in long-term memory.
+
+    Args:
+        key: Topic or category to store under.
+        content: The information to remember.
+    """
+    # from memory import remember as _remember
+    # return _remember(key, content)
+    raise NotImplementedError("lc_remember: wire up your memory module")
+
+
+@tool
+def lc_recall(query: str) -> str:
+    """Search long-term memory using semantic + keyword retrieval.
+    Pass a descriptive query to get the most relevant memories.
+    Use query='*' to retrieve ALL memories.
+
+    Args:
+        query: Topic or question to search memory for. Use '*' for all memories.
+    """
+    # from memory import recall as _recall
+    # return _recall(query)
+    raise NotImplementedError("lc_recall: wire up your memory module")
+
+
+@tool
+def lc_memory_get(path: str) -> str:
+    """Read a specific memory file by path.
+    Use 'MEMORY.md' for long-term memory or 'YYYY-MM-DD.md' for daily logs.
+
+    Args:
+        path: Filename relative to memory dir (e.g. 'MEMORY.md', '2026-03-03.md').
+    """
+    # from memory import memory_get as _memory_get
+    # return _memory_get(path)
+    raise NotImplementedError("lc_memory_get: wire up your memory module")
+
+
+@tool
+def lc_memory_list_files() -> str:
+    """List all memory files (MEMORY.md + daily logs)."""
+    # from memory import memory_list_files as _mlf
+    # return _mlf()
+    raise NotImplementedError("lc_memory_list_files: wire up your memory module")
+
+
+@tool
+def lc_forget(key: str) -> str:
+    """Delete a memory entry by key from long-term memory.
+
+    Args:
+        key: The key to remove from memory.
+    """
+    # from memory import forget as _forget
+    # return _forget(key)
+    raise NotImplementedError("lc_forget: wire up your memory module")
+
+
+@tool
+def lc_update_index(content: str) -> str:
+    """Update the INDEX.md system info file.
+    Use this to store curated environment info, API notes, and configuration
+    that should persist across sessions.
+
+    Args:
+        content: Full Markdown content for INDEX.md.
+    """
+    # from memory import update_index as _update_index
+    # return _update_index(content)
+    raise NotImplementedError("lc_update_index: wire up your memory module")
+
+
+# ── Meta-Skill Tool ───────────────────────────────────────────────────────────
+
+@tool
+def lc_create_skill(
+    name: str,
+    description: str,
+    instructions: str,
+    category: str = "",
+    resources: Optional[Dict[str, str]] = None,
+    dependencies: Optional[List[str]] = None,
+) -> str:
+    """Create a brand-new skill on the fly when no existing skill can handle the request.
+    Writes a SKILL.md and optional resource scripts to the skills directory,
+    installs pip dependencies, and makes the skill immediately available.
+    Use this when you need a capability that doesn't exist yet.
+
+    Args:
+        name: Skill name (lowercase, underscores). E.g. 'weather_forecast'.
+        description: One-line description of what the skill does and when to use it.
+        instructions: Full Markdown instructions for the skill body.
+        category: Optional category folder (e.g. 'data', 'dev', 'web'). Empty for flat layout.
+        resources: Map of filename -> file content for bundled scripts.
+        dependencies: List of pip packages to install.
+    """
+    return create_skill(
+        name=name,
+        description=description,
+        instructions=instructions,
+        category=category,
+        resources=resources,
+        dependencies=dependencies,
+    )
+
+
+# ── Cron Tools ────────────────────────────────────────────────────────────────
+# Stubs — wire up your CronScheduler once it's importable.
+
+@tool
+def lc_cron_add(
+    job_id: str,
+    cron: str,
+    prompt: str,
+    deliver_to_chat_id: Optional[int] = None,
+) -> str:
+    """Schedule a recurring LLM task using standard 5-field cron syntax.
+    Example: '0 9 * * *' = 9 am daily.
+
+    Args:
+        job_id: Unique job identifier (no spaces).
+        cron: 5-field cron expression, e.g. '0 9 * * *'.
+        prompt: The prompt the agent will run on each trigger.
+        deliver_to_chat_id: Optional Telegram chat_id to deliver the result to.
+    """
+    # from cron import scheduler; return scheduler.add(job_id, cron, prompt, deliver_to_chat_id)
+    raise NotImplementedError("lc_cron_add: wire up your CronScheduler")
 
 
 @tool
 def lc_cron_remove(job_id: str) -> str:
-    """Remove a previously scheduled cron job by its ID."""
-    return _cron_dispatch("cron_remove", job_id=job_id)
+    """Remove a previously scheduled cron job by its ID.
+
+    Args:
+        job_id: The job ID to remove.
+    """
+    # from cron import scheduler; return scheduler.remove(job_id)
+    raise NotImplementedError("lc_cron_remove: wire up your CronScheduler")
 
 
 @tool
 def lc_cron_list() -> str:
     """List all currently scheduled cron jobs (both static and dynamic)."""
-    return _cron_dispatch("cron_list")
-
-
-# ── Knowledge Base Tool ───────────────────────────────────────────────────────
-
-@tool
-def lc_consult_knowledge_base(query: str) -> str:
-    """Search the knowledge base for relevant information using hybrid retrieval."""
-    from .tools import AVAILABLE_TOOLS
-    fn = AVAILABLE_TOOLS.get("consult_knowledge_base")
-    if fn is None:
-        return "Error: knowledge base tool is not registered."
-    return fn(query=query)
+    # from cron import scheduler; return scheduler.list_jobs()
+    raise NotImplementedError("lc_cron_list: wire up your CronScheduler")
 
 
 # ── Grouped exports ───────────────────────────────────────────────────────────
 
-PRIMITIVE_LC_TOOLS = [
+primitive_tools = [
     lc_run_command,
     lc_read_file,
     lc_write_file,
@@ -344,7 +291,14 @@ PRIMITIVE_LC_TOOLS = [
     lc_send_file,
 ]
 
-MEMORY_LC_TOOLS = [
+web_search_tool = [lc_web_search]
+
+skill_tools = [
+    lc_use_skill,
+    lc_list_skill_resources,
+]
+
+memory_tools = [
     lc_remember,
     lc_recall,
     lc_memory_get,
@@ -353,36 +307,22 @@ MEMORY_LC_TOOLS = [
     lc_update_index,
 ]
 
-SKILL_LC_TOOLS = [
-    lc_use_skill,
-    lc_list_skill_resources,
-]
+meta_skill_tools = [lc_create_skill]
 
-META_SKILL_LC_TOOLS = [
-    lc_create_skill,
-]
-
-WEB_SEARCH_LC_TOOLS = [
-    lc_web_search,
-]
-
-CRON_LC_TOOLS = [
+cron_tools = [
     lc_cron_add,
     lc_cron_remove,
     lc_cron_list,
 ]
 
-KNOWLEDGE_LC_TOOLS = [
-    lc_consult_knowledge_base,
-]
 
-# Convenience: every tool in one flat list
-ALL_LC_TOOLS = (
-    PRIMITIVE_LC_TOOLS
-    + MEMORY_LC_TOOLS
-    + SKILL_LC_TOOLS
-    + META_SKILL_LC_TOOLS
-    + WEB_SEARCH_LC_TOOLS
-    + CRON_LC_TOOLS
-    + KNOWLEDGE_LC_TOOLS
-)
+def get_all_langchain_tools():
+    """Return every tool as a flat list, ready to pass to a LangChain agent."""
+    return (
+        primitive_tools
+        + web_search_tool
+        + skill_tools
+        + memory_tools
+        + meta_skill_tools
+        + cron_tools
+    )
