@@ -12,6 +12,7 @@ from core.RAG.rag import KnowledgeRAG
 from core.llm.factory import get_llm
 from core.memory.manager import MemoryManager
 from core.langtools import get_all_langchain_tools
+from core.skill_loader import SkillRegistry
 
 logger = logging.getLogger(__name__)
 
