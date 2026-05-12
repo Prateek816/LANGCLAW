@@ -28,13 +28,13 @@ from .. import config
 
 if TYPE_CHECKING:
     from channels.telegram_bot import TelegramBot
-    from ..core.llm.base import LLMProvider
+    from core.llm import get_llm , LLMConfig , stream_response
 
 logger = logging.getLogger(__name__)
 
 DEFAULT_INTERVAL = 60
 def _log_dir() -> str:
-    from .. import config as _cfg
+    import config as _cfg
     return os.path.join(str(_cfg.LANGCLAW_HOME), "context", "logs")
 
 
@@ -50,16 +50,17 @@ class HeartbeatMonitor:
 
     def __init__(
         self,
-        provider: "LLMProvider",
+        #provider: "LLMProvider",
         interval_sec: int = DEFAULT_INTERVAL,
         telegram_bot: "TelegramBot | None" = None,
         alert_chat_id: int | None = None,
         log_path: str | None = None,
     ) -> None:
-        self._provider = provider
+        #self._provider = provider
         self._interval = interval_sec
         self._telegram_bot = telegram_bot
         self._alert_chat_id = alert_chat_id
+        self._llm_client = get_llm("groq","openai/gpt-oss-120b")
         if log_path is None:
             try:
                 log_path = _log_file()
@@ -104,9 +105,10 @@ class HeartbeatMonitor:
             # Run the blocking provider call in a thread-pool so we don't block the event loop
             response = await asyncio.get_event_loop().run_in_executor(
                 None,
-                lambda: self._provider.chat(messages=_PROBE_MESSAGES, tools=[], tool_choice="none"),
+                #lambda: self._provider.chat(messages=_PROBE_MESSAGES, tools=[], tool_choice="none"),
+                lambda: self._llm_client.invoke(_PROBE_MESSAGES)
             )
-            _ = response.choices[0].message.content  # verify structure
+            _ = response.content  # verify structure
             ok = True
         except Exception as exc:
             error_msg = str(exc)
@@ -165,7 +167,7 @@ def _build_file_logger(log_path: str) -> logging.Logger:
 
 
 def create_heartbeat(
-    provider: "LLMProvider",
+    #provider: "LLMProvider",
     telegram_bot: "TelegramBot | None" = None,
 ) -> HeartbeatMonitor:
     """Create a HeartbeatMonitor from pythonclaw.json / env vars."""
@@ -177,7 +179,7 @@ def create_heartbeat(
     )
     alert_chat_id = int(raw_chat_id) if raw_chat_id else None
     return HeartbeatMonitor(
-        provider=provider,
+        #provider=provider,
         interval_sec=interval,
         telegram_bot=telegram_bot,
         alert_chat_id=alert_chat_id,
