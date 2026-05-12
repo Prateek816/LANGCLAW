@@ -9,3 +9,6 @@ langchain_google_genai
 langchain_ollama
 langchain_community
 pickle
+python-telegram-bot
+apsheduler
+PyYAML
