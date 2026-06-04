@@ -10,5 +10,5 @@ langchain_ollama
 langchain_community
 pickle
 python-telegram-bot
-apsheduler
+apscheduler
 PyYAML

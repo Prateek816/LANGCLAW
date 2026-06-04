@@ -160,11 +160,11 @@ class TelegramBot:
             return
         sid = self._session_id(update.effective_chat.id)
         agent = self._sm.get_or_create(sid)
-        from ..core.compaction import estimate_tokens
+        from core.compaction import estimate_tokens
         await update.message.reply_text(
             f"\U0001f4ca Session Status\n"
             f"  Session ID   : {sid}\n"
-            f"  Provider     : {type(agent.provider).__name__}\n"
+            f"  Provider     : {type(agent.llm).__name__}\n"
             f"  Skills       : {len(agent.loaded_skill_names)} loaded\n"
             f"  Memories     : {len(agent.memory.list_all())} entries\n"
             f"  History      : {len(agent.messages)} messages\n"
@@ -370,7 +370,7 @@ class TelegramBot:
 
     def _register_file_sender(self, loop: asyncio.AbstractEventLoop, chat_id: int) -> None:
         """Register a sync callback so the Agent can send files via Telegram."""
-        from ..core.tool.tools import set_file_sender
+        from core.tool.tools import set_file_sender
 
         bot_app = self._app
 
@@ -414,7 +414,7 @@ class TelegramBot:
         Returns the transcript text, or sends a hint to the user and
         returns ``None`` if Deepgram is not configured.
         """
-        from ..core.stt import no_key_message, transcribe_bytes_async
+        from core.stt import no_key_message, transcribe_bytes_async
 
         voice = update.message.voice or update.message.audio
         tg_file = await voice.get_file()

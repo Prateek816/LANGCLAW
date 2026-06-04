@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Literal
 
-Provider = Literal["openai", "gemini", "anthropic", "ollama"]
+Provider = Literal["openai", "gemini", "anthropic", "ollama", "groq"]
 
 
 @dataclass

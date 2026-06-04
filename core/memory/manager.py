@@ -117,24 +117,35 @@ class MemoryManager:
             for k, v in all_memories.items()
         ]
 
-        retriever = HybridRetriever( 
-            use_sparse=True,
-            use_dense=self._use_dense,
-            use_reranker=False,
-        )
         chunks: list[dict] = []
-        #load in in-memory all the memories as chunks for retrieval
         for entry in corpus:
             entry_chunks = chunk_text(
                 text=entry["content"],
                 source=entry["source"],
                 chunk_size=400,
-                overlap=80
+                overlap=80,
             )
-        chunks.extend(entry_chunks)
+            chunks.extend(entry_chunks)
 
-        retriever.fit(corpus)
-        hits = retriever.retrieve(query, top_k=top_k)
+        # Build in-memory BM25 retriever from chunks
+        from rank_bm25 import BM25Okapi
+        from core.RAG.BM25 import default_preprocessing_func
+        from langchain_core.documents import Document
+
+        if not chunks:
+            return "(No memories to search)"
+
+        tokenized = [default_preprocessing_func(c["content"]) for c in chunks]
+        vectorizer = BM25Okapi(tokenized)
+        query_tokens = default_preprocessing_func(query)
+        scores = vectorizer.get_scores(query_tokens)
+
+        # Get top-k indices
+        ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:top_k]
+        hits = []
+        for i in ranked:
+            if scores[i] > 0:
+                hits.append({"source": chunks[i]["source"], "content": chunks[i]["content"]})
 
         if not hits:
             logger.debug("[MemoryManager] No RAG hits for '%s', returning all.", query)

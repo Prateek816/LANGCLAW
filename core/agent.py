@@ -290,11 +290,11 @@ class Agent:
         # Cron tools — bound to this agent's cron manager
         if self._cron_manager:
             cron_defs = [
-                ("lc_cron_add", "Schedule a recurring job.", {"prompt": str, "cron_expr": str, "job_id": str}),
-                ("lc_cron_remove", "Remove a scheduled job.", {"job_id": str}),
-                ("lc_cron_list", "List all scheduled jobs.", {}),
+                ("lc_cron_add", "Schedule a recurring job."),
+                ("lc_cron_remove", "Remove a scheduled job."),
+                ("lc_cron_list", "List all scheduled jobs."),
             ]
-            for name, desc, params in cron_defs:
+            for name, desc in cron_defs:
                 handler = self._make_cron_handler(name)
                 tools.append(StructuredTool.from_function(
                     func=handler, name=name, description=desc,
@@ -349,11 +349,11 @@ class Agent:
             "lc_forget": handle_forget,
             "lc_update_index": handle_update_index,
         }
-        return handlers.get(tool_name, lambda **kw: f"Unknown memory tool: {tool_name}")
+        return handlers.get(tool_name, lambda **_: f"Unknown memory tool: {tool_name}")
 
     def _make_skill_handler(self, tool_name: str):
         """Create a runtime handler for a skill tool."""
-        def handle_use_skill(skill_name: str, args: str = "") -> str:
+        def handle_use_skill(skill_name: str) -> str:
             skill = self._skill_registry.load_skill(skill_name)
             if not skill:
                 return f"Skill '{skill_name}' not found."
@@ -369,7 +369,7 @@ class Agent:
             "lc_use_skill": handle_use_skill,
             "lc_list_skill_resources": handle_list_skill_resources,
         }
-        return handlers.get(tool_name, lambda **kw: f"Unknown skill tool: {tool_name}")
+        return handlers.get(tool_name, lambda **_: f"Unknown skill tool: {tool_name}")
 
     def _make_cron_handler(self, tool_name: str):
         """Create a runtime handler for a cron tool."""
@@ -402,7 +402,7 @@ class Agent:
             "lc_cron_remove": handle_cron_remove,
             "lc_cron_list": handle_cron_list,
         }
-        return handlers.get(tool_name, lambda **kw: f"Unknown cron tool: {tool_name}")
+        return handlers.get(tool_name, lambda **_: f"Unknown cron tool: {tool_name}")
 
     # ── Message building ─────────────────────────────────────────────────────
 
@@ -588,7 +588,8 @@ class Agent:
         for t in tools:
             if t.name == tool_name:
                 try:
-                    return t.invoke(tool_args)
+                    result = t.invoke(tool_args)
+                    return str(result) if not isinstance(result, str) else result
                 except Exception as exc:
                     return f"Tool error: {exc}"
         return f"Unknown tool: {tool_name}"

@@ -65,7 +65,7 @@ class SessionManager:
 
     def __init__(
         self,
-        agent_factory: AgentFactory,
+        agent_factory: AgentFactory | None = None,
         store: "SessionStore | None" = None,
         max_concurrent: int | None = None,
     ) -> None:
@@ -93,6 +93,8 @@ class SessionManager:
     def get_or_create(self, session_id: str) -> "Agent":
         """Return the existing Agent for session_id, creating one if needed."""
         if session_id not in self._sessions:
+            if self._factory is None:
+                raise RuntimeError("No agent factory set. Call set_factory() first.")
             logger.info("[SessionManager] Creating session '%s'", session_id)
             self._sessions[session_id] = self._factory(session_id)
         return self._sessions[session_id]

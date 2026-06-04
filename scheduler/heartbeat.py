@@ -60,6 +60,7 @@ class HeartbeatMonitor:
         self._interval = interval_sec
         self._telegram_bot = telegram_bot
         self._alert_chat_id = alert_chat_id
+        from core.llm import get_llm
         self._llm_client = get_llm("groq","openai/gpt-oss-120b")
         if log_path is None:
             try:
