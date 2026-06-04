@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Notion REST API client for PythonClaw."""
+"""Notion REST API client for LangClaw."""
 import argparse
 import json
 import os
@@ -19,7 +19,7 @@ def _get_token() -> str:
     token = os.environ.get("NOTION_API_KEY", "")
     if token:
         return token
-    for path in [os.path.expanduser("~/.pythonclaw/pythonclaw.json"), "pythonclaw.json"]:
+    for path in [os.path.expanduser("~/.langclaw/langclaw.json"), "langclaw.json", os.path.expanduser("~/.pythonclaw/pythonclaw.json"), "pythonclaw.json"]:
         if os.path.isfile(path):
             try:
                 with open(path) as f:
@@ -29,7 +29,7 @@ def _get_token() -> str:
                     return token
             except (json.JSONDecodeError, OSError):
                 continue
-    print("Error: Notion token not configured. Set skills.notion.token in pythonclaw.json", file=sys.stderr)
+    print("Error: Notion token not configured. Set skills.notion.token in langclaw.json", file=sys.stderr)
     sys.exit(1)
 
 

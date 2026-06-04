@@ -17,7 +17,7 @@ except ImportError:
     sys.exit(1)
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; PythonClaw/1.0)"
+    "User-Agent": "Mozilla/5.0 (compatible; LangClaw/1.0)"
 }
 
 

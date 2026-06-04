@@ -156,7 +156,7 @@ class HeartbeatMonitor:
 
 def _build_file_logger(log_path: str) -> logging.Logger:
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
-    file_logger = logging.getLogger("pythonclaw.heartbeat.file")
+    file_logger = logging.getLogger("langclaw.heartbeat.file")
     file_logger.setLevel(logging.INFO)
     if not file_logger.handlers:
         handler = logging.handlers.RotatingFileHandler(
@@ -171,7 +171,7 @@ def create_heartbeat(
     #provider: "LLMProvider",
     telegram_bot: "TelegramBot | None" = None,
 ) -> HeartbeatMonitor:
-    """Create a HeartbeatMonitor from pythonclaw.json / env vars."""
+    """Create a HeartbeatMonitor from langclaw.json / env vars."""
     interval = config.get_int(
         "heartbeat", "intervalSec", env="HEARTBEAT_INTERVAL_SEC", default=DEFAULT_INTERVAL,
     )

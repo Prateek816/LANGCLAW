@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generic SMTP email sender.  Reads credentials from pythonclaw.json."""
+"""Generic SMTP email sender.  Reads credentials from langclaw.json."""
 
 import argparse
 import json
@@ -11,8 +11,8 @@ from email.mime.text import MIMEText
 
 
 def _load_email_config() -> dict:
-    """Load skills.email from pythonclaw.json."""
-    for path in ["pythonclaw.json", os.path.expanduser("~/.pythonclaw/pythonclaw.json")]:
+    """Load skills.email from langclaw.json."""
+    for path in ["langclaw.json", os.path.expanduser("~/.langclaw/langclaw.json"), "pythonclaw.json", os.path.expanduser("~/.pythonclaw/pythonclaw.json")]:
         if not os.path.isfile(path):
             continue
         with open(path, encoding="utf-8") as f:
@@ -40,7 +40,7 @@ def send_email(
     password = cfg.get("senderPassword", "")
 
     if not sender or not password:
-        return "Error: Email credentials not configured.  Set skills.email in pythonclaw.json."
+        return "Error: Email credentials not configured.  Set skills.email in langclaw.json."
 
     msg = MIMEMultipart("alternative")
     msg["From"] = sender

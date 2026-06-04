@@ -56,7 +56,7 @@
 # Removes // comments and trailing commas from JSON-like text.
 
 # _find_config_file()
-# Searches for available pythonclaw.json config file locations.
+# Searches for available langclaw.json / pythonclaw.json config file locations.
 
 # _deep_get(data, *keys, default=None)
 # Safely retrieves nested dictionary values.
@@ -80,7 +80,7 @@ _config_path: Path | None = None
 
 
 def home() -> Path:
-    """Return the PythonClaw home directory (``~/.pythonclaw`` by default)."""
+    """Return the LangClaw home directory (``~/.langclaw`` by default)."""
     return LANGCLAW_HOME
 
 
@@ -254,14 +254,14 @@ def group_context_dir(session_id: str) -> Path:
     """Return the per-group context directory for *session_id*.
 
     Maps ``session_id`` (e.g. ``telegram:123``) to a safe filesystem path
-    under ``~/.pythonclaw/context/groups/<safe_id>/``.
+    under ``~/.langclaw/context/groups/<safe_id>/``.
     """
     safe = re.sub(r"[^\w\-]", "_", session_id)
     return LANGCLAW_HOME / "context" / "groups" / safe
 
 
 def files_dir() -> Path:
-    """Return the shared files directory (``~/.pythonclaw/context/files/``)."""
+    """Return the shared files directory (``~/.langclaw/context/files/``)."""
     d = LANGCLAW_HOME / "context" / "files"
     d.mkdir(parents=True, exist_ok=True)
     return d

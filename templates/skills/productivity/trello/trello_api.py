@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Trello REST API client for PythonClaw."""
+"""Trello REST API client for LangClaw."""
 import argparse
 import json
 import os
@@ -21,7 +21,7 @@ def _get_creds() -> tuple[str, str]:
     if api_key and token:
         return api_key, token
 
-    for path in [os.path.expanduser("~/.pythonclaw/pythonclaw.json"), "pythonclaw.json"]:
+    for path in [os.path.expanduser("~/.langclaw/langclaw.json"), os.path.expanduser("~/.pythonclaw/pythonclaw.json"), "langclaw.json", "pythonclaw.json"]:
         if os.path.isfile(path):
             try:
                 with open(path) as f:

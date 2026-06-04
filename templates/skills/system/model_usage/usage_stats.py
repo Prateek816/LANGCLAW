@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Parse and summarise PythonClaw usage from history_detail.jsonl."""
+"""Parse and summarise LangClaw usage from history_detail.jsonl."""
 import argparse
 import json
 import os
@@ -15,7 +15,7 @@ def main():
 
     log_path = args.log
     if not log_path:
-        home = os.environ.get("PYTHONCLAW_HOME", os.path.expanduser("~/.pythonclaw"))
+        home = os.environ.get("LANGCLAW_HOME", os.path.expanduser("~/.langclaw"))
         log_path = os.path.join(home, "context", "logs", "history_detail.jsonl")
 
     if not os.path.isfile(log_path):
@@ -57,7 +57,7 @@ def main():
     if args.format == "json":
         print(json.dumps(stats, indent=2))
     else:
-        print("PythonClaw Usage Statistics")
+        print("LangClaw Usage Statistics")
         print(f"{'=' * 40}")
         print(f"Total interactions: {stats['total_interactions']}")
         print(f"Active days: {stats['unique_days']}")

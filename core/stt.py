@@ -7,7 +7,7 @@ Provides both sync and async helpers so every channel can call
 Returns the transcript string on success, or ``None`` when the Deepgram
 API key is not configured.
 
-Language is configurable via ``deepgram.language`` in pythonclaw.json:
+Language is configurable via ``deepgram.language`` in langclaw.json:
   - ``"multi"`` (default) — multilingual mode, works for any language
   - ``"zh"``/``"en"``/``"ja"``/… — force a specific language
   - ``"auto"`` — auto-detect (needs ~5 s+ of audio to be reliable)

@@ -82,7 +82,7 @@ def run_command(command: str) -> str:
 
     The command inherits the project's virtual environment so that
     ``python``, ``pip``, and any installed CLI tools resolve correctly.
-    The working directory is set to ``~/.pythonclaw/context/files/`` so
+    The working directory is set to ``~/.langclaw/context/files/`` so
     that any files created or downloaded by the command land there.
     """
     try:
@@ -416,7 +416,7 @@ def web_search(
 
     client = _get_tavily_client()
     if client is None:
-        return "Error: Tavily API key not configured (set TAVILY_API_KEY or tavily.apiKey in pythonclaw.json)"
+        return "Error: Tavily API key not configured (set TAVILY_API_KEY or tavily.apiKey in langclaw.json)"
 
     try:
         kwargs: dict = {
@@ -535,7 +535,7 @@ def create_skill(
     sanitized to prevent directory traversal.
     """
     import config as _cfg
-    skills_dir = os.path.join(str(_cfg.PYTHONCLAW_HOME), "context", "skills")
+    skills_dir = os.path.join(str(_cfg.LANGCLAW_HOME), "context", "skills")
     _resolve_in_sandbox(skills_dir)
     os.makedirs(skills_dir, exist_ok=True)
 

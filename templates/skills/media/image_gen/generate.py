@@ -18,7 +18,7 @@ def _get_api_key() -> str:
     key = os.environ.get("OPENAI_API_KEY", "")
     if key:
         return key
-    for path in [os.path.expanduser("~/.pythonclaw/pythonclaw.json"), "pythonclaw.json"]:
+    for path in [os.path.expanduser("~/.langclaw/langclaw.json"), os.path.expanduser("~/.pythonclaw/pythonclaw.json"), "langclaw.json", "pythonclaw.json"]:
         if os.path.isfile(path):
             try:
                 with open(path) as f:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read and update pythonclaw.json configuration values."""
+"""Read and update langclaw.json configuration values."""
 
 import argparse
 import json
@@ -9,11 +9,12 @@ import sys
 
 
 def _config_file() -> str:
-    home = os.path.expanduser("~/.pythonclaw")
-    for p in [os.path.join(home, "pythonclaw.json"), "pythonclaw.json"]:
+    home = os.path.expanduser("~/.langclaw")
+    fallback_home = os.path.expanduser("~/.pythonclaw")
+    for p in [os.path.join(home, "langclaw.json"), os.path.join(fallback_home, "pythonclaw.json"), "langclaw.json", "pythonclaw.json"]:
         if os.path.exists(p):
             return p
-    return os.path.join(home, "pythonclaw.json")
+    return os.path.join(home, "langclaw.json")
 
 
 SENSITIVE_PATTERNS = re.compile(
@@ -117,7 +118,7 @@ def set_value(key_path: str, value: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Manage pythonclaw.json")
+    parser = argparse.ArgumentParser(description="Manage langclaw.json")
     parser.add_argument("--show", action="store_true", help="Show all config (masked)")
     parser.add_argument("--get", metavar="KEY", help="Get a config value by dot-path")
     parser.add_argument("--set", nargs=2, metavar=("KEY", "VALUE"), help="Set a config value")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""GitHub API client.  Reads token from pythonclaw.json."""
+"""GitHub API client.  Reads token from langclaw.json."""
 
 import argparse
 import json
@@ -17,7 +17,7 @@ API = "https://api.github.com"
 
 
 def _load_token() -> str:
-    for path in ["pythonclaw.json", os.path.expanduser("~/.pythonclaw/pythonclaw.json")]:
+    for path in ["langclaw.json", os.path.expanduser("~/.langclaw/langclaw.json"), "pythonclaw.json", os.path.expanduser("~/.pythonclaw/pythonclaw.json")]:
         if not os.path.isfile(path):
             continue
         with open(path, encoding="utf-8") as f:

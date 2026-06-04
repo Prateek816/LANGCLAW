@@ -4,9 +4,9 @@
 import argparse
 import os
 
-SOUL_TEMPLATE = """# PythonClaw — Soul
+SOUL_TEMPLATE = """# LangClaw — Soul
 
-You are a PythonClaw agent — an autonomous AI assistant.
+You are a LangClaw agent — an autonomous AI assistant.
 
 This document defines your core identity — the values, principles, and character
 that remain constant regardless of which persona or role you are playing.
@@ -50,7 +50,7 @@ depth is genuinely needed.
 *This soul file is loaded at agent startup.*
 """
 
-PERSONA_TEMPLATE = """# PythonClaw — Persona
+PERSONA_TEMPLATE = """# LangClaw — Persona
 
 ## Role
 
@@ -174,7 +174,7 @@ def write_soul(user_name: str, personality: str, focus: str, language: str) -> s
         language=language,
         personality_description=_personality_description(personality),
     )
-    home = os.path.expanduser("~/.pythonclaw")
+    home = os.path.expanduser("~/.langclaw")
     path = os.path.join(home, "context", "soul", "SOUL.md")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
@@ -191,7 +191,7 @@ def write_persona(user_name: str, personality: str, focus: str, language: str) -
         style_notes=_style_notes(personality),
         focus_guidelines=_focus_guidelines(focus),
     )
-    home = os.path.expanduser("~/.pythonclaw")
+    home = os.path.expanduser("~/.langclaw")
     path = os.path.join(home, "context", "persona", "persona.md")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:

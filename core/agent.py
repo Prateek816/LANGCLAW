@@ -248,6 +248,16 @@ class Agent:
         if boot_ctx:
             parts.append(f"## What You Remember\n\n{boot_ctx}")
 
+        # Onboarding directive for new sessions without user-customized identity
+        if self._needs_onboarding:
+            parts.append(
+                "## Onboarding\n\n"
+                "This is a new session with default identity. Your first priority is to "
+                "guide the user through setting up their identity. Use the `lc_use_skill` "
+                "tool to load the 'onboarding' skill and follow its instructions. "
+                "Do not proceed with other tasks until onboarding is complete or the user explicitly declines."
+            )
+
         self._system_prompt = "\n\n---\n\n".join(parts)
 
         if self.verbose:

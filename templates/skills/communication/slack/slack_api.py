@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Slack Web API client for PythonClaw."""
+"""Slack Web API client for LangClaw."""
 import argparse
 import json
 import os
@@ -15,12 +15,14 @@ BASE_URL = "https://slack.com/api"
 
 
 def _get_token() -> str:
-    """Read Slack token from pythonclaw.json or environment."""
+    """Read Slack token from langclaw.json or environment."""
     token = os.environ.get("SLACK_BOT_TOKEN", "")
     if token:
         return token
 
     config_paths = [
+        os.path.expanduser("~/.langclaw/langclaw.json"),
+        "langclaw.json",
         os.path.expanduser("~/.pythonclaw/pythonclaw.json"),
         "pythonclaw.json",
     ]
@@ -35,7 +37,7 @@ def _get_token() -> str:
             except (json.JSONDecodeError, OSError):
                 continue
 
-    print("Error: Slack token not configured. Set skills.slack.token in pythonclaw.json", file=sys.stderr)
+    print("Error: Slack token not configured. Set skills.slack.token in langclaw.json", file=sys.stderr)
     sys.exit(1)
 
 

@@ -1,5 +1,5 @@
 """
-Telegram channel for pythonclaw.
+Telegram channel for LangClaw.
 
 Telegram is purely a *channel* — it handles sending and receiving messages.
 Session lifecycle (which Agent handles which chat) is delegated to the
@@ -23,7 +23,7 @@ IDs to restrict access.  Leave empty (or unset) to allow all users.
 
 Group behaviour
 ---------------
-Set ``channels.telegram.requireMention`` to ``true`` in pythonclaw.json to
+Set ``channels.telegram.requireMention`` to ``true`` in langclaw.json to
 require @bot mention in group chats.  DMs always respond.
 """
 
@@ -137,7 +137,7 @@ class TelegramBot:
         sid = self._session_id(update.effective_chat.id)
         self._sm.get_or_create(sid)
         await update.message.reply_text(
-            "\U0001f44b Hi! I'm your PythonClaw agent.\n\n"
+            "\U0001f44b Hi! I'm your LangClaw agent.\n\n"
             "Just send me a message and I'll do my best to help.\n"
             "You can also send photos and I'll analyze them.\n\n"
             "Commands:\n"
@@ -564,7 +564,7 @@ def _split_message(text: str, limit: int = 4096) -> list[str]:
 
 
 def create_bot(session_manager: "SessionManager") -> TelegramBot:
-    """Create a TelegramBot from pythonclaw.json / env vars."""
+    """Create a TelegramBot from langclaw.json / env vars."""
     token = config.get_str(
         "channels", "telegram", "token", env="TELEGRAM_BOT_TOKEN",
     )

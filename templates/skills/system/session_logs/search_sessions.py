@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Search across all PythonClaw session files for a keyword."""
+"""Search across all LangClaw session files for a keyword."""
 import argparse
 import os
 import sys
@@ -17,7 +17,7 @@ def main():
 
     sessions_dir = args.sessions_dir
     if not sessions_dir:
-        home = os.environ.get("PYTHONCLAW_HOME", os.path.expanduser("~/.pythonclaw"))
+        home = os.environ.get("LANGCLAW_HOME", os.path.expanduser("~/.langclaw"))
         sessions_dir = os.path.join(home, "context", "sessions")
 
     if not os.path.isdir(sessions_dir):

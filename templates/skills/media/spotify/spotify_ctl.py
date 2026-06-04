@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Spotify Web API controller for PythonClaw."""
+"""Spotify Web API controller for LangClaw."""
 import argparse
 import json
 import os
@@ -14,13 +14,13 @@ except ImportError:
     print("Error: requests is not installed. Run: pip install requests", file=sys.stderr)
     sys.exit(1)
 
-TOKEN_FILE = os.path.expanduser("~/.pythonclaw/.spotify_token.json")
+TOKEN_FILE = os.path.expanduser("~/.langclaw/.spotify_token.json")
 REDIRECT_URI = "http://localhost:8888/callback"
 SCOPES = "user-read-playback-state user-modify-playback-state user-read-currently-playing"
 
 
 def _get_config() -> dict:
-    for path in [os.path.expanduser("~/.pythonclaw/pythonclaw.json"), "pythonclaw.json"]:
+    for path in [os.path.expanduser("~/.langclaw/langclaw.json"), os.path.expanduser("~/.pythonclaw/pythonclaw.json"), "langclaw.json", "pythonclaw.json"]:
         if os.path.isfile(path):
             try:
                 with open(path) as f:
@@ -77,7 +77,7 @@ def _api(method: str, path: str, token: str, **kwargs) -> dict | None:
 def cmd_auth(args):
     cfg = _get_config()
     if not cfg.get("clientId"):
-        print("Set skills.spotify.clientId and clientSecret in pythonclaw.json first")
+        print("Set skills.spotify.clientId and clientSecret in langclaw.json first")
         return
 
     auth_url = "https://accounts.spotify.com/authorize?" + urlencode({
