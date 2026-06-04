@@ -26,7 +26,7 @@ from langchain_core.tools import tool
 
 # ── Import all implementation functions from your tools module ────────────────
 # Adjust this import path to wherever your tools.py lives.
-from tools import (
+from core.tool.tools import (
     run_command,
     read_file,
     write_file,

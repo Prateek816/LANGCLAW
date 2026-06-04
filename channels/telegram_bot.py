@@ -370,7 +370,7 @@ class TelegramBot:
 
     def _register_file_sender(self, loop: asyncio.AbstractEventLoop, chat_id: int) -> None:
         """Register a sync callback so the Agent can send files via Telegram."""
-        from ..core.tools import set_file_sender
+        from ..core.tool.tools import set_file_sender
 
         bot_app = self._app
 

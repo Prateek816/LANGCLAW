@@ -1,5 +1,5 @@
 """
-Heartbeat monitor for pythonclaw.
+Heartbeat monitor for langclaw.
 
 Periodically sends a minimal probe to the configured LLM provider to verify
 that it is reachable and responding.  Results are:
@@ -9,7 +9,7 @@ that it is reachable and responding.  Results are:
   * Optionally sent as a Telegram alert when the provider becomes unreachable
     (one alert per outage, not once per failed ping)
 
-Configuration (pythonclaw.json or env vars)
+Configuration (langclaw.json or env vars)
 -------------------------------------------
   heartbeat.intervalSec  / HEARTBEAT_INTERVAL_SEC   — seconds between probes (default: 60)
   heartbeat.alertChatId  / HEARTBEAT_ALERT_CHAT_ID  — Telegram chat_id to receive failure alerts

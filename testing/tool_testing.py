@@ -8,8 +8,8 @@ Run:
 import os
 
 # IMPORTANT: configure sandbox BEFORE using tools
-from core.tools import set_sandbox
-from core.langtools import ALL_LC_TOOLS
+from core.tool.tools import set_sandbox
+from core.tool.langtools import ALL_LC_TOOLS
 
 # Allow writing in current directory
 set_sandbox([os.getcwd()])
