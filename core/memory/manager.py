@@ -32,9 +32,7 @@ from __future__ import annotations
 
 import logging
 
-from core.RAG.retriever import HybridRetriever
 from .storage import MemoryStorage
-from core.RAG.chunker import load_corpus_from_directory
 from core.RAG.chunker import chunk_text
 
 logger = logging.getLogger(__name__)

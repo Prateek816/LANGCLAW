@@ -19,7 +19,10 @@ import sys
 import config
 from session_manager import SessionManager
 from core.agent import Agent
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 def _setup_logging() -> None:
     level = config.get_str("logging", "level") or "INFO"
@@ -107,6 +110,7 @@ def run_repl(sm: SessionManager) -> None:
 
 
 def main() -> None:
+    load_dotenv()
     parser = argparse.ArgumentParser(description="LangClaw agent framework")
     parser.add_argument("--repl", action="store_true", help="Interactive REPL mode (no Telegram)")
     parser.add_argument("--no-cron", action="store_true", help="Disable cron scheduler")
