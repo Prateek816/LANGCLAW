@@ -46,7 +46,7 @@ from telegram.ext import (
     filters,
 )
 
-from .. import config
+import config
 
 if TYPE_CHECKING:
     from session_manager import SessionManager
@@ -190,7 +190,7 @@ class TelegramBot:
     async def _cmd_clear_files(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         if not await self._check_access(update, context):
             return
-        from .. import config as _cfg
+        import config as _cfg
         count = _cfg.clear_files()
         await update.message.reply_text(f"Cleared {count} file(s) from the downloads folder.")
 

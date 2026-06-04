@@ -40,7 +40,7 @@ def _get_key() -> str | None:
 
 def _build_url() -> str:
     """Build the Deepgram API URL with language/model parameters."""
-    from .. import config
+    import config
 
     lang = config.get_str("deepgram", "language") or "multi"
     model = config.get_str("deepgram", "model") or "nova-2"

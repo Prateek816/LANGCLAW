@@ -48,6 +48,10 @@ class KnowledgeRAG:
             "[KnowledgeRAG] Loaded %d chunks from '%s'", len(corpus), knowledge_dir
         )
 
+    def __len__(self) -> int:
+        """Return the number of chunks loaded from the knowledge directory."""
+        return len(self._retriever._sparse_retriever.store.docs) if self._retriever._sparse_retriever else 0
+
     def retrieve(self, query: str, top_k: int = 5) -> list[dict]:
         """
         Return up to *top_k* relevant chunks for *query*.

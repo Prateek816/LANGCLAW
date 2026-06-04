@@ -70,6 +70,8 @@ from pathlib import Path
 from typing import Any
 
 LANGCLAW_HOME = Path(os.environ.get("LANGCLAW_HOME", Path.home() / ".langclaw"))
+# Backward-compatible alias — some modules reference PYTHONCLAW_HOME
+PYTHONCLAW_HOME = LANGCLAW_HOME
 
 _TRAILING_COMMA_RE = re.compile(r",\s*([}\]])")
 
@@ -120,7 +122,9 @@ def _strip_json5(text: str) -> str:
 def _find_config_file() -> Path | None:
     candidates = [
         LANGCLAW_HOME / "langclaw.json",
+        LANGCLAW_HOME / "pythonclaw.json",
         Path.cwd() / "langclaw.json",
+        Path.cwd() / "pythonclaw.json",
     ]
     for p in candidates:
         if p.is_file():

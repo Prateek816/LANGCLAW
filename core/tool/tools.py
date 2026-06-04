@@ -74,7 +74,7 @@ def _sanitize_filename(name: str) -> str:
 
 def _files_dir() -> str:
     """Return the shared files directory, creating it if needed."""
-    from ... import config as _cfg
+    import config as _cfg
     return str(_cfg.files_dir())
 
 def run_command(command: str) -> str:
@@ -532,7 +532,7 @@ def create_skill(
     All paths are validated against the sandbox.  Resource filenames are
     sanitized to prevent directory traversal.
     """
-    from ... import config as _cfg
+    import config as _cfg
     skills_dir = os.path.join(str(_cfg.PYTHONCLAW_HOME), "context", "skills")
     _resolve_in_sandbox(skills_dir)
     os.makedirs(skills_dir, exist_ok=True)

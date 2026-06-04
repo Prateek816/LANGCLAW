@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 def _cron_dir() -> str:
-    from .. import config as _cfg
+    import config as _cfg
     return os.path.join(str(_cfg.LANGCLAW_HOME), "context", "cron")
 
 

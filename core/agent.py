@@ -3,26 +3,27 @@ from __future__ import annotations
 import json
 import logging
 import os
-import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from concurrent.futures import TimeoutError as FuturesTimeout
-from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
+
+from langchain_core.messages import (
+    AIMessage,
+    BaseMessage,
+    HumanMessage,
+    SystemMessage,
+    ToolMessage,
+)
 
 from core.RAG.rag import KnowledgeRAG
 from core.llm.factory import get_llm
 from core.memory.manager import MemoryManager
-from core.tool.langtools import get_all_langchain_tools
 from core.skill_loader import SkillRegistry
-from core.tool.tools import (
-    configure_venv,
-    set_sandbox
-)
 
 import config as _cfg
 
 from .compaction import (
     DEFAULT_AUTO_THRESHOLD_TOKENS,
     DEFAULT_RECENT_KEEP,
+    compact,
     estimate_tokens,
 )
 
@@ -74,21 +75,15 @@ class Agent:
 
     def __init__(
         self,
-        #provider:LLMProvider, LLMProvider is providing two apis chat and chat stream
-        context_dir:str,
-        session_id:str|None = None ,
-        #memory_dir:str | None = None,
-        #skills_dir :list[str]|None=None, 
-        #knowledge_path:str|None=None,
-        #persona_path:str|None=None,
-        #soul_path:str|None=None,
-        verbose:bool=False,
-        show_full_context:bool=False,
-        max_chat_history:int=10,
-        auto_compaction:bool=True,
-        compaction_threshold:int = DEFAULT_AUTO_THRESHOLD_TOKENS,
-        compaction_recent_keep:int = DEFAULT_RECENT_KEEP,
-        cron_manager = None,
+        context_dir: str,
+        session_id: str | None = None,
+        verbose: bool = False,
+        show_full_context: bool = False,
+        max_chat_history: int = 10,
+        auto_compaction: bool = True,
+        compaction_threshold: int = DEFAULT_AUTO_THRESHOLD_TOKENS,
+        compaction_recent_keep: int = DEFAULT_RECENT_KEEP,
+        cron_manager=None,
     ):
         
         #self.provider = provider
@@ -108,7 +103,10 @@ class Agent:
         soul_path = os.path.join(context_dir, "soul")
         tools_path = os.path.join(context_dir, "tools")
 
-        self.llm = get_llm("groq","openai/gpt-oss-120b")
+        from core.llm.config import Provider
+        provider: Provider = _cfg.get_str("llm", "provider") or "groq"  # type: ignore[assignment]
+        model = _cfg.get_str("llm", "model") or "openai/gpt-oss-120b"
+        self.llm = get_llm(provider, model)
         self.session_id = session_id
         self.messages :list[dict]=[]
         self.verbose = verbose
@@ -196,7 +194,437 @@ class Agent:
             elif os.path.isfile(p) and os.path.getsize(p) > 0:
                 return True
         return False
-    
 
-    # ── Initialisation ────────────────────────────────────────────────────────
-    
+    # ── System prompt ────────────────────────────────────────────────────────
+
+    def _init_system_prompt(self) -> None:
+        """Build the system prompt from identity layers + skills + memory."""
+        parts: list[str] = []
+
+        # Soul (core identity)
+        if self.soul_instruction:
+            parts.append(self.soul_instruction.strip())
+
+        # Persona (role / style)
+        if self.persona_instruction:
+            parts.append(self.persona_instruction.strip())
+
+        # Tools notes (environment-specific info)
+        if self.tools_notes:
+            parts.append(f"## Your Local Environment\n\n{self.tools_notes.strip()}")
+
+        # Skill catalog — compact listing of available skills
+        self._skill_registry = SkillRegistry(skills_dirs=self.skills_dirs or None)
+        catalog = self._skill_registry.build_catalog()
+        if catalog:
+            parts.append(f"## Available Skills\n\n{catalog}")
+
+        # RAG knowledge hint
+        if self.rag:
+            parts.append(
+                "You have access to a knowledge base. Use the retrieve_knowledge tool "
+                "to search it when the user's question may be answered by stored documents."
+            )
+
+        # Web search hint
+        if self._web_search_enabled:
+            parts.append(
+                "You have web search available via the web_search tool. "
+                "Use it when you need current information."
+            )
+
+        # Memory boot context (curated long-term memories)
+        boot_ctx = self.memory.boot_context(max_chars=3000)
+        if boot_ctx:
+            parts.append(f"## What You Remember\n\n{boot_ctx}")
+
+        self._system_prompt = "\n\n---\n\n".join(parts)
+
+        if self.verbose:
+            print(f"[Agent] System prompt: {len(self._system_prompt)} chars")
+
+    # ── Tools ────────────────────────────────────────────────────────────────
+
+    def _build_tools(self) -> list:
+        """Build the LangChain tool list with runtime bindings."""
+        from langchain_core.tools import StructuredTool
+        from core.tool.langtools import (
+            primitive_tools,
+            web_search_tool,
+            meta_skill_tools,
+        )
+
+        tools = list(primitive_tools)
+
+        if self._web_search_enabled:
+            tools.extend(web_search_tool)
+
+        # Memory tools — bound to this agent's memory manager
+        memory_defs = [
+            ("lc_remember", "Store a fact in long-term memory."),
+            ("lc_recall", "Search long-term memory for relevant facts."),
+            ("lc_memory_get", "Read a specific memory file by path."),
+            ("lc_memory_list_files", "List all memory files."),
+            ("lc_forget", "Remove a memory entry by key."),
+            ("lc_update_index", "Update the memory INDEX.md file."),
+        ]
+        for name, desc in memory_defs:
+            handler = self._make_memory_handler(name)
+            tools.append(StructuredTool.from_function(
+                func=handler, name=name, description=desc,
+            ))
+
+        # Skill tools — bound to this agent's skill registry
+        skill_defs = [
+            ("lc_use_skill", "Load and use a skill by name."),
+            ("lc_list_skill_resources", "List resource files for a skill."),
+        ]
+        for name, desc in skill_defs:
+            handler = self._make_skill_handler(name)
+            tools.append(StructuredTool.from_function(
+                func=handler, name=name, description=desc,
+            ))
+
+        tools.extend(meta_skill_tools)
+
+        # Cron tools — bound to this agent's cron manager
+        if self._cron_manager:
+            cron_defs = [
+                ("lc_cron_add", "Schedule a recurring job.", {"prompt": str, "cron_expr": str, "job_id": str}),
+                ("lc_cron_remove", "Remove a scheduled job.", {"job_id": str}),
+                ("lc_cron_list", "List all scheduled jobs.", {}),
+            ]
+            for name, desc, params in cron_defs:
+                handler = self._make_cron_handler(name)
+                tools.append(StructuredTool.from_function(
+                    func=handler, name=name, description=desc,
+                ))
+
+        # Knowledge retrieval tool
+        if self.rag:
+            def retrieve_knowledge(query: str) -> str:
+                """Search the knowledge base for relevant documents."""
+                assert self.rag is not None
+                results = self.rag.retrieve(query, top_k=5)
+                if not results:
+                    return "No relevant documents found."
+                return "\n\n".join(
+                    f"[{r.get('source', 'unknown')}]\n{r['content']}" for r in results
+                )
+
+            tools.append(StructuredTool.from_function(
+                func=retrieve_knowledge, name="retrieve_knowledge",
+                description="Search the knowledge base for relevant documents.",
+            ))
+
+        return tools
+
+    def _make_memory_handler(self, tool_name: str):
+        """Create a runtime handler for a memory tool."""
+        def handle_remember(content: str, key: str = "") -> str:
+            return self.memory.remember(content, key or None)
+
+        def handle_recall(query: str = "*") -> str:
+            return self.memory.recall(query)
+
+        def handle_memory_get(path: str) -> str:
+            return self.memory.memory_get(path)
+
+        def handle_memory_list_files() -> str:
+            files = self.memory.list_files()
+            return "\n".join(files) if files else "No memory files."
+
+        def handle_forget(key: str) -> str:
+            return self.memory.forget(key)
+
+        def handle_update_index(content: str) -> str:
+            self.memory.write_index(content)
+            return "INDEX.md updated."
+
+        handlers = {
+            "lc_remember": handle_remember,
+            "lc_recall": handle_recall,
+            "lc_memory_get": handle_memory_get,
+            "lc_memory_list_files": handle_memory_list_files,
+            "lc_forget": handle_forget,
+            "lc_update_index": handle_update_index,
+        }
+        return handlers.get(tool_name, lambda **kw: f"Unknown memory tool: {tool_name}")
+
+    def _make_skill_handler(self, tool_name: str):
+        """Create a runtime handler for a skill tool."""
+        def handle_use_skill(skill_name: str, args: str = "") -> str:
+            skill = self._skill_registry.load_skill(skill_name)
+            if not skill:
+                return f"Skill '{skill_name}' not found."
+            return f"## {skill.name}\n\n{skill.instructions}"
+
+        def handle_list_skill_resources(skill_name: str) -> str:
+            resources = self._skill_registry.list_resources(skill_name)
+            if not resources:
+                return f"No resources found for '{skill_name}'."
+            return "\n".join(resources)
+
+        handlers = {
+            "lc_use_skill": handle_use_skill,
+            "lc_list_skill_resources": handle_list_skill_resources,
+        }
+        return handlers.get(tool_name, lambda **kw: f"Unknown skill tool: {tool_name}")
+
+    def _make_cron_handler(self, tool_name: str):
+        """Create a runtime handler for a cron tool."""
+        def handle_cron_add(prompt: str, cron_expr: str, job_id: str = "") -> str:
+            if not self._cron_manager:
+                return "Cron scheduler not available."
+            jid = self._cron_manager.add_dynamic_job(
+                job_id=job_id or None,
+                prompt=prompt,
+                cron_expr=cron_expr,
+            )
+            return f"Job '{jid}' scheduled."
+
+        def handle_cron_remove(job_id: str) -> str:
+            if not self._cron_manager:
+                return "Cron scheduler not available."
+            ok = self._cron_manager.remove_dynamic_job(job_id)
+            return f"Job '{job_id}' removed." if ok else f"Job '{job_id}' not found."
+
+        def handle_cron_list() -> str:
+            if not self._cron_manager:
+                return "Cron scheduler not available."
+            jobs = self._cron_manager.list_jobs()
+            if not jobs:
+                return "No scheduled jobs."
+            return json.dumps(jobs, indent=2)
+
+        handlers = {
+            "lc_cron_add": handle_cron_add,
+            "lc_cron_remove": handle_cron_remove,
+            "lc_cron_list": handle_cron_list,
+        }
+        return handlers.get(tool_name, lambda **kw: f"Unknown cron tool: {tool_name}")
+
+    # ── Message building ─────────────────────────────────────────────────────
+
+    def _build_messages(self, user_input: str | list) -> list[BaseMessage]:
+        """Build the full message list for the LLM call."""
+        msgs: list[BaseMessage] = [SystemMessage(content=self._system_prompt)]
+
+        # Add chat history
+        for m in self.messages:
+            role = m.get("role", "user")
+            content = m.get("content", "")
+            if role == "user":
+                msgs.append(HumanMessage(content=content))
+            elif role == "assistant":
+                msgs.append(AIMessage(content=content))
+
+        # Add current user input
+        if isinstance(user_input, list):
+            # Multimodal (e.g., image + text)
+            msgs.append(HumanMessage(content=user_input))
+        else:
+            msgs.append(HumanMessage(content=user_input))
+
+        return msgs
+
+    # ── Auto-compaction check ────────────────────────────────────────────────
+
+    def _maybe_compact(self) -> None:
+        """Trigger auto-compaction if the conversation is too long."""
+        if not self.auto_compaction:
+            return
+        tokens = estimate_tokens(self.messages)
+        if tokens >= self.compaction_threshold:
+            if self.verbose:
+                print(f"[Agent] Auto-compaction triggered ({tokens} tokens)")
+            self.compact()
+
+    # ── Chat (non-streaming) ─────────────────────────────────────────────────
+
+    def chat(self, user_input: str | list) -> str:
+        """
+        Send a message and return the full response.
+
+        Parameters
+        ----------
+        user_input : str or list
+            Text string, or a LangChain-style multimodal content list.
+
+        Returns
+        -------
+        The assistant's response text.
+        """
+        self._maybe_compact()
+
+        tools = self._build_tools()
+        llm_with_tools = self.llm.bind_tools(tools) if tools else self.llm
+
+        msgs = self._build_messages(user_input)
+
+        if self.show_full_context:
+            for m in msgs:
+                print(f"  [{m.type}] {str(m.content)[:200]}")
+
+        # Tool dispatch loop
+        for _ in range(self.MAX_TOOL_ROUNDS):
+            response = llm_with_tools.invoke(msgs)
+            msgs.append(response)
+
+            if not response.tool_calls:
+                # No tool calls — final answer
+                answer = response.content or ""
+                # Store in history
+                self.messages.append({"role": "user", "content": str(user_input)})
+                self.messages.append({"role": "assistant", "content": answer})
+                self._trim_history()
+                return answer
+
+            # Execute tool calls
+            for tc in response.tool_calls:
+                tool_name = tc["name"]
+                tool_args = tc["args"]
+                tool_id = tc["id"]
+
+                if self.verbose:
+                    print(f"  [Tool] {tool_name}({tool_args})")
+
+                # Find and call the tool
+                result = self._execute_tool(tools, tool_name, tool_args)
+                msgs.append(ToolMessage(content=result, tool_call_id=tool_id))
+
+        # Exhausted tool rounds
+        answer = "I exceeded the maximum tool rounds. Please try a simpler request."
+        self.messages.append({"role": "user", "content": str(user_input)})
+        self.messages.append({"role": "assistant", "content": answer})
+        return answer
+
+    # ── Chat (streaming) ─────────────────────────────────────────────────────
+
+    def chat_stream(self, user_input: str | list, token_callback=None) -> str:
+        """
+        Send a message with streaming. Calls token_callback for each chunk.
+
+        Parameters
+        ----------
+        user_input : str or list
+            Text string, or a LangChain-style multimodal content list.
+        token_callback : callable(str) or None
+            Called with each text chunk as it arrives.
+
+        Returns
+        -------
+        The complete assistant response text.
+        """
+        self._maybe_compact()
+
+        tools = self._build_tools()
+        llm_with_tools = self.llm.bind_tools(tools) if tools else self.llm
+
+        msgs = self._build_messages(user_input)
+
+        if self.show_full_context:
+            for m in msgs:
+                print(f"  [{m.type}] {str(m.content)[:200]}")
+
+        # Tool dispatch loop
+        for _ in range(self.MAX_TOOL_ROUNDS):
+            # Stream the response
+            full_text = ""
+            accumulated = None
+            for chunk in llm_with_tools.stream(msgs):
+                accumulated = chunk if accumulated is None else accumulated + chunk
+                text = chunk.content or ""
+                if isinstance(text, list):
+                    text = "".join(
+                        block.get("text", "") if isinstance(block, dict) else str(block)
+                        for block in text
+                    )
+                if text:
+                    full_text += text
+                    if token_callback:
+                        token_callback(text)
+
+            if accumulated is None:
+                break
+
+            # Convert accumulated chunk to AIMessage for the message list
+            response = AIMessage(
+                content=accumulated.content or "",
+                tool_calls=accumulated.tool_calls if accumulated.tool_calls else [],
+            )
+            msgs.append(response)
+
+            if not response.tool_calls:
+                # Final answer
+                self.messages.append({"role": "user", "content": str(user_input)})
+                self.messages.append({"role": "assistant", "content": full_text})
+                self._trim_history()
+                return full_text
+
+            # Execute tool calls
+            for tc in response.tool_calls:
+                tool_name = tc["name"]
+                tool_args = tc["args"]
+                tool_id = tc["id"]
+
+                if self.verbose:
+                    print(f"  [Tool] {tool_name}({tool_args})")
+
+                result = self._execute_tool(tools, tool_name, tool_args)
+                msgs.append(ToolMessage(content=result, tool_call_id=tool_id))
+
+        answer = "I exceeded the maximum tool rounds. Please try a simpler request."
+        self.messages.append({"role": "user", "content": str(user_input)})
+        self.messages.append({"role": "assistant", "content": answer})
+        if token_callback:
+            token_callback(answer)
+        return answer
+
+    # ── Tool execution ───────────────────────────────────────────────────────
+
+    def _execute_tool(self, tools: list, tool_name: str, tool_args: dict) -> str:
+        """Find and execute a tool by name."""
+        for t in tools:
+            if t.name == tool_name:
+                try:
+                    return t.invoke(tool_args)
+                except Exception as exc:
+                    return f"Tool error: {exc}"
+        return f"Unknown tool: {tool_name}"
+
+    # ── History management ───────────────────────────────────────────────────
+
+    def _trim_history(self) -> None:
+        """Keep only the most recent messages in the sliding window."""
+        max_msgs = self.max_chat_history * 2  # user + assistant pairs
+        if len(self.messages) > max_msgs:
+            self.messages = self.messages[-max_msgs:]
+
+    # ── Compaction ───────────────────────────────────────────────────────────
+
+    def compact(self, instruction: str | None = None) -> str:
+        """
+        Compact conversation history — summarize old messages, optionally
+        flush key facts to memory.
+
+        Returns a summary of what was compacted.
+        """
+        if not self.messages:
+            return "Nothing to compact — conversation is empty."
+
+        old_count = len(self.messages)
+        self.messages, summary = compact(
+            self.messages,
+            llm=self.llm,
+            memory=self.memory,
+            recent_keep=self.compaction_recent_keep,
+            instruction=instruction,
+        )
+        self.compaction_count += 1
+        new_count = len(self.messages)
+
+        if self.verbose:
+            print(f"[Agent] Compacted {old_count} → {new_count} messages")
+
+        return f"Compacted {old_count - new_count} messages.\n\nSummary: {summary}"

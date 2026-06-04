@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .llm.factory import get_llm
+    from langchain_core.language_models.chat_models import BaseChatModel
     from .memory.manager import MemoryManager
 
 logger = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ DEFAULT_AUTO_THRESHOLD_TOKENS = 6000   # trigger auto-compaction at ~6k tokens
 DEFAULT_RECENT_KEEP = 6                # keep last N chat messages verbatim
 
 def _compaction_log_file() -> str:
-    import core.config as _cfg
+    import config as _cfg
     return os.path.join(str(_cfg.LANGCLAW_HOME), "context", "compaction", "history.jsonl")
 
 def estimate_tokens(messages: list[dict]) -> int:
@@ -61,7 +61,7 @@ def messages_to_text(messages: list[dict]) -> str:
 
 def memory_flush(
     messages_to_flush: list[dict],
-    provider: "LLMProvider",
+    llm: "BaseChatModel",
     memory: "MemoryManager",
 ) -> int:
     """
@@ -84,12 +84,14 @@ def memory_flush(
         "Return ONLY valid JSON, no explanation."
     )
     try:
-        response = provider.chat(
-            messages=[{"role": "user", "content": prompt}],
-            tools=[],
-            tool_choice="none",
-        )
-        raw = response.choices[0].message.content or "[]"
+        from langchain_core.messages import HumanMessage
+        response = llm.invoke([HumanMessage(content=prompt)])
+        raw = response.content or "[]"
+        if isinstance(raw, list):
+            raw = "".join(
+                block.get("text", "") if isinstance(block, dict) else str(block)
+                for block in raw
+            )
         # Strip markdown fences if present
         raw = raw.strip()
         if raw.startswith("```"):
@@ -115,7 +117,7 @@ def memory_flush(
 
 def compact(
     messages: list[dict],
-    provider: "LLMProvider",
+    llm: "BaseChatModel",
     memory: "MemoryManager | None" = None,
     recent_keep: int = DEFAULT_RECENT_KEEP,
     instruction: str | None = None,
@@ -127,7 +129,7 @@ def compact(
     Parameters
     ----------
     messages      : full message list (system + chat)
-    provider      : LLM provider used for summarisation
+    llm           : LangChain BaseChatModel used for summarisation
     memory        : MemoryManager for pre-compaction memory flush (optional)
     recent_keep   : number of recent chat messages to keep verbatim
     instruction   : optional extra focus hint for the summarisation prompt
@@ -154,7 +156,7 @@ def compact(
 
     # 1. Memory flush — save important facts before discarding old messages
     if memory is not None:
-        memory_flush(to_summarise, provider, memory)
+        memory_flush(to_summarise, llm, memory)
 
     # 2. Summarise
     history_text = messages_to_text(to_summarise)
@@ -166,12 +168,14 @@ def compact(
         f"Provide a compact summary (3–8 sentences or bullet points):"
     )
     try:
-        response = provider.chat(
-            messages=[{"role": "user", "content": summarise_prompt}],
-            tools=[],
-            tool_choice="none",
-        )
-        summary = (response.choices[0].message.content or "").strip()
+        from langchain_core.messages import HumanMessage
+        response = llm.invoke([HumanMessage(content=summarise_prompt)])
+        summary = (response.content or "").strip()
+        if isinstance(summary, list):
+            summary = "".join(
+                block.get("text", "") if isinstance(block, dict) else str(block)
+                for block in summary
+            )
     except Exception as exc:
         logger.error("[Compaction] Summarisation failed: %s", exc)
         raise

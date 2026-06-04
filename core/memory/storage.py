@@ -37,7 +37,7 @@ class MemoryStorage:
 
     def __init__(self, memory_dir: str | None = None) -> None:
         if memory_dir is None:
-            from ... import config as _cfg
+            import config as _cfg
             memory_dir = os.path.join(str(_cfg.PYTHONCLAW_HOME), "context", "memory")
         self.memory_dir = memory_dir
         os.makedirs(memory_dir, exist_ok=True)

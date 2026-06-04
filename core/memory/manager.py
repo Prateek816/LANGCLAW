@@ -65,7 +65,7 @@ class MemoryManager:
         import os
 
         if memory_dir is None:
-            from ... import config as _cfg
+            import config as _cfg
             memory_dir = os.path.join(str(_cfg.PYTHONCLAW_HOME), "context", "memory")
 
         self.storage = MemoryStorage(memory_dir)

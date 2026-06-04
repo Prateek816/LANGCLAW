@@ -42,11 +42,11 @@ import logging
 from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, AsyncIterator, Callable
 
-from . import config
+import config
 
 if TYPE_CHECKING:
-    from .core.agent import Agent
-    from .core.session_store import SessionStore
+    from core.agent import Agent
+    from core.session_store import SessionStore
 
 logger = logging.getLogger(__name__)
 

@@ -24,7 +24,7 @@ import os
 import time
 from typing import TYPE_CHECKING
 
-from .. import config
+import config
 
 if TYPE_CHECKING:
     from channels.telegram_bot import TelegramBot
