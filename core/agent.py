@@ -25,6 +25,7 @@ from .compaction import (
     DEFAULT_RECENT_KEEP,
     compact,
     estimate_tokens,
+    memory_flush,
 )
 
 logger = logging.getLogger(__name__)
@@ -84,6 +85,7 @@ class Agent:
         compaction_threshold: int = DEFAULT_AUTO_THRESHOLD_TOKENS,
         compaction_recent_keep: int = DEFAULT_RECENT_KEEP,
         cron_manager=None,
+        session_store=None,
     ):
         
         #self.provider = provider
@@ -117,6 +119,7 @@ class Agent:
         self.compaction_recent_keep = compaction_recent_keep
         self.compaction_count : int = 0
         self._cron_manager = cron_manager
+        self._file_sender = None  # channel-specific file sender callback
 
         self.loaded_skill_names : set[str] = set()
         self.pending_injections : list[str] = []
@@ -254,7 +257,19 @@ class Agent:
             meta_skill_tools,
         )
 
-        tools = list(primitive_tools)
+        # Exclude lc_send_file from primitive_tools — we build it per-session below
+        tools = [t for t in primitive_tools if t.name != "lc_send_file"]
+
+        # send_file — bound to this agent's channel-specific file sender
+        def _send_file(path: str, caption: str = "") -> str:
+            """Send a file to the user via the active channel."""
+            from core.tool.tools import send_file as _send_file_impl
+            return _send_file_impl(path, caption, sender=self._file_sender)
+
+        tools.append(StructuredTool.from_function(
+            func=_send_file, name="lc_send_file",
+            description="Send a file to the user via the active channel. Max 100 MB.",
+        ))
 
         if self._web_search_enabled:
             tools.extend(web_search_tool)
@@ -434,10 +449,12 @@ class Agent:
         """Trigger auto-compaction if the conversation is too long."""
         if not self.auto_compaction:
             return
-        tokens = estimate_tokens(self.messages)
+        history_tokens = estimate_tokens(self.messages)
+        system_tokens = estimate_tokens([{"content": self._system_prompt}])
+        tokens = history_tokens + system_tokens
         if tokens >= self.compaction_threshold:
             if self.verbose:
-                print(f"[Agent] Auto-compaction triggered ({tokens} tokens)")
+                print(f"[Agent] Auto-compaction triggered ({tokens} tokens, system={system_tokens})")
             self.compact()
 
     # ── Chat (non-streaming) ─────────────────────────────────────────────────
@@ -597,9 +614,20 @@ class Agent:
     # ── History management ───────────────────────────────────────────────────
 
     def _trim_history(self) -> None:
-        """Keep only the most recent messages in the sliding window."""
+        """Keep only the most recent messages in the sliding window.
+
+        Before dropping old messages, flush key facts to long-term memory
+        so that information is not silently lost.
+        """
         max_msgs = self.max_chat_history * 2  # user + assistant pairs
         if len(self.messages) > max_msgs:
+            to_drop = self.messages[:-max_msgs]
+            # Only flush if dropping meaningful amount (>2 messages)
+            if len(to_drop) > 2:
+                try:
+                    memory_flush(to_drop, self.llm, self.memory)
+                except Exception as exc:
+                    logger.warning("[Agent] Memory flush during trim failed (non-fatal): %s", exc)
             self.messages = self.messages[-max_msgs:]
 
     # ── Compaction ───────────────────────────────────────────────────────────

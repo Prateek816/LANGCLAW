@@ -144,8 +144,15 @@ def set_file_sender(fn: callable | None) -> None:
     _file_sender = fn
 
 
-def send_file(path: str, caption: str = "") -> str:
-    """Send a file to the user via the active channel (Telegram/Discord/WhatsApp/Web)."""
+def send_file(path: str, caption: str = "", sender: callable | None = None) -> str:
+    """Send a file to the user via the active channel (Telegram/Discord/WhatsApp/Web).
+
+    Args:
+        path: Path to the file to send.
+        caption: Optional caption for the file.
+        sender: Channel-specific file sender callback. If None, falls back to
+                the global _file_sender (deprecated path).
+    """
     resolved = os.path.realpath(os.path.abspath(path))
     if not os.path.isfile(resolved):
         return f"Error: file not found: {path}"
@@ -155,14 +162,16 @@ def send_file(path: str, caption: str = "") -> str:
         size_mb = size / (1024 * 1024)
         return f"Error: file too large ({size_mb:.1f} MB). Maximum allowed is 100 MB."
 
-    if _file_sender is None:
+    # Prefer session-scoped sender; fall back to global for backward compat
+    active_sender = sender or _file_sender
+    if active_sender is None:
         return (
             f"File ready at: {resolved} ({size / 1024:.1f} KB). "
             "No active channel to send through — user can download it directly."
         )
 
     try:
-        _file_sender(resolved, caption)
+        active_sender(resolved, caption)
         name = os.path.basename(resolved)
         return f"File '{name}' ({size / 1024:.1f} KB) sent successfully."
     except Exception as exc:

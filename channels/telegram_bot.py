@@ -245,7 +245,7 @@ class TelegramBot:
             async with self._sm.acquire(sid):
                 loop = asyncio.get_event_loop()
                 chat_id = update.effective_chat.id
-                self._register_file_sender(loop, chat_id)
+                self._register_file_sender(loop, chat_id, agent)
                 future = loop.run_in_executor(
                     None, agent.chat_stream, chat_input, token_queue.put,
                 )
@@ -254,6 +254,7 @@ class TelegramBot:
             logger.exception("[Telegram] Agent error")
             await update.message.reply_text(f"Sorry, something went wrong: {exc}")
         finally:
+            agent._file_sender = None
             typing_task.cancel()
 
         try:
@@ -368,10 +369,8 @@ class TelegramBot:
             for chunk in _split_message(text):
                 await update.message.reply_text(chunk)
 
-    def _register_file_sender(self, loop: asyncio.AbstractEventLoop, chat_id: int) -> None:
+    def _register_file_sender(self, loop: asyncio.AbstractEventLoop, chat_id: int, agent) -> None:
         """Register a sync callback so the Agent can send files via Telegram."""
-        from core.tool.tools import set_file_sender
-
         bot_app = self._app
 
         def _sender(path: str, caption: str = "") -> None:
@@ -389,7 +388,7 @@ class TelegramBot:
             future = asyncio.run_coroutine_threadsafe(_do_send(), loop)
             future.result(timeout=60)
 
-        set_file_sender(_sender)
+        agent._file_sender = _sender
 
     async def _build_image_input(self, update: Update, caption: str) -> list:
         """Download photo and build a multimodal content array."""

@@ -44,6 +44,9 @@ class MemoryStorage:
         self._memory_file = os.path.join(memory_dir, "MEMORY.md")
         self._index_file = os.path.join(memory_dir, "INDEX.md")
         self.data: Dict[str, dict] = {}   # key → {"value": ..., "updated": ...}
+        self._index_cache: str | None = None
+        self._daily_cache: str = ""
+        self._daily_cache_ts: float = 0.0
         self._load()
 
     # ── Persistence ───────────────────────────────────────────────────────────
@@ -124,11 +127,19 @@ class MemoryStorage:
             lines.append(value)
             lines.append("")
 
+        content = "\n".join(lines)
+        tmp = self._memory_file + ".tmp"
         try:
-            with open(self._memory_file, "w", encoding="utf-8") as f:
-                f.write("\n".join(lines))
+            with open(tmp, "w", encoding="utf-8") as f:
+                f.write(content)
+            os.rename(tmp, self._memory_file)
         except OSError as e:
             print(f"Error saving MEMORY.md: {e}")
+            # Clean up temp file if rename failed
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
 
     def _append_daily_log(self, key: str, value: str) -> None:
         """Append an entry to today's daily log file."""
@@ -168,8 +179,6 @@ class MemoryStorage:
 
     # ── INDEX.md — curated system info (cached) ────────────────────────────
 
-    _index_cache: str | None = None
-
     def read_index(self) -> str:
         """Read INDEX.md content (cached). Returns empty string if not found."""
         if self._index_cache is not None:
@@ -193,9 +202,6 @@ class MemoryStorage:
         return self._index_file
 
     # ── Daily logs (cached with 60s TTL) ──────────────────────────────────
-
-    _daily_cache: str = ""
-    _daily_cache_ts: float = 0.0
 
     def read_recent_daily_logs(self, days: int = 2) -> str:
         """Read the last *days* daily logs, with 60s in-memory cache."""

@@ -153,7 +153,9 @@ class CronScheduler:
     def reload_jobs(self) -> int:
         """Hot-reload static jobs from the YAML file without stopping the scheduler."""
         self._scheduler.remove_all_jobs()
-        return self.load_and_register_jobs()
+        static_count = self.load_and_register_jobs()
+        dynamic_count = self._register_dynamic_jobs()
+        return static_count + dynamic_count
     
     def _load_dynamic_jobs(self) -> dict[str, dict]:
         """Load persisted dynamic jobs from JSON. Returns {job_id: job_dict}."""
@@ -170,8 +172,17 @@ class CronScheduler:
     def _save_dynamic_jobs(self, jobs: dict[str, dict]) -> None:
         djf = _dynamic_jobs_file()
         os.makedirs(os.path.dirname(djf), exist_ok=True)
-        with open(djf, "w", encoding="utf-8") as f:
-            json.dump(jobs, f, indent=2, ensure_ascii=False)
+        tmp = djf + ".tmp"
+        try:
+            with open(tmp, "w", encoding="utf-8") as f:
+                json.dump(jobs, f, indent=2, ensure_ascii=False)
+            os.rename(tmp, djf)
+        except OSError as exc:
+            logger.error("[CronScheduler] Failed to save dynamic jobs: %s", exc)
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
     
     def _register_dynamic_jobs(self) -> int:
         """Register all persisted dynamic jobs with the scheduler."""
