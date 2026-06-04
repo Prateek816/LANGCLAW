@@ -120,13 +120,20 @@ class Agent:
         self.compaction_count : int = 0
         self._cron_manager = cron_manager
         self._file_sender = None  # channel-specific file sender callback
+        self._session_store = session_store
+
+        # Restore persisted session history if available
+        if session_store and session_id:
+            saved = session_store.load(session_id)
+            if saved:
+                self.messages = saved
+                if verbose:
+                    print(f"[Agent] Restored {len(saved)} messages from session store")
 
         self.loaded_skill_names : set[str] = set()
-        self.pending_injections : list[str] = []
         self.MAX_PARALLEL_SKILLS = _cfg.get_int(
             "agent","maxParallelSkills",default=5
         )
-        self._bg_executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="agent-bg")
 
         mem_dir = memory_dir
         global_mem_dir : str | None = None
@@ -254,7 +261,6 @@ class Agent:
         from core.tool.langtools import (
             primitive_tools,
             web_search_tool,
-            meta_skill_tools,
         )
 
         # Exclude lc_send_file from primitive_tools — we build it per-session below
@@ -300,7 +306,20 @@ class Agent:
                 func=handler, name=name, description=desc,
             ))
 
-        tools.extend(meta_skill_tools)
+        # create_skill — bound to this agent's skill registry for cache invalidation
+        def _create_skill(name: str, description: str, instructions: str,
+                          category: str = "", resources: dict | None = None,
+                          dependencies: list | None = None) -> str:
+            from core.tool.tools import create_skill as _create_skill_impl
+            result = _create_skill_impl(name, description, instructions,
+                                        category, resources, dependencies)
+            self._skill_registry.invalidate()
+            return result
+
+        tools.append(StructuredTool.from_function(
+            func=_create_skill, name="create_skill",
+            description="Create a new skill at runtime (God Mode). Writes SKILL.md and resource files, installs pip dependencies.",
+        ))
 
         # Cron tools — bound to this agent's cron manager
         if self._cron_manager:
@@ -495,6 +514,7 @@ class Agent:
                 self.messages.append({"role": "user", "content": str(user_input)})
                 self.messages.append({"role": "assistant", "content": answer})
                 self._trim_history()
+                self._persist()
                 return answer
 
             # Execute tool calls
@@ -514,6 +534,7 @@ class Agent:
         answer = "I exceeded the maximum tool rounds. Please try a simpler request."
         self.messages.append({"role": "user", "content": str(user_input)})
         self.messages.append({"role": "assistant", "content": answer})
+        self._persist()
         return answer
 
     # ── Chat (streaming) ─────────────────────────────────────────────────────
@@ -577,6 +598,7 @@ class Agent:
                 self.messages.append({"role": "user", "content": str(user_input)})
                 self.messages.append({"role": "assistant", "content": full_text})
                 self._trim_history()
+                self._persist()
                 return full_text
 
             # Execute tool calls
@@ -596,17 +618,25 @@ class Agent:
         self.messages.append({"role": "assistant", "content": answer})
         if token_callback:
             token_callback(answer)
+        self._persist()
         return answer
 
     # ── Tool execution ───────────────────────────────────────────────────────
 
+    # Default timeout for tool execution (seconds). run_command has its own 60s timeout.
+    TOOL_TIMEOUT = 30
+
     def _execute_tool(self, tools: list, tool_name: str, tool_args: dict) -> str:
-        """Find and execute a tool by name."""
+        """Find and execute a tool by name with timeout protection."""
         for t in tools:
             if t.name == tool_name:
                 try:
-                    result = t.invoke(tool_args)
+                    with ThreadPoolExecutor(max_workers=1) as pool:
+                        future = pool.submit(t.invoke, tool_args)
+                        result = future.result(timeout=self.TOOL_TIMEOUT)
                     return str(result) if not isinstance(result, str) else result
+                except TimeoutError:
+                    return f"Tool '{tool_name}' timed out after {self.TOOL_TIMEOUT}s"
                 except Exception as exc:
                     return f"Tool error: {exc}"
         return f"Unknown tool: {tool_name}"
@@ -629,6 +659,14 @@ class Agent:
                 except Exception as exc:
                     logger.warning("[Agent] Memory flush during trim failed (non-fatal): %s", exc)
             self.messages = self.messages[-max_msgs:]
+
+    def _persist(self) -> None:
+        """Write current messages to session store (write-through)."""
+        if self._session_store and self.session_id:
+            try:
+                self._session_store.save(self.session_id, self.messages)
+            except Exception as exc:
+                logger.warning("[Agent] Session persist failed (non-fatal): %s", exc)
 
     # ── Compaction ───────────────────────────────────────────────────────────
 

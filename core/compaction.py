@@ -183,11 +183,16 @@ def compact(
     # 3. Persist
     persist_compaction(summary, len(to_summarise), log_path=log_path)
 
-    # 4. Build new message list
+    # 4. Build new message list — remove old compaction summaries, keep only the new one
+    summary_prefix = "[Compaction Summary"
+    system_msgs_clean = [
+        m for m in system_msgs
+        if not (m.get("role") == "system" and m.get("content", "").startswith(summary_prefix))
+    ]
     summary_system_msg = {
         "role": "system",
         "content": f"[Compaction Summary — {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}]\n{summary}",
     }
-    new_messages = system_msgs + [summary_system_msg] + to_keep
+    new_messages = system_msgs_clean + [summary_system_msg] + to_keep
 
     return new_messages, summary

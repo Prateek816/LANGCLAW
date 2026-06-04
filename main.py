@@ -19,6 +19,7 @@ import sys
 import config
 from session_manager import SessionManager
 from core.agent import Agent
+from core.session_store import SessionStore
 from dotenv import load_dotenv
 import os
 
@@ -33,6 +34,9 @@ def _setup_logging() -> None:
     )
 
 
+_session_store: SessionStore | None = None
+
+
 def _agent_factory(session_id: str) -> Agent:
     """Create an Agent for the given session."""
     context_dir = str(config.group_context_dir(session_id))
@@ -40,6 +44,7 @@ def _agent_factory(session_id: str) -> Agent:
         context_dir=context_dir,
         session_id=session_id,
         verbose=config.get_bool("agent", "verbose", default=False),
+        session_store=_session_store,
     )
 
 
@@ -119,7 +124,10 @@ def main() -> None:
 
     _setup_logging()
 
-    sm = SessionManager()
+    global _session_store
+    _session_store = SessionStore()
+
+    sm = SessionManager(store=_session_store)
     sm.set_factory(_agent_factory)
 
     if args.repl:

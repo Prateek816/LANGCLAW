@@ -223,13 +223,6 @@ def _resolve_in_sandbox(path: str) -> str:
     )
 
 
-def _sanitize_filename(name: str) -> str:
-    """Strip path separators and '..' segments from a filename."""
-    name = name.replace("..", "").replace("/", "").replace("\\", "")
-    if not name:
-        raise ValueError("Empty or invalid filename after sanitization.")
-    return name
-
 
 # ── Schema helpers ────────────────────────────────────────────────────────────
 
@@ -611,7 +604,7 @@ def create_skill(
     ]
     if dep_results:
         parts.append("Dependencies:\n" + "\n".join(dep_results))
-    parts.append("Registry will be refreshed — the skill is now available via use_skill().")
+    parts.append("Skill is now available via use_skill().")
 
     return "\n".join(parts)
 
