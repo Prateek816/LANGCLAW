@@ -2,7 +2,7 @@
 
 <img width="432" height="247" alt="LangClaw" src="https://github.com/user-attachments/assets/fee52b60-6e06-4548-918c-9b0183874712" />
 
-An autonomous AI agent framework built in Python with LangChain. LangClaw connects LLMs to real-world tools, persistent memory, knowledge retrieval, and scheduled tasks — accessible via Telegram or a local REPL.
+An autonomous AI agent framework built in Python with LangChain. LangClaw connects LLMs to real-world tools, persistent memory, knowledge retrieval, and scheduled tasks — accessible via Telegram or a local REPL.Langclaw is deeply inspired by Openclaw.
 
 ## Features
 

@@ -105,10 +105,16 @@ class Agent:
         soul_path = os.path.join(context_dir, "soul")
         tools_path = os.path.join(context_dir, "tools")
 
-        from core.llm.config import Provider
-        provider: Provider = _cfg.get_str("llm", "provider") or "groq"  # type: ignore[assignment]
-        model = _cfg.get_str("llm", "model") or "openai/gpt-oss-120b"
-        self.llm = get_llm(provider, model)
+        from core.llm.config import Provider , LLMConfig
+        provider: Provider = _cfg.get_str("llm", "provider")   # type: ignore[assignment]
+        model = _cfg.get_str("llm", "model") 
+        base_url = _cfg.get_str("llm", "base_url", default=None) # type: ignore[assignment]
+        cfg = LLMConfig(
+            provider=provider,
+            model=model,
+            base_url=base_url
+        )
+        self.llm = get_llm(config=cfg)
         self.session_id = session_id
         self.messages :list[dict]=[]
         self.verbose = verbose
@@ -316,20 +322,7 @@ class Agent:
                 func=handler, name=name, description=desc,
             ))
 
-        # create_skill — bound to this agent's skill registry for cache invalidation
-        def _create_skill(name: str, description: str, instructions: str,
-                          category: str = "", resources: dict | None = None,
-                          dependencies: list | None = None) -> str:
-            from core.tool.tools import create_skill as _create_skill_impl
-            result = _create_skill_impl(name, description, instructions,
-                                        category, resources, dependencies)
-            self._skill_registry.invalidate()
-            return result
-
-        tools.append(StructuredTool.from_function(
-            func=_create_skill, name="create_skill",
-            description="Create a new skill at runtime (God Mode). Writes SKILL.md and resource files, installs pip dependencies.",
-        ))
+        
 
         # Cron tools — bound to this agent's cron manager
         if self._cron_manager:
