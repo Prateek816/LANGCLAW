@@ -108,29 +108,28 @@ class SkillRegistry:
                 if meta and meta.name not in seen:
                     out.append(meta)
                     seen.add(meta.name)
-                
-                else:
-                    #Categorized layout : skills/<category>/<skill>/SKILL.md
-                    category_name= entry
-                    cat_md = os.path.join(entry_path,"CATEGORY.md")
+            else:
+                #Categorized layout : skills/<category>/<skill>/SKILL.md
+                category_name= entry
+                cat_md = os.path.join(entry_path,"CATEGORY.md")
 
-                    if os.path.isfile(cat_md) and category_name not in self._categories:
-                        cat_meta = self._read_category(cat_md,category_name)
-                        if cat_meta:
-                            self._categories[category_name] = cat_meta
-                    
-                    for sub_entry in sorted(os.listdir(entry_path)):
-                        if sub_entry.startswith(("__", ".")):
-                            continue
-                        sub_path = os.path.join(entry_path, sub_entry)
-                        sub_md = os.path.join(sub_path, "SKILL.md")
-                        if os.path.isdir(sub_path) and os.path.isfile(sub_md):
-                            meta = self._read_metadata(
-                                sub_md, sub_path, category=category_name
-                            )
-                            if meta and meta.name not in seen:
-                                out.append(meta)
-                                seen.add(meta.name)
+                if os.path.isfile(cat_md) and category_name not in self._categories:
+                    cat_meta = self._read_category(cat_md,category_name)
+                    if cat_meta:
+                        self._categories[category_name] = cat_meta
+
+                for sub_entry in sorted(os.listdir(entry_path)):
+                    if sub_entry.startswith(("__", ".")):
+                        continue
+                    sub_path = os.path.join(entry_path, sub_entry)
+                    sub_md = os.path.join(sub_path, "SKILL.md")
+                    if os.path.isdir(sub_path) and os.path.isfile(sub_md):
+                        meta = self._read_metadata(
+                            sub_md, sub_path, category=category_name
+                        )
+                        if meta and meta.name not in seen:
+                            out.append(meta)
+                            seen.add(meta.name)
 
     @staticmethod
     def _read_category(cat_path: str, fallback_name: str) -> CategoryMetadata | None:
@@ -272,6 +271,7 @@ class SkillRegistry:
         """
         skills = self.discover()
         if not skills:
+            print("No skills found in registry.")
             return "(no skills installed)"
 
         groups: dict[str, list[SkillMetadata]] = {}
@@ -291,7 +291,8 @@ class SkillRegistry:
                 for s in groups[cat]
             ]
             lines.append(", ".join(names))
-
+        print("current skills catalog:")
+        print("\n".join(lines)[:200])
         return "\n".join(lines)
     
 

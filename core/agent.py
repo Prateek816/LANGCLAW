@@ -71,7 +71,7 @@ class Agent:
     compaction_recent_keep : number of recent messages kept verbatim after compaction
     cron_manager       : CronScheduler instance (enables cron_add/remove/list tools)
     """
-    MAX_TOOL_ROUNDS = 6
+    MAX_TOOL_ROUNDS = 10
     MAX_PARALLEL_SKILLS = 5
 
     def __init__(
@@ -100,7 +100,7 @@ class Agent:
             memory_dir = os.path.join(context_dir,"memory")
 
         knowledge_path = os.path.join(context_dir,"knowledge")
-        skills_dirs = [os.path.join(context_dir,"context","skills")]
+        skills_dirs = [os.path.join(str(_cfg.home()), "context", "skills")]
         persona_path = os.path.join(context_dir, "persona")
         soul_path = os.path.join(context_dir, "soul")
         tools_path = os.path.join(context_dir, "tools")
