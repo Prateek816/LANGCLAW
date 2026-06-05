@@ -23,10 +23,13 @@ Conflict resolution
 
 from __future__ import annotations
 
+import logging
 import os
 import re
 from datetime import datetime
 from typing import Any, Dict
+
+logger = logging.getLogger(__name__)
 
 _KEY_HEADER = re.compile(r"^## (.+)$", re.MULTILINE)
 _UPDATED_LINE = re.compile(r"^> Updated: (.+)$", re.MULTILINE)
@@ -61,10 +64,12 @@ class MemoryStorage:
             with open(self._memory_file, "r", encoding="utf-8") as f:
                 text = f.read()
         except OSError:
+            logger.warning("Could not read MEMORY.md, starting with empty memory")
             self.data = {}
             return
 
         self.data = self._parse_memory_md(text)
+        logger.debug("Loaded %d memory entries from MEMORY.md", len(self.data))
 
     @staticmethod
     def _parse_memory_md(text: str) -> Dict[str, dict]:
@@ -134,7 +139,7 @@ class MemoryStorage:
                 f.write(content)
             os.rename(tmp, self._memory_file)
         except OSError as e:
-            print(f"Error saving MEMORY.md: {e}")
+            logger.error("Error saving MEMORY.md: %s", e)
             # Clean up temp file if rename failed
             try:
                 os.unlink(tmp)
@@ -154,7 +159,7 @@ class MemoryStorage:
                     f.write(f"# Daily Memory — {today}\n\n")
                 f.write(f"### {now} — {key}\n\n{value}\n\n")
         except OSError as e:
-            print(f"Error writing daily memory log: {e}")
+            logger.error("Error writing daily memory log: %s", e)
 
     # ── Public API ────────────────────────────────────────────────────────────
 
@@ -163,6 +168,7 @@ class MemoryStorage:
         return entry["value"] if entry else None
 
     def set(self, key: str, value: Any) -> None:
+        logger.debug("Setting memory key: %s", key)
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.data[key] = {"value": str(value), "updated": now}
         self._save_memory_md()
@@ -170,6 +176,7 @@ class MemoryStorage:
 
     def delete(self, key: str) -> None:
         if key in self.data:
+            logger.debug("Deleting memory key: %s", key)
             del self.data[key]
             self._save_memory_md()
 

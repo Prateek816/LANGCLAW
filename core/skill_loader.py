@@ -271,7 +271,7 @@ class SkillRegistry:
         """
         skills = self.discover()
         if not skills:
-            print("No skills found in registry.")
+            logger.warning("No skills found in registry.")
             return "(no skills installed)"
 
         groups: dict[str, list[SkillMetadata]] = {}
@@ -291,8 +291,7 @@ class SkillRegistry:
                 for s in groups[cat]
             ]
             lines.append(", ".join(names))
-        print("current skills catalog:")
-        print("\n".join(lines)[:200])
+        logger.debug("Built skill catalog: %d categories, %d skills", len(groups), len(skills))
         return "\n".join(lines)
     
 

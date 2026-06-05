@@ -26,12 +26,26 @@ import os
 load_dotenv()
 
 def _setup_logging() -> None:
+    from logging.handlers import RotatingFileHandler
+
     level = config.get_str("logging", "level") or "INFO"
-    logging.basicConfig(
-        level=getattr(logging, level.upper(), logging.INFO),
-        format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
+    log_format = "%(asctime)s [%(name)s] %(levelname)s: %(message)s"
+    datefmt = "%Y-%m-%d %H:%M:%S"
+
+    root = logging.getLogger()
+    root.setLevel(getattr(logging, level.upper(), logging.INFO))
+
+    # Console handler
+    console = logging.StreamHandler()
+    console.setFormatter(logging.Formatter(log_format, datefmt=datefmt))
+    root.addHandler(console)
+
+    # File handler — app.log with rotation (5 MB, 3 backups)
+    file_handler = RotatingFileHandler(
+        "app.log", maxBytes=5 * 1024 * 1024, backupCount=3, encoding="utf-8"
     )
+    file_handler.setFormatter(logging.Formatter(log_format, datefmt=datefmt))
+    root.addHandler(file_handler)
 
 
 _session_store: SessionStore | None = None

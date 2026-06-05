@@ -24,8 +24,11 @@ cfg = LLMConfig(
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass, field
 from typing import Literal
+
+logger = logging.getLogger(__name__)
 
 # Extend this union whenever a new provider is added.
 Provider = Literal[
@@ -152,6 +155,7 @@ class LLMConfig:
                 extra[key] = value
 
         if extra:
+            logger.debug("Forwarding extra keys to LLMConfig: %s", list(extra.keys()))
             init_kwargs["extra"] = extra
 
         return cls(**init_kwargs)

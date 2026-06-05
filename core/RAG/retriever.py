@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import logging
 import os
 from typing import List, Optional
 
 from langchain_core.documents import Document
+
+logger = logging.getLogger(__name__)
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
@@ -43,7 +46,7 @@ class HybridRetriever:
             store.load()
             self._sparse_retriever = PersistentBM25Retriever(store=store, k=sparse_k)
         elif use_sparse:
-            print("[HybridRetriever] BM25 index not found. Run ingest_chunks() first.")
+            logger.warning("BM25 index not found at %s. Run ingest_chunks() first.", BM25_PATH)
 
         # ── Dense (Chroma) ────────────────────────────────────────────
         self._dense_retriever: Optional[Chroma] = None
@@ -53,7 +56,7 @@ class HybridRetriever:
                 embedding_function=embedding_model,
             )
         elif use_dense:
-            print("[HybridRetriever] Chroma store not found. Run ingest_chunks() first.")
+            logger.warning("Chroma store not found at %s. Run ingest_chunks() first.", CHROMA_PATH)
 
         # ── Reranker (FlashRank) ───────────────────────────────────────
         self._reranker: Optional[FlashRankReranker] = None
@@ -61,7 +64,7 @@ class HybridRetriever:
             try:
                 self._reranker = FlashRankReranker()
             except:
-                print("[HybridRetriever] FlashRank not found.")
+                logger.warning("FlashRank reranker not available")
         
         
 
@@ -88,6 +91,7 @@ class HybridRetriever:
             candidates.extend(dense_results)
 
         if not candidates:
+            logger.debug("No candidates found for query")
             return []
 
         # Deduplicate
@@ -112,4 +116,7 @@ class HybridRetriever:
             data.pop("_idx", None)
             results.append(data)
 
+        logger.debug("Retrieved %d results (sparse=%s, dense=%s, reranked=%s)",
+                      len(results), self._sparse_retriever is not None,
+                      self._dense_retriever is not None, self._reranker is not None)
         return results

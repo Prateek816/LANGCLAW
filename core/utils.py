@@ -4,6 +4,10 @@ Shared utilities for langclaw.
 
 from __future__ import annotations
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def parse_frontmatter(content: str) -> tuple[dict, str]:
     """
@@ -61,4 +65,5 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
 
     _flush()
 
+    logger.debug("Parsed frontmatter with %d keys", len(metadata))
     return metadata, parts[2].strip()

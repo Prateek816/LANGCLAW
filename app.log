@@ -1,0 +1,2 @@
+2026-06-05 20:28:28 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-05 20:28:28 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=mimo-v2.5

@@ -64,10 +64,13 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 LANGCLAW_HOME = Path(os.environ.get("LANGCLAW_HOME", Path.home() / ".langclaw"))
 # Backward-compatible alias — some modules reference PYTHONCLAW_HOME
@@ -128,7 +131,9 @@ def _find_config_file() -> Path | None:
     ]
     for p in candidates:
         if p.is_file():
+            logger.debug("Config file found: %s", p)
             return p
+    logger.debug("No config file found in candidates")
     return None
 
 
@@ -164,6 +169,9 @@ def load(path: str | Path | None = None, *, force: bool = False) -> dict:
         text = config_path.read_text(encoding="utf-8")
         text = _strip_json5(text)
         raw = json.loads(text)
+        logger.info("Config loaded from %s", config_path)
+    else:
+        logger.info("No config file found, using defaults")
 
     _config = raw
     return _config
@@ -282,6 +290,7 @@ def clear_files() -> int:
                 count += 1
         except OSError:
             pass
+    logger.info("Cleared %d files from shared files directory", count)
     return count
 
 

@@ -21,8 +21,11 @@ You can also import individual tools or groups:
 
 from __future__ import annotations
 
+import logging
 from typing import Optional, List, Dict, Any
 from langchain_core.tools import tool
+
+logger = logging.getLogger(__name__)
 
 # ── Import all implementation functions from your tools module ────────────────
 # Adjust this import path to wherever your tools.py lives.

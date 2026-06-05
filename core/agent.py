@@ -12,7 +12,7 @@ from langchain_core.messages import (
     SystemMessage,
     ToolMessage,
 )
-
+from langsmith import traceable
 from core.RAG.rag import KnowledgeRAG
 from core.llm.factory import get_llm
 from core.memory.manager import MemoryManager
@@ -94,7 +94,7 @@ class Agent:
             os.makedirs(os.path.join(group_dir, "memory"), exist_ok=True)
             memory_dir = os.path.join(group_dir, "memory")
             if verbose:
-                print(f"[Agent] Per-group memory: {memory_dir}")
+                logger.debug("Per-group memory: %s", memory_dir)
 
         else:
             memory_dir = os.path.join(context_dir,"memory")
@@ -134,7 +134,7 @@ class Agent:
             if saved:
                 self.messages = saved
                 if verbose:
-                    print(f"[Agent] Restored {len(saved)} messages from session store")
+                    logger.debug("Restored %d messages from session store", len(saved))
 
         self.loaded_skill_names : set[str] = set()
         self.MAX_PARALLEL_SKILLS = _cfg.get_int(
@@ -155,13 +155,13 @@ class Agent:
                 use_reranker=True,
             )
             if verbose:
-                print(f"[Agent] KnowledgeRAG: '{knowledge_path}' ({len(self.rag)} chunks)")
+                logger.info("KnowledgeRAG: '%s' (%d chunks)", knowledge_path, len(self.rag))
         
         self._web_search_enabled = bool(
             _cfg.get("tavily", "apiKey", env="TAVILY_API_KEY")
         )
         if verbose and self._web_search_enabled:
-            print("[Agent] Web search enabled (Tavily)")
+            logger.info("Web search enabled (Tavily)")
 
         #Identity layer
         self.soul_instruction = _load_text_dir_or_file(soul_path, label="Soul")
@@ -186,13 +186,13 @@ class Agent:
         self._needs_onboarding = not self._has_user_identity(soul_path, persona_path)
 
         if verbose and self.soul_instruction:
-            print(f"[Agent] Soul loaded ({len(self.soul_instruction)} chars)")
+            logger.debug("Soul loaded (%d chars)", len(self.soul_instruction))
         if verbose and self.persona_instruction:
-            print(f"[Agent] Persona loaded ({len(self.persona_instruction)} chars)")
+            logger.debug("Persona loaded (%d chars)", len(self.persona_instruction))
         if verbose and self.tools_notes:
-            print(f"[Agent] TOOLS.md loaded ({len(self.tools_notes)} chars)")
+            logger.debug("TOOLS.md loaded (%d chars)", len(self.tools_notes))
         if verbose and self._needs_onboarding:
-            print("[Agent] No user identity found — onboarding will be triggered")
+            logger.info("No user identity found — onboarding will be triggered")
 
         self._init_system_prompt()
 
@@ -267,7 +267,7 @@ class Agent:
         self._system_prompt = "\n\n---\n\n".join(parts)
 
         if self.verbose:
-            print(f"[Agent] System prompt: {len(self._system_prompt)} chars")
+            logger.debug("System prompt: %d chars", len(self._system_prompt))
 
     # ── Tools ────────────────────────────────────────────────────────────────
 
@@ -476,7 +476,7 @@ class Agent:
         tokens = history_tokens + system_tokens
         if tokens >= self.compaction_threshold:
             if self.verbose:
-                print(f"[Agent] Auto-compaction triggered ({tokens} tokens, system={system_tokens})")
+                logger.info("Auto-compaction triggered (%d tokens, system=%d)", tokens, system_tokens)
             self.compact()
 
     # ── Chat (non-streaming) ─────────────────────────────────────────────────
@@ -503,7 +503,7 @@ class Agent:
 
         if self.show_full_context:
             for m in msgs:
-                print(f"  [{m.type}] {str(m.content)[:200]}")
+                logger.debug("  [%s] %s", m.type, str(m.content)[:200])
 
         # Tool dispatch loop
         for _ in range(self.MAX_TOOL_ROUNDS):
@@ -527,7 +527,7 @@ class Agent:
                 tool_id = tc["id"]
 
                 if self.verbose:
-                    print(f"  [Tool] {tool_name}({tool_args})")
+                    logger.debug("  [Tool] %s(%s)", tool_name, tool_args)
 
                 # Find and call the tool
                 result = self._execute_tool(tools, tool_name, tool_args)
@@ -566,7 +566,7 @@ class Agent:
 
         if self.show_full_context:
             for m in msgs:
-                print(f"  [{m.type}] {str(m.content)[:200]}")
+                logger.debug("  [%s] %s", m.type, str(m.content)[:200])
 
         # Tool dispatch loop
         for _ in range(self.MAX_TOOL_ROUNDS):
@@ -611,7 +611,7 @@ class Agent:
                 tool_id = tc["id"]
 
                 if self.verbose:
-                    print(f"  [Tool] {tool_name}({tool_args})")
+                    logger.debug("  [Tool] %s(%s)", tool_name, tool_args)
 
                 result = self._execute_tool(tools, tool_name, tool_args)
                 msgs.append(ToolMessage(content=result, tool_call_id=tool_id))
@@ -695,6 +695,6 @@ class Agent:
         new_count = len(self.messages)
 
         if self.verbose:
-            print(f"[Agent] Compacted {old_count} → {new_count} messages")
+            logger.info("Compacted %d → %d messages", old_count, new_count)
 
         return f"Compacted {old_count - new_count} messages.\n\nSummary: {summary}"

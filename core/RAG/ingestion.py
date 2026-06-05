@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import logging
 import os
 import uuid
 from typing import List
 
 from langchain_core.documents import Document
+
+logger = logging.getLogger(__name__)
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
@@ -40,14 +43,14 @@ def store_in_chroma(documents: List[Document]):
         return
 
     if os.path.exists(CHROMA_PATH):
-        # Load existing collection and add
+        logger.debug("Adding %d documents to existing Chroma store", len(documents))
         vectordb = Chroma(
             persist_directory=CHROMA_PATH,
             embedding_function=embedding_model,
         )
         vectordb.add_documents(documents)
     else:
-        # First time — build from scratch
+        logger.info("Creating new Chroma store with %d documents", len(documents))
         Chroma.from_documents(
             documents=documents,
             embedding=embedding_model,
@@ -58,18 +61,20 @@ def store_in_chroma(documents: List[Document]):
 def store_in_bm25(documents: List[Document]):
     store = BM25PersistentStore(path=BM25_PATH)
     if os.path.exists(BM25_PATH):
+        logger.debug("Adding %d documents to existing BM25 store", len(documents))
         store.load()
         store.add_documents(documents)
     else:
+        logger.info("Creating new BM25 store with %d documents", len(documents))
         store.build(documents)
 
 
 def ingest_chunks(chunks: List[dict]):
     if not chunks:
-        print("[Ingest] No chunks to process.")
+        logger.warning("No chunks to process")
         return
-    print(f"[Ingest] Processing {len(chunks)} chunks...")
+    logger.info("Processing %d chunks...", len(chunks))
     documents = chunks_to_documents(chunks)
     store_in_chroma(documents)
     store_in_bm25(documents)
-    print("[Ingest] Done.")
+    logger.info("Ingestion complete: %d chunks stored", len(chunks))

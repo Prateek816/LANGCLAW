@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import logging
 from collections.abc import Generator, AsyncGenerator
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import BaseMessage
@@ -25,6 +28,7 @@ def stream_response(
     accessible via StopIteration.value if you need it.
     """
     full_text = ""
+    logger.debug("Starting sync stream")
     try:
         for chunk in llm.stream(messages, **kwargs):
             text = chunk.content
@@ -38,8 +42,10 @@ def stream_response(
                 full_text += text
                 yield text
     except Exception as exc:
+        logger.error("Sync streaming failed: %s", exc)
         raise LLMStreamError(f"Streaming failed: {exc}") from exc
 
+    logger.debug("Sync stream completed, %d chars", len(full_text))
     return full_text
 
 
@@ -55,6 +61,7 @@ async def astream_response(
         async for chunk in astream_response(llm, messages):
             print(chunk, end="", flush=True)
     """
+    logger.debug("Starting async stream")
     try:
         async for chunk in llm.astream(messages, **kwargs):
             text = chunk.content
@@ -66,4 +73,6 @@ async def astream_response(
             if text:
                 yield text
     except Exception as exc:
+        logger.error("Async streaming failed: %s", exc)
         raise LLMStreamError(f"Async streaming failed: {exc}") from exc
+    logger.debug("Async stream completed")

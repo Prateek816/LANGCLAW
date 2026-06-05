@@ -1,9 +1,12 @@
 from __future__ import annotations
+import logging
 import os
 import re
 import hashlib
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+logger = logging.getLogger(__name__)
 
 def chunk_text(
     text: str,
@@ -24,6 +27,7 @@ def chunk_text(
     )
 
     chunks = splitter.split_text(text)
+    logger.debug("Chunked '%s' into %d chunks", source, len(chunks))
 
     return [
         {"source": source, "content": chunk, "chunk_idx": idx}
@@ -85,9 +89,10 @@ def load_corpus_from_directory(directory: str) -> list[dict]:
             updated_tracking[filename] = file_hash
 
         except OSError as exc:
-            print(f"[Chunker] Could not read '{filepath}': {exc}")
+            logger.warning("Could not read '%s': %s", filepath, exc)
 
     # Save updated tracking
     save_tracking(updated_tracking)
+    logger.info("Loaded corpus: %d chunks from %s", len(corpus), directory)
 
     return corpus

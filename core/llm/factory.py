@@ -31,8 +31,11 @@ Custom / OpenAI-compatible endpoints
 
 from __future__ import annotations
 
+import logging
 import os
 from typing import Callable
+
+logger = logging.getLogger(__name__)
 
 from langchain_core.language_models.chat_models import BaseChatModel
 
@@ -70,6 +73,7 @@ def _require_api_key(env_var: str, provider: str) -> str:
     """
     value = os.getenv(env_var)
     if not value:
+        logger.error("Missing API key %s for provider %s", env_var, provider)
         raise LLMConfigurationError(
             f"{env_var} is not set. "
             f"Export it in your shell or add it to your .env file to use "
@@ -266,10 +270,12 @@ def get_llm(
 
     builder = _BUILDERS.get(config.provider)
     if builder is None:
+        logger.error("Provider not supported: %s", config.provider)
         raise ProviderNotSupportedError(
             config.provider, known_providers=list(_BUILDERS)
         )
 
+    logger.info("Creating LLM: provider=%s, model=%s", config.provider, config.model)
     return builder(config)
 
 
