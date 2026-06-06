@@ -16,3 +16,4 @@ chromadb
 sentence-transformers
 flashrank
 httpx
+langsmith>=0.1.0

@@ -114,6 +114,7 @@ class Agent:
             base_url=base_url
         )
         self.llm = get_llm(config=cfg)
+        self._llm_config = cfg
         self.session_id = session_id
         self.messages :list[dict]=[]
         self.verbose = verbose
@@ -479,6 +480,10 @@ class Agent:
 
     # ── Chat (non-streaming) ─────────────────────────────────────────────────
 
+    @traceable(
+        run_type="chain",
+        name="Agent Chat",
+    )
     def chat(self, user_input: str | list) -> str:
         """
         Send a message and return the full response.
@@ -540,6 +545,10 @@ class Agent:
 
     # ── Chat (streaming) ─────────────────────────────────────────────────────
 
+    @traceable(
+        run_type="chain",
+        name="Agent Chat (Streaming)",
+    )
     def chat_stream(self, user_input: str | list, token_callback=None) -> str:
         """
         Send a message with streaming. Calls token_callback for each chunk.
@@ -627,6 +636,10 @@ class Agent:
     # Default timeout for tool execution (seconds). run_command has its own 60s timeout.
     TOOL_TIMEOUT = 30
 
+    @traceable(
+        run_type="chain",
+        name="Execute Tool",
+    )
     def _execute_tool(self, tools: list, tool_name: str, tool_args: dict) -> str:
         """Find and execute a tool by name with timeout protection."""
         for t in tools:
