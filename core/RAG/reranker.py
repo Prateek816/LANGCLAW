@@ -4,6 +4,7 @@ import logging
 from typing import List, Optional
 
 from langchain_core.documents import Document
+from langsmith import traceable
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +45,7 @@ class FlashRankReranker:
 
     # ── Core ──────────────────────────────────────────────────────────
 
+    @traceable(run_type="chain", name="FlashRank Rerank")
     def rerank(
         self,
         query: str,

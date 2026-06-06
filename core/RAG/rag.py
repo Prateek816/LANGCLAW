@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
+from langsmith import traceable
 from core.RAG.chunker import load_corpus_from_directory
 from core.RAG.retriever import HybridRetriever
 from core.RAG.ingestion import ingest_chunks
@@ -52,6 +53,7 @@ class KnowledgeRAG:
         """Return the number of chunks loaded from the knowledge directory."""
         return len(self._retriever._sparse_retriever.store.docs) if self._retriever._sparse_retriever else 0
 
+    @traceable(run_type="retriever", name="Knowledge Retrieval")
     def retrieve(self, query: str, top_k: int = 5) -> list[dict]:
         """
         Return up to *top_k* relevant chunks for *query*.

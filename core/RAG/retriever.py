@@ -5,6 +5,7 @@ import os
 from typing import List, Optional
 
 from langchain_core.documents import Document
+from langsmith import traceable
 
 logger = logging.getLogger(__name__)
 from langchain_community.vectorstores import Chroma
@@ -70,6 +71,7 @@ class HybridRetriever:
 
     # ── Core retrieve ─────────────────────────────────────────────────
 
+    @traceable(run_type="retriever", name="Hybrid Retrieve")
     def retrieve(self, query: str, top_k: int = 5) -> list[dict]:
         """
         Retrieve top_k relevant chunks.

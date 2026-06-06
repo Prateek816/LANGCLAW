@@ -6,6 +6,8 @@ import os
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
+from langsmith import traceable
+
 if TYPE_CHECKING:
     from langchain_core.language_models.chat_models import BaseChatModel
     from .memory.manager import MemoryManager
@@ -59,6 +61,7 @@ def messages_to_text(messages: list[dict]) -> str:
 
 # ── Memory flush ──────────────────────────────────────────────────────────────
 
+@traceable(run_type="chain", name="Memory Flush")
 def memory_flush(
     messages_to_flush: list[dict],
     llm: "BaseChatModel",
@@ -115,6 +118,7 @@ def memory_flush(
 
 # ── Core compact function ─────────────────────────────────────────────────────
 
+@traceable(run_type="chain", name="Compact History")
 def compact(
     messages: list[dict],
     llm: "BaseChatModel",

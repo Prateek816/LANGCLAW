@@ -6,6 +6,8 @@ import subprocess
 import sys
 from typing import Any, Optional
 
+from langsmith import traceable
+
 logger = logging.getLogger(__name__)
 
 _venv_dir : str|None = None
@@ -77,6 +79,7 @@ def _files_dir() -> str:
     import config as _cfg
     return str(_cfg.files_dir())
 
+@traceable(run_type="tool", name="Shell Command")
 def run_command(command: str) -> str:
     """Execute a shell command and return combined stdout/stderr.
 
@@ -243,6 +246,7 @@ def _get_tavily_client():
     return _tavily_client
 
 
+@traceable(run_type="tool", name="Web Search")
 def web_search(
     query: str,
     *,
@@ -318,6 +322,7 @@ AVAILABLE_TOOLS["web_search"] = web_search
 
 # ── Meta-skill: create_skill ("God Mode") ────────────────────────────────────
 
+@traceable(run_type="tool", name="Create Skill")
 def create_skill(
     name: str,
     description: str,

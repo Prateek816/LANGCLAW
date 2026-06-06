@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import logging
 
+from langsmith import traceable
 from .storage import MemoryStorage
 from core.RAG.chunker import chunk_text
 
@@ -92,6 +93,7 @@ class MemoryManager:
         self.storage.set(key, content)
         return f"Memory stored: [{key}] = {content}"
 
+    @traceable(run_type="retriever", name="Memory Recall")
     def recall(self, query: str, top_k: int = 10) -> str:
         """
         Retrieve memories relevant to *query*.

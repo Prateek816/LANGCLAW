@@ -55,7 +55,7 @@ class Agent:
 
     Parameters
     ----------
-    provider           : LLM backend (DeepSeek, Grok, Claude, Gemini, …)
+    provider           : LLM backend (DeepSeek, Grok, Claude, Gemini, ...)
     session_id         : session identifier (enables per-group context isolation)
     memory_dir         : path to memory directory (auto-detected if None)
     skills_dirs        : list of skill directory paths
@@ -466,6 +466,7 @@ class Agent:
 
     # ── Auto-compaction check ────────────────────────────────────────────────
 
+    @traceable(run_type="chain", name="Auto-Compaction Check")
     def _maybe_compact(self) -> None:
         """Trigger auto-compaction if the conversation is too long."""
         if not self.auto_compaction:
@@ -497,6 +498,17 @@ class Agent:
         -------
         The assistant's response text.
         """
+        session_type = (self.session_id or "unknown").split(":")[0]
+        return self._chat_impl(user_input, langsmith_extra={
+            "metadata": {
+                "session_id": self.session_id,
+                "provider": self._llm_config.provider,
+                "model": self._llm_config.model,
+            },
+            "tags": [session_type],
+        })
+
+    def _chat_impl(self, user_input: str | list, *, langsmith_extra=None) -> str:
         self._maybe_compact()
 
         tools = self._build_tools()
@@ -564,6 +576,17 @@ class Agent:
         -------
         The complete assistant response text.
         """
+        session_type = (self.session_id or "unknown").split(":")[0]
+        return self._chat_stream_impl(user_input, token_callback, langsmith_extra={
+            "metadata": {
+                "session_id": self.session_id,
+                "provider": self._llm_config.provider,
+                "model": self._llm_config.model,
+            },
+            "tags": [session_type],
+        })
+
+    def _chat_stream_impl(self, user_input: str | list, token_callback=None, *, langsmith_extra=None) -> str:
         self._maybe_compact()
 
         tools = self._build_tools()
@@ -640,7 +663,8 @@ class Agent:
         run_type="chain",
         name="Execute Tool",
     )
-    def _execute_tool(self, tools: list, tool_name: str, tool_args: dict) -> str:
+    def _execute_tool(self, tools: list, tool_name: str, tool_args: dict,
+                       *, langsmith_extra: dict | None = None) -> str:
         """Find and execute a tool by name with timeout protection."""
         for t in tools:
             if t.name == tool_name:
@@ -657,6 +681,7 @@ class Agent:
 
     # ── History management ───────────────────────────────────────────────────
 
+    @traceable(run_type="chain", name="Trim History")
     def _trim_history(self) -> None:
         """Keep only the most recent messages in the sliding window.
 
@@ -684,6 +709,7 @@ class Agent:
 
     # ── Compaction ───────────────────────────────────────────────────────────
 
+    @traceable(run_type="chain", name="Agent Compact")
     def compact(self, instruction: str | None = None) -> str:
         """
         Compact conversation history — summarize old messages, optionally

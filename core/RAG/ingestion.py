@@ -6,6 +6,7 @@ import uuid
 from typing import List
 
 from langchain_core.documents import Document
+from langsmith import traceable
 
 logger = logging.getLogger(__name__)
 from langchain_community.vectorstores import Chroma
@@ -69,6 +70,7 @@ def store_in_bm25(documents: List[Document]):
         store.build(documents)
 
 
+@traceable(run_type="chain", name="Ingest Chunks")
 def ingest_chunks(chunks: List[dict]):
     if not chunks:
         logger.warning("No chunks to process")
