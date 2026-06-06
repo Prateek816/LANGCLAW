@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import logging
 import os
 from concurrent.futures import ThreadPoolExecutor
@@ -413,26 +412,25 @@ class Agent:
         def handle_cron_add(prompt: str, cron_expr: str, job_id: str = "") -> str:
             if not self._cron_manager:
                 return "Cron scheduler not available."
-            jid = self._cron_manager.add_dynamic_job(
-                job_id=job_id or None,
+            if not job_id:
+                import uuid
+                job_id = f"job_{uuid.uuid4().hex[:8]}"
+            result = self._cron_manager.add_dynamic_job(
+                job_id=job_id,
                 prompt=prompt,
                 cron_expr=cron_expr,
             )
-            return f"Job '{jid}' scheduled."
+            return result
 
         def handle_cron_remove(job_id: str) -> str:
             if not self._cron_manager:
                 return "Cron scheduler not available."
-            ok = self._cron_manager.remove_dynamic_job(job_id)
-            return f"Job '{job_id}' removed." if ok else f"Job '{job_id}' not found."
+            return self._cron_manager.remove_dynamic_job(job_id)
 
         def handle_cron_list() -> str:
             if not self._cron_manager:
                 return "Cron scheduler not available."
-            jobs = self._cron_manager.list_jobs()
-            if not jobs:
-                return "No scheduled jobs."
-            return json.dumps(jobs, indent=2)
+            return self._cron_manager.list_jobs()
 
         handlers = {
             "lc_cron_add": handle_cron_add,

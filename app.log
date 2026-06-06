@@ -1,2 +1,69 @@
 2026-06-05 20:28:28 [session_manager] INFO: [SessionManager] Creating session 'cli'
 2026-06-05 20:28:28 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=mimo-v2.5
+2026-06-06 10:50:17 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-06 10:50:17 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=gemma4:latest
+2026-06-06 10:50:59 [httpx] INFO: HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 10:51:05 [httpx] INFO: HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 10:51:45 [core.compaction] INFO: [Compaction] Memory flush saved 12 fact(s).
+2026-06-06 10:54:47 [httpx] INFO: HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:09:03 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-06 11:09:03 [scheduler.cron] INFO: [CronScheduler] No jobs to schedule — scheduler will start but be idle.
+2026-06-06 11:09:03 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-06 11:09:03 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-06 11:09:03 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=gemma4:latest
+2026-06-06 11:09:59 [httpx] INFO: HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:10:18 [httpx] INFO: HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:14:08 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-06 11:14:08 [scheduler.cron] INFO: [CronScheduler] No jobs to schedule — scheduler will start but be idle.
+2026-06-06 11:14:08 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-06 11:14:08 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-06 11:14:08 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=mimo-v2.5
+2026-06-06 11:14:25 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:14:26 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:14:56 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:15:19 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:15:23 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:15:43 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:15:47 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:15:50 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:15:53 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:15:55 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:15:58 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:16:05 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:16:08 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:16:32 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:16:34 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-06 11:16:34 [scheduler.cron] INFO: [CronScheduler] Added dynamic job 'job_3fbd6b5d' (cron='0 12 * * *')
+2026-06-06 11:16:35 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:17:58 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:18:01 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:18:04 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-06 11:18:04 [scheduler.cron] INFO: [CronScheduler] Added dynamic job 'daily-news-1120am' (cron='20 11 * * *')
+2026-06-06 11:18:05 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:18:08 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:18:55 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:19:53 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:19:56 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:20:00 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:37:41 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-06 11:37:41 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-06 11:37:41 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-06 11:37:41 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-06 11:37:41 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-06 11:37:41 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-06 11:37:41 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-06 11:37:41 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=mimo-v2.5
+2026-06-06 11:38:19 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:38:21 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:38:24 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:39:03 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:39:05 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:39:08 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:39:12 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:39:15 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:40:19 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:40:22 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:40:23 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:41:09 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:41:24 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-06 11:41:58 [httpx] INFO: HTTP Request: POST https://api.xiaomimimo.com/v1/chat/completions "HTTP/1.1 200 OK"

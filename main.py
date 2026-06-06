@@ -49,6 +49,7 @@ def _setup_logging() -> None:
 
 
 _session_store: SessionStore | None = None
+_cron_scheduler = None
 
 
 def _agent_factory(session_id: str) -> Agent:
@@ -59,6 +60,7 @@ def _agent_factory(session_id: str) -> Agent:
         session_id=session_id,
         verbose=config.get_bool("agent", "verbose", default=False),
         session_store=_session_store,
+        cron_manager=_cron_scheduler,
     )
 
 
@@ -68,13 +70,14 @@ def run_telegram(sm: SessionManager, *, cron: bool, heartbeat: bool) -> None:
 
     bot = create_bot(sm)
 
+    global _cron_scheduler
     cron_scheduler = None
     if cron:
         try:
             from scheduler.cron import CronScheduler
             cron_scheduler = CronScheduler(sm, telegram_bot=bot)
-            cron_scheduler.load_and_register_jobs()
-            cron_scheduler.start()
+            _cron_scheduler = cron_scheduler
+            cron_scheduler.start()  # start() already calls load_and_register_jobs()
             logging.getLogger(__name__).info("Cron scheduler started.")
         except Exception as exc:
             logging.getLogger(__name__).warning("Cron scheduler failed to start: %s", exc)
@@ -84,13 +87,26 @@ def run_telegram(sm: SessionManager, *, cron: bool, heartbeat: bool) -> None:
         try:
             from scheduler.heartbeat import create_heartbeat
             hb = create_heartbeat(telegram_bot=bot)
-            hb.start()
-            logging.getLogger(__name__).info("Heartbeat monitor started.")
+            logging.getLogger(__name__).info("Heartbeat monitor created.")
         except Exception as exc:
-            logging.getLogger(__name__).warning("Heartbeat failed to start: %s", exc)
+            logging.getLogger(__name__).warning("Heartbeat failed to create: %s", exc)
+
+    # Patch bot.run_polling so heartbeat starts inside the async event loop
+    def _patched_run_polling() -> None:
+        app = bot.build_application()
+        logging.getLogger(__name__).info("[Telegram] Starting bot (polling mode)...")
+
+        async def _post_init(application):
+            await bot._register_commands()
+            if hb:
+                await hb.start()
+                logging.getLogger(__name__).info("Heartbeat monitor started.")
+
+        app.post_init = _post_init
+        app.run_polling(drop_pending_updates=True)
 
     try:
-        bot.run_polling()
+        _patched_run_polling()
     finally:
         if cron_scheduler:
             cron_scheduler.stop()
@@ -100,32 +116,47 @@ def run_telegram(sm: SessionManager, *, cron: bool, heartbeat: bool) -> None:
 
 def run_repl(sm: SessionManager) -> None:
     """Interactive REPL mode — chat directly in the terminal."""
+    global _cron_scheduler
+
+    # Start cron scheduler in REPL mode (no Telegram delivery)
+    try:
+        from scheduler.cron import CronScheduler
+        _cron_scheduler = CronScheduler(sm)
+        _cron_scheduler.start()  # start() already calls load_and_register_jobs()
+        logging.getLogger(__name__).info("Cron scheduler started (REPL mode).")
+    except Exception as exc:
+        logging.getLogger(__name__).warning("Cron scheduler failed to start: %s", exc)
+
     session_id = "cli"
     agent = sm.get_or_create(session_id)
     print("LangClaw REPL — type 'quit' or 'exit' to stop.\n")
 
-    while True:
-        try:
-            user_input = input("You: ").strip()
-        except (EOFError, KeyboardInterrupt):
-            print("\nBye.")
-            break
+    try:
+        while True:
+            try:
+                user_input = input("You: ").strip()
+            except (EOFError, KeyboardInterrupt):
+                print("\nBye.")
+                break
 
-        if not user_input:
-            continue
-        if user_input.lower() in ("quit", "exit"):
-            print("Bye.")
-            break
+            if not user_input:
+                continue
+            if user_input.lower() in ("quit", "exit"):
+                print("Bye.")
+                break
 
-        def token_cb(chunk: str) -> None:
-            print(chunk, end="", flush=True)
+            def token_cb(chunk: str) -> None:
+                print(chunk, end="", flush=True)
 
-        print("Agent: ", end="", flush=True)
-        try:
-            response = agent.chat_stream(user_input, token_cb)
-            print()  # newline after streaming
-        except Exception as exc:
-            print(f"\nError: {exc}")
+            print("Agent: ", end="", flush=True)
+            try:
+                response = agent.chat_stream(user_input, token_cb)
+                print()  # newline after streaming
+            except Exception as exc:
+                print(f"\nError: {exc}")
+    finally:
+        if _cron_scheduler:
+            _cron_scheduler.stop()
 
 
 def main() -> None:
@@ -143,6 +174,9 @@ def main() -> None:
 
     sm = SessionManager(store=_session_store)
     sm.set_factory(_agent_factory)
+
+    # Ensure cron directory exists
+    os.makedirs(os.path.join(str(config.LANGCLAW_HOME), "context", "cron"), exist_ok=True)
 
     if args.repl:
         run_repl(sm)
