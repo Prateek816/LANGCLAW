@@ -118,42 +118,60 @@ def run_repl(sm: SessionManager) -> None:
     """Interactive REPL mode — chat directly in the terminal."""
     global _cron_scheduler
 
+    from cli import print_banner, print_agent_prompt, print_agent_prefix, print_exit, print_error, console
+
     # Start cron scheduler in REPL mode (no Telegram delivery)
+    cron_running = False
     try:
         from scheduler.cron import CronScheduler
         _cron_scheduler = CronScheduler(sm)
         _cron_scheduler.start()  # start() already calls load_and_register_jobs()
+        cron_running = True
         logging.getLogger(__name__).info("Cron scheduler started (REPL mode).")
     except Exception as exc:
         logging.getLogger(__name__).warning("Cron scheduler failed to start: %s", exc)
 
     session_id = "cli"
     agent = sm.get_or_create(session_id)
-    print("LangClaw REPL — type 'quit' or 'exit' to stop.\n")
+
+    # Print startup banner
+    print_banner(
+        agent_name="LangClaw Agent",
+        provider=agent._llm_config.provider,
+        model=agent._llm_config.model,
+        session_id=session_id,
+        max_history=agent.max_chat_history,
+        auto_compaction=agent.auto_compaction,
+        compaction_threshold=agent.compaction_threshold,
+        cron_running=cron_running,
+        tracing_enabled=os.getenv("LANGCHAIN_TRACING_V2", "").lower() == "true",
+    )
 
     try:
         while True:
             try:
-                user_input = input("You: ").strip()
+                user_input = print_agent_prompt().strip()
             except (EOFError, KeyboardInterrupt):
-                print("\nBye.")
+                print_exit()
                 break
 
             if not user_input:
                 continue
+
             if user_input.lower() in ("quit", "exit"):
-                print("Bye.")
+                print_exit()
                 break
 
-            def token_cb(chunk: str) -> None:
-                print(chunk, end="", flush=True)
+            print_agent_prefix()
 
-            print("Agent: ", end="", flush=True)
+            def token_cb(chunk: str) -> None:
+                console.print(chunk, end="", highlight=False)
+
             try:
                 response = agent.chat_stream(user_input, token_cb)
-                print()  # newline after streaming
+                console.print()  # newline after streaming
             except Exception as exc:
-                print(f"\nError: {exc}")
+                print_error(str(exc))
     finally:
         if _cron_scheduler:
             _cron_scheduler.stop()
