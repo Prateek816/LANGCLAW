@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 import yaml
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 if TYPE_CHECKING:
@@ -35,17 +36,25 @@ class CronScheduler:
 
     Each job runs inside its own session ("cron:{job_id}") managed by the
     shared SessionManager, keeping job context isolated and persistent.
+
+    sync_mode: When True, uses BackgroundScheduler (works without asyncio event loop).
+               Use for REPL mode. When False (default), uses AsyncIOScheduler.
     """
     def __init__(
         self,
         session_manager: "SessionManager",
         jobs_path: str | None = None,
         telegram_bot: "TelegramBot | None" = None,
+        sync_mode: bool = False,
     ) -> None:
         self._sm = session_manager
         self._jobs_path = jobs_path or _default_jobs_path()
         self._telegram_bot = telegram_bot
-        self._scheduler = AsyncIOScheduler()
+        self._sync_mode = sync_mode
+        if sync_mode:
+            self._scheduler = BackgroundScheduler()
+        else:
+            self._scheduler = AsyncIOScheduler()
 
     # ── YAML loading ─────────────────────────────────────────────────────────
 

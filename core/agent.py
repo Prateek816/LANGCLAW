@@ -479,6 +479,44 @@ class Agent:
                 logger.info("Auto-compaction triggered (%d tokens, system=%d)", tokens, system_tokens)
             self.compact()
 
+    # ── Shared tool dispatch loop ──────────────────────────────────────────
+
+    def _run_tool_loop(self, tools, msgs, invoke_fn) -> str:
+        """Run the tool dispatch loop.
+
+        Parameters
+        ----------
+        tools : list
+            Bound tools for execution.
+        msgs : list
+            Message list (modified in-place with tool messages).
+        invoke_fn : callable(msgs) -> AIMessage
+            Called each round to get the LLM response.
+
+        Returns
+        -------
+        The final answer string.
+        """
+        for _ in range(self.MAX_TOOL_ROUNDS):
+            response = invoke_fn(msgs)
+            msgs.append(response)
+
+            if not response.tool_calls:
+                return response.content or ""
+
+            for tc in response.tool_calls:
+                tool_name = tc["name"]
+                tool_args = tc["args"]
+                tool_id = tc["id"]
+
+                if self.verbose:
+                    logger.debug("  [Tool] %s(%s)", tool_name, tool_args)
+
+                result = self._execute_tool(tools, tool_name, tool_args)
+                msgs.append(ToolMessage(content=result, tool_call_id=tool_id))
+
+        return "I exceeded the maximum tool rounds. Please try a simpler request."
+
     # ── Chat (non-streaming) ─────────────────────────────────────────────────
 
     @traceable(
@@ -512,7 +550,10 @@ class Agent:
         self._maybe_compact()
 
         tools = self._build_tools()
-        llm_with_tools = self.llm.bind_tools(tools) if tools else self.llm
+        # Disable streaming for invoke() — avoids "No generations found in stream"
+        # when the provider returns full answers at once (non-streaming).
+        base_llm = self.llm.model_copy(update={"streaming": False})
+        llm_with_tools = base_llm.bind_tools(tools) if tools else base_llm
 
         msgs = self._build_messages(user_input)
 
@@ -520,38 +561,11 @@ class Agent:
             for m in msgs:
                 logger.debug("  [%s] %s", m.type, str(m.content)[:200])
 
-        # Tool dispatch loop
-        for _ in range(self.MAX_TOOL_ROUNDS):
-            response = llm_with_tools.invoke(msgs)
-            msgs.append(response)
+        answer = self._run_tool_loop(tools, msgs, lambda m: llm_with_tools.invoke(m))
 
-            if not response.tool_calls:
-                # No tool calls — final answer
-                answer = response.content or ""
-                # Store in history
-                self.messages.append({"role": "user", "content": str(user_input)})
-                self.messages.append({"role": "assistant", "content": answer})
-                self._trim_history()
-                self._persist()
-                return answer
-
-            # Execute tool calls
-            for tc in response.tool_calls:
-                tool_name = tc["name"]
-                tool_args = tc["args"]
-                tool_id = tc["id"]
-
-                if self.verbose:
-                    logger.debug("  [Tool] %s(%s)", tool_name, tool_args)
-
-                # Find and call the tool
-                result = self._execute_tool(tools, tool_name, tool_args)
-                msgs.append(ToolMessage(content=result, tool_call_id=tool_id))
-
-        # Exhausted tool rounds
-        answer = "I exceeded the maximum tool rounds. Please try a simpler request."
         self.messages.append({"role": "user", "content": str(user_input)})
         self.messages.append({"role": "assistant", "content": answer})
+        self._trim_history()
         self._persist()
         return answer
 
@@ -598,12 +612,11 @@ class Agent:
             for m in msgs:
                 logger.debug("  [%s] %s", m.type, str(m.content)[:200])
 
-        # Tool dispatch loop
-        for _ in range(self.MAX_TOOL_ROUNDS):
-            # Stream the response
+        def streaming_invoke(messages):
+            """Stream response, call token_callback for each chunk, return AIMessage."""
             full_text = ""
             accumulated = None
-            for chunk in llm_with_tools.stream(msgs):
+            for chunk in llm_with_tools.stream(messages):
                 accumulated = chunk if accumulated is None else accumulated + chunk
                 text = chunk.content or ""
                 if isinstance(text, list):
@@ -617,40 +630,18 @@ class Agent:
                         token_callback(text)
 
             if accumulated is None:
-                break
+                return AIMessage(content="")
 
-            # Convert accumulated chunk to AIMessage for the message list
-            response = AIMessage(
+            return AIMessage(
                 content=accumulated.content or "",
                 tool_calls=accumulated.tool_calls if accumulated.tool_calls else [],
             )
-            msgs.append(response)
 
-            if not response.tool_calls:
-                # Final answer
-                self.messages.append({"role": "user", "content": str(user_input)})
-                self.messages.append({"role": "assistant", "content": full_text})
-                self._trim_history()
-                self._persist()
-                return full_text
+        answer = self._run_tool_loop(tools, msgs, streaming_invoke)
 
-            # Execute tool calls
-            for tc in response.tool_calls:
-                tool_name = tc["name"]
-                tool_args = tc["args"]
-                tool_id = tc["id"]
-
-                if self.verbose:
-                    logger.debug("  [Tool] %s(%s)", tool_name, tool_args)
-
-                result = self._execute_tool(tools, tool_name, tool_args)
-                msgs.append(ToolMessage(content=result, tool_call_id=tool_id))
-
-        answer = "I exceeded the maximum tool rounds. Please try a simpler request."
         self.messages.append({"role": "user", "content": str(user_input)})
         self.messages.append({"role": "assistant", "content": answer})
-        if token_callback:
-            token_callback(answer)
+        self._trim_history()
         self._persist()
         return answer
 

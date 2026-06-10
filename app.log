@@ -131,3 +131,62 @@
 2026-06-06 22:44:44 [__main__] WARNING: Cron scheduler failed to start: no running event loop
 2026-06-06 22:44:44 [session_manager] INFO: [SessionManager] Creating session 'cli'
 2026-06-06 22:44:44 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-07 11:02:12 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-07 11:02:12 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-07 11:02:12 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-07 11:02:12 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-07 11:02:12 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-07 11:02:12 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-07 11:02:12 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-07 11:02:12 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-07 11:02:52 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-07 11:03:04 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-07 11:03:46 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-07 11:04:13 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-08 00:06:31 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-08 00:06:31 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-08 00:06:31 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-08 00:06:31 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-08 00:06:31 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-08 00:06:31 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-08 00:06:31 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-08 00:06:31 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-08 00:06:44 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-08 00:07:01 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-08 09:45:06 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-08 09:45:06 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-08 09:45:06 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-08 09:45:06 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-08 09:45:06 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-08 09:45:06 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-08 09:45:06 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-08 09:45:06 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-08 09:45:17 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-08 09:48:53 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-08 09:48:53 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-08 09:48:53 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-08 09:48:53 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-08 09:48:53 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-08 09:48:53 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-08 09:48:53 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-08 09:48:53 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-08 09:49:23 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-08 10:01:51 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-08 10:18:46 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-08 10:18:46 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-08 10:18:46 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-08 10:18:46 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-08 10:18:46 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-08 10:18:46 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-08 10:18:46 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-08 10:18:46 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-08 10:19:05 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 14:08:09 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 14:08:09 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 14:08:09 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 14:08:09 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 14:08:09 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 14:08:09 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 14:08:09 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 14:08:09 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-10 14:08:29 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"

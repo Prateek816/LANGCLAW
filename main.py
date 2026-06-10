@@ -118,7 +118,7 @@ def run_repl(sm: SessionManager) -> None:
     """Interactive REPL mode — chat directly in the terminal."""
     global _cron_scheduler
 
-    from cli import print_banner, print_agent_prompt, print_agent_prefix, print_exit, print_error, console
+    from cli import print_banner, print_agent_prompt, print_agent_prefix, print_exit, print_error
 
     # Start cron scheduler in REPL mode (no Telegram delivery)
     cron_running = False
@@ -164,12 +164,9 @@ def run_repl(sm: SessionManager) -> None:
 
             print_agent_prefix()
 
-            def token_cb(chunk: str) -> None:
-                console.print(chunk, end="", highlight=False)
-
             try:
-                response = agent.chat_stream(user_input, token_cb)
-                console.print()  # newline after streaming
+                response = agent.chat(user_input)
+                print(response)
             except Exception as exc:
                 print_error(str(exc))
     finally:
