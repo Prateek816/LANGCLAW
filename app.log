@@ -190,3 +190,18 @@
 2026-06-10 14:08:09 [session_manager] INFO: [SessionManager] Creating session 'cli'
 2026-06-10 14:08:09 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
 2026-06-10 14:08:29 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 14:10:49 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 14:10:49 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 14:10:49 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 14:10:49 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 14:10:49 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 14:10:49 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 14:10:49 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 14:10:49 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-10 14:11:15 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 14:11:36 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 14:14:01 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 14:14:19 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 14:14:43 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 14:15:04 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 14:15:18 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
