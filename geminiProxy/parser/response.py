@@ -1,6 +1,4 @@
 """
-app/parser/response.py
-──────────────────────
 Parse the raw text string returned by Gemini Web and convert it into
 the appropriate OpenAI-compatible response object.
 
@@ -29,8 +27,8 @@ import logging
 import re
 import uuid
 
-from app.config import settings
-from app.schemas.openai_output import (
+from config import settings
+from schemas.openai_output import (
     ChatCompletionResponse,
     Choice,
     ChoiceMessage,

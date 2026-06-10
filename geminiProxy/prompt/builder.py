@@ -1,6 +1,4 @@
 """
-app/prompt/builder.py
-─────────────────────
 Converts an OpenAI-format message list (plus optional tool definitions
 and tool_choice) into a single plain-text prompt suitable for pasting
 into the Gemini Web UI.
@@ -19,7 +17,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from app.schemas.openai_input import (
+from schemas.openai_input import (
     AssistantMessage,
     ChatCompletionRequest,
     Message,
@@ -30,7 +28,7 @@ from app.schemas.openai_input import (
 )
 
 # ── Sentinel used by the response parser ──────────────────────────────────
-from app.config import settings
+from config import settings
 
 SENTINEL = settings.tool_call_sentinel
 

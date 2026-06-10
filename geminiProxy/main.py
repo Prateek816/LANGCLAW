@@ -1,6 +1,4 @@
 """
-app/main.py
-───────────
 FastAPI application factory with lifespan management.
 
 Startup
@@ -30,9 +28,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.browser.manager import BrowserManager
-from app.config import settings
-from app.routes.chat import router as chat_router
+from browser.manager import BrowserManager
+from config import settings
+from routes.chat import router as chat_router
 
 # ── Logging ────────────────────────────────────────────────────────────────
 

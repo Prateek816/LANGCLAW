@@ -1,6 +1,4 @@
 """
-app/browser/gemini_page.py
-──────────────────────────
 GeminiPage — one Playwright page, one request, then close.
 
 Interaction pattern mirrors the reference implementation:
@@ -15,7 +13,7 @@ import logging
 
 from playwright.async_api import Page, TimeoutError as PlaywrightTimeout
 
-from app.config import settings
+from config import settings
 
 logger = logging.getLogger(__name__)
 

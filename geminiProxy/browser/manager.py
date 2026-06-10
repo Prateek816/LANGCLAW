@@ -1,6 +1,4 @@
 """
-app/browser/manager.py
-──────────────────────
 BrowserManager — owns the single persistent Chrome context and dishes
 out pages on demand, matching the reference implementation's pattern:
 
@@ -18,8 +16,8 @@ from typing import AsyncIterator, Optional
 
 from playwright.async_api import BrowserContext, Playwright, async_playwright
 
-from app.browser.gemini_page import GeminiPage
-from app.config import settings
+from browser.gemini_page import GeminiPage
+from config import settings
 
 logger = logging.getLogger(__name__)
 

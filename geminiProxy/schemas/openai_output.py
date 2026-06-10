@@ -1,6 +1,4 @@
 """
-app/schemas/openai_output.py
-────────────────────────────
 Pydantic models for the OpenAI Chat Completions response body.
 Matches the OpenAI wire format exactly so that standard clients
 can parse these responses without modification.

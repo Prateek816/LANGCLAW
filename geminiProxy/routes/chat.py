@@ -1,6 +1,4 @@
 """
-app/routes/chat.py
-──────────────────
 OpenAI-compatible POST /v1/chat/completions endpoint.
 
 Request flow
@@ -19,11 +17,11 @@ import logging
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
 
-from app.browser.gemini_page import GeminiPageError
-from app.config import settings
-from app.parser.response import parse_gemini_response
-from app.prompt.builder import build_prompt
-from app.schemas.openai_input import ChatCompletionRequest
+from browser.gemini_page import GeminiPageError
+from config import settings
+from parser.response import parse_gemini_response
+from prompt.builder import build_prompt
+from schemas.openai_input import ChatCompletionRequest
 
 router = APIRouter()
 logger = logging.getLogger(__name__)

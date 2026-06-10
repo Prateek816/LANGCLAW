@@ -1,5 +1,5 @@
 """
-app/config.py — Central configuration loaded from environment / .env
+configuration loaded from environment / .env
 """
 from __future__ import annotations
 

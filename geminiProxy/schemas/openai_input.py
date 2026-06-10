@@ -1,6 +1,4 @@
 """
-app/schemas/openai_input.py
-───────────────────────────
 Pydantic models for the OpenAI Chat Completions request body.
 All fields mirror the OpenAI API so that standard clients work
 without modification.
