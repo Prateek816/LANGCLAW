@@ -1,0 +1,42 @@
+# AI / LLM Providers
+google-generativeai
+langchain_openai
+langchain_anthropic
+langchain_groq
+langchain_google_genai
+langchain_ollama
+
+# LangChain Ecosystem
+langchain_core
+langchain_community
+
+# Search & Retrieval
+tavily-python
+rank_bm25
+chromadb
+sentence-transformers
+flashrank
+
+# API Server
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+orjson>=3.10.0
+
+# Data Validation & Configuration
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+python-dotenv
+PyYAML
+
+# Browser Automation
+playwright>=1.44.0
+
+# Networking & HTTP
+httpx
+
+# Observability & Tracing
+langsmith>=0.1.0
+
+# Telegram Integration
+python-telegram-bot
+apscheduler
