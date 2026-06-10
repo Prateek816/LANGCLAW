@@ -205,3 +205,181 @@
 2026-06-10 14:14:43 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-10 14:15:04 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-10 14:15:18 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 21:20:36 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 21:20:36 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:20:36 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 21:20:36 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:20:36 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 21:20:36 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 21:20:36 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 21:20:36 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nvidia/nemotron-3-super-120b-a12b:free
+2026-06-10 21:23:19 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 21:23:19 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:23:19 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 21:23:19 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:23:19 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 21:23:19 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 21:23:19 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 21:23:19 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-10 21:23:50 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 21:23:50 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:23:50 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 21:23:50 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:23:50 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 21:23:50 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 21:23:50 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 21:23:50 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-10 21:26:43 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2026-06-10 21:26:43 [openai._base_client] INFO: Retrying request to /chat/completions in 0.487425 seconds
+2026-06-10 21:26:50 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2026-06-10 21:26:50 [openai._base_client] INFO: Retrying request to /chat/completions in 0.755754 seconds
+2026-06-10 21:26:55 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 502 Bad Gateway"
+2026-06-10 21:27:33 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 21:27:33 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:27:33 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 21:27:33 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:27:33 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 21:27:33 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 21:27:33 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 21:27:33 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-10 21:27:52 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 21:28:05 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 21:38:55 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 21:38:55 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:38:55 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 21:38:55 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:38:55 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 21:38:55 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 21:38:55 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 21:38:55 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-10 21:39:03 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 502 Bad Gateway"
+2026-06-10 21:39:03 [openai._base_client] INFO: Retrying request to /chat/completions in 0.493909 seconds
+2026-06-10 21:39:05 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 502 Bad Gateway"
+2026-06-10 21:39:05 [openai._base_client] INFO: Retrying request to /chat/completions in 0.972840 seconds
+2026-06-10 21:39:07 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 502 Bad Gateway"
+2026-06-10 21:39:53 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2026-06-10 21:39:53 [openai._base_client] INFO: Retrying request to /chat/completions in 0.456178 seconds
+2026-06-10 21:40:43 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 21:40:43 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:40:43 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 21:40:43 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:40:43 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 21:40:43 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 21:40:43 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 21:40:43 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-10 21:41:32 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 21:42:05 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 21:42:05 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:42:05 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 21:42:05 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:42:05 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 21:42:05 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 21:42:05 [core.llm.factory] INFO: Creating LLM: provider=groq, model=openai/gpt-oss-120b
+2026-06-10 21:42:05 [__main__] INFO: Heartbeat monitor created.
+2026-06-10 21:42:05 [__main__] INFO: [Telegram] Starting bot (polling mode)...
+2026-06-10 21:42:06 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getMe "HTTP/1.1 200 OK"
+2026-06-10 21:42:06 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMyCommands "HTTP/1.1 200 OK"
+2026-06-10 21:42:07 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getMe "HTTP/1.1 200 OK"
+2026-06-10 21:42:07 [channels.telegram_bot] INFO: [Telegram] Registered 5 bot commands, username=@Prateek816_bot
+2026-06-10 21:42:07 [scheduler.heartbeat] INFO: [Heartbeat] Monitor started (interval=60s)
+2026-06-10 21:42:07 [__main__] INFO: Heartbeat monitor started.
+2026-06-10 21:42:07 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/deleteWebhook "HTTP/1.1 200 OK"
+2026-06-10 21:42:07 [apscheduler.scheduler] INFO: Scheduler started
+2026-06-10 21:42:07 [telegram.ext.Application] INFO: Application started
+2026-06-10 21:42:07 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 21:42:08 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=719ms
+2026-06-10 21:42:18 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:42:28 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:42:37 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:42:37 [session_manager] INFO: [SessionManager] Creating session 'telegram:5207747295'
+2026-06-10 21:42:37 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-10 21:42:38 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-10 21:42:39 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-10 21:42:43 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-10 21:42:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-10 21:42:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:42:52 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 21:42:52 [channels.telegram_bot] ERROR: [Telegram] Agent error
+Traceback (most recent call last):
+  File "/Users/prateek/Desktop/langclaw/channels/telegram_bot.py", line 252, in _handle_message
+    await self._flush_stream(update, token_queue, future)
+  File "/Users/prateek/Desktop/langclaw/channels/telegram_bot.py", line 343, in _flush_stream
+    response = future.result() if future.done() else "(timed out)"
+               ^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.14_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prateek/Desktop/langclaw/core/agent.py", line 594, in chat_stream
+    return self._chat_stream_impl(user_input, token_callback, langsmith_extra={
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prateek/Desktop/langclaw/core/agent.py", line 640, in _chat_stream_impl
+    answer = self._run_tool_loop(tools, msgs, streaming_invoke)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prateek/Desktop/langclaw/core/agent.py", line 501, in _run_tool_loop
+    response = invoke_fn(msgs)
+               ^^^^^^^^^^^^^^^
+  File "/Users/prateek/Desktop/langclaw/core/agent.py", line 619, in streaming_invoke
+    for chunk in llm_with_tools.stream(messages):
+  File "/Users/prateek/Desktop/langclaw/.venv/lib/python3.11/site-packages/langchain_core/runnables/base.py", line 6058, in stream
+    yield from self.bound.stream(
+  File "/Users/prateek/Desktop/langclaw/.venv/lib/python3.11/site-packages/langchain_core/language_models/chat_models.py", line 837, in stream
+    raise err
+ValueError: No generation chunks were returned
+2026-06-10 21:42:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-10 21:42:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-10 21:42:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-10 21:42:56 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:42:57 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-10 21:42:57 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-10 21:43:02 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-10 21:43:06 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-10 21:43:07 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:43:08 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 21:43:08 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=521ms
+2026-06-10 21:43:10 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-10 21:43:10 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-10 21:43:10 [channels.telegram_bot] ERROR: [Telegram] Agent error
+Traceback (most recent call last):
+  File "/Users/prateek/Desktop/langclaw/channels/telegram_bot.py", line 252, in _handle_message
+    await self._flush_stream(update, token_queue, future)
+  File "/Users/prateek/Desktop/langclaw/channels/telegram_bot.py", line 343, in _flush_stream
+    response = future.result() if future.done() else "(timed out)"
+               ^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.14_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prateek/Desktop/langclaw/core/agent.py", line 594, in chat_stream
+    return self._chat_stream_impl(user_input, token_callback, langsmith_extra={
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prateek/Desktop/langclaw/core/agent.py", line 640, in _chat_stream_impl
+    answer = self._run_tool_loop(tools, msgs, streaming_invoke)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prateek/Desktop/langclaw/core/agent.py", line 501, in _run_tool_loop
+    response = invoke_fn(msgs)
+               ^^^^^^^^^^^^^^^
+  File "/Users/prateek/Desktop/langclaw/core/agent.py", line 619, in streaming_invoke
+    for chunk in llm_with_tools.stream(messages):
+  File "/Users/prateek/Desktop/langclaw/.venv/lib/python3.11/site-packages/langchain_core/runnables/base.py", line 6058, in stream
+    yield from self.bound.stream(
+  File "/Users/prateek/Desktop/langclaw/.venv/lib/python3.11/site-packages/langchain_core/language_models/chat_models.py", line 837, in stream
+    raise err
+ValueError: No generation chunks were returned
+2026-06-10 21:43:11 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-10 21:43:11 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-10 21:43:17 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:43:27 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:43:31 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-10 21:43:31 [telegram.ext.Application] INFO: Application is stopping. This might take a moment.
+2026-06-10 21:43:31 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-06-10 21:43:31 [telegram.ext.Application] INFO: Application.stop() complete
+2026-06-10 21:43:31 [asyncio] ERROR: Task was destroyed but it is pending!
+task: <Task pending name='heartbeat' coro=<HeartbeatMonitor._loop() running at /Users/prateek/Desktop/langclaw/scheduler/heartbeat.py:99> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2026-06-10 21:43:53 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-10 21:43:53 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:43:53 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-10 21:43:53 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-10 21:43:53 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-10 21:43:53 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-10 21:43:53 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-10 21:43:53 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-10 21:44:08 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"

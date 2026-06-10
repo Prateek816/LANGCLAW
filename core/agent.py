@@ -113,6 +113,9 @@ class Agent:
             model=model,
             base_url=base_url
         )
+        # Local proxies (e.g. Gemini browser proxy) don't support streaming
+        if base_url and "localhost" in base_url:
+            cfg.streaming = False
         self.llm = get_llm(config=cfg)
         self._llm_config = cfg
         self.session_id = session_id
