@@ -1788,3 +1788,34 @@ action.0.EvaluateActionModel.search_page
 2026-06-11 22:34:42 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-11 22:34:42 [core.subagents.subagent_factory] INFO: [research-agent] Completed. Output length: 3540 chars
 2026-06-11 22:34:55 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:32:59 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-12 01:32:59 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-12 01:32:59 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-12 01:32:59 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-12 01:32:59 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-12 01:32:59 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-12 01:32:59 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-12 01:32:59 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-12 01:33:00 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-12 01:33:00 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-12 01:33:00 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-12 01:33:00 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-12 01:33:00 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-12 01:33:00 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-12 01:33:00 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-12 01:33:00 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-12 01:33:16 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:34:15 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:34:31 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:35:20 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:36:15 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:36:30 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:37:28 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:37:42 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:38:08 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:38:32 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:38:47 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:38:59 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:39:12 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:39:25 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 01:39:39 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"

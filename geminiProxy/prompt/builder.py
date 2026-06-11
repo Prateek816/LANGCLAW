@@ -1,22 +1,14 @@
 """
+─────────────────────
 Converts an OpenAI-format message list (plus optional tool definitions
-and tool_choice) into a single plain-text prompt suitable for pasting
-into the Gemini Web UI.
-
-Design goals
-────────────
-1. Gemini must understand the conversation history, including any
-   previous tool call / tool result turns.
-2. When tools are provided Gemini must be instructed to output tool
-   calls in a specific, parseable format rather than prose.
-3. The prompt must be self-contained so that every Gemini page can
-   be opened fresh with no prior context.
+and tool_choice) into a single plain-text prompt for Gemini Web.
 """
 from __future__ import annotations
 
 import json
 from typing import Any
 
+from config import settings
 from schemas.openai_input import (
     AssistantMessage,
     ChatCompletionRequest,
@@ -27,52 +19,24 @@ from schemas.openai_input import (
     UserMessage,
 )
 
-# ── Sentinel used by the response parser ──────────────────────────────────
-from config import settings
-
 SENTINEL = settings.tool_call_sentinel
 
-# ── Tool-call output schema shown to Gemini ───────────────────────────────
-TOOL_CALL_FORMAT_EXAMPLE = """\
-{sentinel}
+# ── Tool-call output format shown to Gemini ───────────────────────────────
+# Gemini is told to repeat this block once per tool it wants to call.
+
+TOOL_CALL_FORMAT = f"""\
+{SENTINEL}
 {{
   "name": "<function_name>",
   "arguments": {{
     "<param>": "<value>"
   }}
-}}""".format(
-    sentinel=SENTINEL
-)
-
-# ── System preamble injected before user content ──────────────────────────
-TOOL_SYSTEM_PREAMBLE = """\
-
-## Available tools
-{tool_list}
-
-## Tool-calling rules
-- If you decide a tool should be called, output ONLY the following block
-  and nothing else — no explanation, no prose before or after:
-
-{format_example}
-
-- Replace <function_name> with the exact tool name and fill in the
-  arguments object with the required parameters.
-- If no tool is needed, respond normally in plain text.
-- Never invent tool names that are not in the Available tools list.
-- Never call more than one tool per response.
-"""
-
-NO_TOOL_SYSTEM_PREAMBLE = """\
-You are a helpful AI assistant. Respond naturally to the conversation below.
-"""
+}}"""
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────
 
-
 def _content_to_str(content: Any) -> str:
-    """Flatten message content (str or list[ContentPart]) to plain text."""
     if isinstance(content, str):
         return content
     if isinstance(content, list):
@@ -90,94 +54,63 @@ def _format_tool_list(tools: list[Tool]) -> str:
     lines: list[str] = []
     for tool in tools:
         fn = tool.function
-        desc = fn.description or "No description provided."
-        params_json = (
-            json.dumps(fn.parameters, indent=2) if fn.parameters else "{}"
-        )
-        lines.append(
-            f"### {fn.name}\n{desc}\nParameters (JSON Schema):\n{params_json}"
-        )
-    return "\n\n".join(lines)
+        desc = fn.description or "No description."
+        params_json = json.dumps(fn.parameters, indent=2) if fn.parameters else "{}"
+        lines.append(f"- {fn.name}: {desc}\n  Parameters: {params_json}")
+    return "\n".join(lines)
 
 
-def _format_message(msg: Message) -> str:
-    """Render a single message as a labelled block of text."""
+def _render_message(msg: Message) -> str:
     if isinstance(msg, SystemMessage):
-        content = _content_to_str(msg.content)
-        return f"[SYSTEM]\n{content}"
+        return f"System: {_content_to_str(msg.content)}"
 
     if isinstance(msg, UserMessage):
-        content = _content_to_str(msg.content)
-        return f"[USER]\n{content}"
+        return f"User: {_content_to_str(msg.content)}"
 
     if isinstance(msg, AssistantMessage):
-        # The assistant turn may contain tool calls or plain text.
         if msg.tool_calls:
-            calls_repr: list[str] = []
+            calls = []
             for tc in msg.tool_calls:
                 try:
-                    args = json.loads(tc.function.arguments)
-                    args_pretty = json.dumps(args, indent=2)
+                    args = json.dumps(json.loads(tc.function.arguments), indent=2)
                 except (json.JSONDecodeError, TypeError):
-                    args_pretty = tc.function.arguments
-                calls_repr.append(
-                    f"Tool call: {tc.function.name}\nArguments:\n{args_pretty}"
-                )
-            return "[ASSISTANT — TOOL CALL]\n" + "\n---\n".join(calls_repr)
-        content = _content_to_str(msg.content)
-        return f"[ASSISTANT]\n{content}"
+                    args = tc.function.arguments
+                calls.append(f"Called {tc.function.name} with:\n{args}")
+            return "Assistant (tool calls):\n" + "\n---\n".join(calls)
+        return f"Assistant: {_content_to_str(msg.content)}"
 
     if isinstance(msg, ToolMessage):
-        content = _content_to_str(msg.content)
-        return f"[TOOL RESULT (id={msg.tool_call_id})]\n{content}"
+        return f"Tool result (id={msg.tool_call_id}): {_content_to_str(msg.content)}"
 
-    # Fallback for unexpected types
-    return f"[MESSAGE]\n{str(msg)}"
+    return str(msg)
 
 
 # ── Public API ─────────────────────────────────────────────────────────────
 
-
 def build_prompt(request: ChatCompletionRequest) -> str:
     """
-    Convert a ChatCompletionRequest into a single plain-text prompt
-    to send to Gemini Web.
+    Build a plain-text prompt from the full OpenAI request.
 
-    Structure:
-        <system preamble (tool instructions or generic)>
-        ──────────────────
-        <message 1>
-        <message 2>
-        …
-        ──────────────────
-        [ASSISTANT]          ← dangling prefix so Gemini continues here
+    When tools are present Gemini is told it MAY emit multiple
+    TOOL_CALL_JSON: blocks — one per tool it wants to call — before
+    any prose response.
     """
     has_tools = bool(request.tools)
+    conversation = "\n\n".join(_render_message(m) for m in request.messages)
 
-    # ── Build the system preamble ─────────────────────────────────────────
-    if has_tools:
-        tool_list_str = _format_tool_list(request.tools)  # type: ignore[arg-type]
-        preamble = TOOL_SYSTEM_PREAMBLE.format(
-            tool_list=tool_list_str,
-            format_example=TOOL_CALL_FORMAT_EXAMPLE,
-        )
-    else:
-        preamble = NO_TOOL_SYSTEM_PREAMBLE
+    if not has_tools:
+        return f"{conversation}\n\nAssistant:"
 
-    # ── Render each message ───────────────────────────────────────────────
-    message_blocks: list[str] = []
-    for msg in request.messages:
-        message_blocks.append(_format_message(msg))
+    tool_list_str = _format_tool_list(request.tools)  # type: ignore[arg-type]
 
-    divider = "─" * 50
-
-    conversation = f"\n{divider}\n".join(message_blocks)
-
-    prompt = (
-        preamble.strip()
-        + f"\n\n{divider}\nCONVERSATION\n{divider}\n\n"
-        + conversation
-        + f"\n\n{divider}\n[ASSISTANT]\n"
+    return (
+        f"You have access to these tools:\n{tool_list_str}\n\n"
+        f"If you need to call one or more tools, output ONLY the following block "
+        f"repeated once for each tool call — no explanation, no prose, nothing else:\n\n"
+        f"{TOOL_CALL_FORMAT}\n\n"
+        f"Repeat that block for every tool you want to call. "
+        f"If you need to call get_weather AND search_web, output two blocks back to back.\n\n"
+        f"If no tool is needed, respond normally.\n\n"
+        f"---\n\n"
+        f"{conversation}\n\nAssistant:"
     )
-
-    return prompt

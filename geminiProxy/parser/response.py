@@ -1,30 +1,14 @@
 """
-Parse the raw text string returned by Gemini Web and convert it into
-the appropriate OpenAI-compatible response object.
+──────────────────────
+Parse raw Gemini text into an OpenAI-compatible response.
 
-Two outcomes are possible:
-  1. The response is a normal assistant text reply.
-  2. The response contains a tool-call block (identified by the sentinel).
-
-Tool-call detection
-───────────────────
-Gemini is instructed to output exactly:
-
-    TOOL_CALL_JSON:
-    {
-      "name": "<fn>",
-      "arguments": { ... }
-    }
-
-The parser searches for the sentinel string, extracts the JSON that
-follows, validates it, and builds a ToolCall response.  If parsing
-fails for any reason the whole response is treated as plain text.
+Scans for ALL TOOL_CALL_JSON: blocks in the response and returns
+them as parallel tool_calls — or falls back to plain text.
 """
 from __future__ import annotations
 
 import json
 import logging
-import re
 import uuid
 
 from config import settings
@@ -42,72 +26,80 @@ logger = logging.getLogger(__name__)
 SENTINEL = settings.tool_call_sentinel
 
 
-def _extract_tool_call_json(text: str) -> dict | None:
+def _extract_all_tool_calls(text: str) -> list[dict]:
     """
-    Look for the sentinel in *text* and return the JSON object that
-    follows it, or None if not found / not valid JSON.
+    Find every TOOL_CALL_JSON: block in *text* and return a list of
+    parsed dicts.  Blocks that fail JSON parsing are skipped.
     """
-    idx = text.find(SENTINEL)
-    if idx == -1:
-        return None
+    results: list[dict] = []
+    search_from = 0
 
-    after_sentinel = text[idx + len(SENTINEL) :].strip()
+    while True:
+        idx = text.find(SENTINEL, search_from)
+        if idx == -1:
+            break
 
-    # Find the first {...} block
-    brace_start = after_sentinel.find("{")
-    if brace_start == -1:
-        return None
+        after = text[idx + len(SENTINEL):].strip()
 
-    # Walk forward to find the matching closing brace
-    depth = 0
-    brace_end = -1
-    for i, ch in enumerate(after_sentinel[brace_start:], start=brace_start):
-        if ch == "{":
-            depth += 1
-        elif ch == "}":
-            depth -= 1
-            if depth == 0:
-                brace_end = i + 1
-                break
+        # Find the opening brace
+        brace_start = after.find("{")
+        if brace_start == -1:
+            break
 
-    if brace_end == -1:
-        return None
+        # Walk to the matching closing brace
+        depth = 0
+        brace_end = -1
+        for i, ch in enumerate(after[brace_start:], start=brace_start):
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    brace_end = i + 1
+                    break
 
-    json_str = after_sentinel[brace_start:brace_end]
-    try:
-        data = json.loads(json_str)
-    except json.JSONDecodeError as exc:
-        logger.warning("Tool-call JSON parse error: %s | raw: %r", exc, json_str)
-        return None
+        if brace_end == -1:
+            break
 
-    if not isinstance(data, dict):
-        return None
-
-    return data
-
-
-def _build_tool_call_response(model: str, data: dict) -> ChatCompletionResponse:
-    """Build an OpenAI tool_calls response from the parsed JSON dict."""
-    fn_name = data.get("name", "")
-    raw_args = data.get("arguments", {})
-
-    # arguments must be a JSON-encoded string in the OpenAI schema
-    if isinstance(raw_args, dict):
-        arguments_str = json.dumps(raw_args)
-    elif isinstance(raw_args, str):
-        # Validate it's actually JSON
+        json_str = after[brace_start:brace_end]
         try:
-            json.loads(raw_args)
-            arguments_str = raw_args
-        except json.JSONDecodeError:
-            arguments_str = json.dumps({"raw": raw_args})
-    else:
-        arguments_str = json.dumps(raw_args)
+            data = json.loads(json_str)
+            if isinstance(data, dict) and data.get("name"):
+                results.append(data)
+                logger.debug("Parsed tool call: %s", data.get("name"))
+        except json.JSONDecodeError as exc:
+            logger.warning("Skipping malformed tool-call JSON: %s | %r", exc, json_str)
 
-    tool_call = ToolCall(
-        id=f"call_{uuid.uuid4().hex[:24]}",
-        function=ToolCallFunction(name=fn_name, arguments=arguments_str),
-    )
+        # Advance past this block and look for the next sentinel
+        search_from = idx + len(SENTINEL) + brace_end
+
+    return results
+
+
+def _build_tool_calls_response(model: str, tool_data_list: list[dict]) -> ChatCompletionResponse:
+    tool_calls: list[ToolCall] = []
+
+    for data in tool_data_list:
+        fn_name = data.get("name", "")
+        raw_args = data.get("arguments", {})
+
+        if isinstance(raw_args, dict):
+            arguments_str = json.dumps(raw_args)
+        elif isinstance(raw_args, str):
+            try:
+                json.loads(raw_args)
+                arguments_str = raw_args
+            except json.JSONDecodeError:
+                arguments_str = json.dumps({"raw": raw_args})
+        else:
+            arguments_str = json.dumps(raw_args)
+
+        tool_calls.append(
+            ToolCall(
+                id=f"call_{uuid.uuid4().hex[:24]}",
+                function=ToolCallFunction(name=fn_name, arguments=arguments_str),
+            )
+        )
 
     return ChatCompletionResponse(
         model=model,
@@ -117,7 +109,7 @@ def _build_tool_call_response(model: str, data: dict) -> ChatCompletionResponse:
                 message=ChoiceMessage(
                     role="assistant",
                     content=None,
-                    tool_calls=[tool_call],
+                    tool_calls=tool_calls,
                 ),
                 finish_reason="tool_calls",
             )
@@ -127,7 +119,6 @@ def _build_tool_call_response(model: str, data: dict) -> ChatCompletionResponse:
 
 
 def _build_text_response(model: str, text: str) -> ChatCompletionResponse:
-    """Build a standard assistant text response."""
     return ChatCompletionResponse(
         model=model,
         choices=[
@@ -147,12 +138,12 @@ def _build_text_response(model: str, text: str) -> ChatCompletionResponse:
 
 # ── Public API ─────────────────────────────────────────────────────────────
 
-
 def parse_gemini_response(raw_text: str, model: str) -> ChatCompletionResponse:
     """
-    Parse *raw_text* (Gemini's reply) and return a ChatCompletionResponse.
+    Parse *raw_text* and return a ChatCompletionResponse.
 
-    Tries tool-call detection first; falls back to plain text.
+    Collects ALL TOOL_CALL_JSON: blocks — supports parallel tool calls.
+    Falls back to plain text if none are found.
     """
     raw_text = raw_text.strip()
 
@@ -160,16 +151,10 @@ def parse_gemini_response(raw_text: str, model: str) -> ChatCompletionResponse:
         logger.warning("Gemini returned an empty response.")
         return _build_text_response(model, "")
 
-    tool_data = _extract_tool_call_json(raw_text)
-    if tool_data is not None:
-        fn_name = tool_data.get("name", "")
-        if fn_name:
-            logger.debug("Detected tool call: %s", fn_name)
-            return _build_tool_call_response(model, tool_data)
-        else:
-            logger.warning(
-                "Tool-call sentinel found but 'name' is missing; "
-                "treating as plain text."
-            )
+    tool_data_list = _extract_all_tool_calls(raw_text)
+
+    if tool_data_list:
+        logger.debug("Returning %d tool call(s).", len(tool_data_list))
+        return _build_tool_calls_response(model, tool_data_list)
 
     return _build_text_response(model, raw_text)
