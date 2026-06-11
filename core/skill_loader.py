@@ -74,16 +74,27 @@ class SkillRegistry:
     def discover(self):
 
         if self._cache is not None:
+            logger.info("Skill Registry cache hit (%d skills)", len(self._cache))
             return self._cache
-        
+
         skills:list[SkillMetadata] = []
         seen_names : set[str] = set()
 
         for s_dir in self.skills_dirs:
             if not os.path.isdir(s_dir):
+                logger.info("Skill dir not found, skipping: %s", s_dir)
                 continue
+            logger.info("Scanning skill dir: %s", s_dir)
+            before = len(skills)
             self._scan_dir(s_dir,skills,seen_names)
+            found = len(skills) - before
+            logger.info("  -> %d skill(s) found in %s", found, s_dir)
         self._cache = skills
+        logger.info(
+            "Skill discovery complete: %d skill(s), %d category(ies) — %s",
+            len(skills), len(self._categories),
+            ", ".join(s.name for s in skills) if skills else "(none)",
+        )
         return skills
     
     def _scan_dir(
@@ -271,8 +282,8 @@ class SkillRegistry:
         """
         skills = self.discover()
         if not skills:
-            logger.warning("No skills found in registry.")
-            return "(no skills installed)"
+            logger.info("No skills found — catalog empty")
+            return ""
 
         groups: dict[str, list[SkillMetadata]] = {}
         for s in skills:
@@ -291,8 +302,12 @@ class SkillRegistry:
                 for s in groups[cat]
             ]
             lines.append(", ".join(names))
-        logger.debug("Built skill catalog: %d categories, %d skills", len(groups), len(skills))
-        return "\n".join(lines)
+        catalog = "\n".join(lines)
+        logger.info(
+            "Skill catalog built: %d categories, %d skills (%d chars)",
+            len(groups), len(skills), len(catalog),
+        )
+        return catalog
     
 
 # ── Module-level convenience functions ───────────────────────────────────────

@@ -85,7 +85,7 @@ class Agent:
         compaction_recent_keep: int = DEFAULT_RECENT_KEEP,
         cron_manager=None,
         session_store=None,
-        allow_subagents:bool = False
+        allow_subagents:bool = True
     ):
         
         #self.provider = provider
@@ -123,6 +123,7 @@ class Agent:
         self.messages :list[dict]=[]
         self.verbose = verbose
         self.show_full_context = show_full_context
+        
         self.max_chat_history = max_chat_history
         self.auto_compaction = auto_compaction
         self.compaction_threshold = compaction_threshold
@@ -132,6 +133,11 @@ class Agent:
         self._file_sender = None  # channel-specific file sender callback
         self._session_store = session_store
         self.allow_subagents = allow_subagents
+        if allow_subagents:
+            from core.subagents.subagents_registry import BaseRegistry
+            self._subagent_registry = BaseRegistry()
+        else:
+            self._subagent_registry = None
 
         # Restore persisted session history if available
         if session_store and session_id:
@@ -174,15 +180,15 @@ class Agent:
         self.tools_notes = _load_text_dir_or_file(tools_path, label="Tools")
 
 
-        # Skills — always include the built-in templates + user context/skills
+        # Skills — only include built-in templates when user provides skill dirs
         self.skills_dirs: list[str] = []
-        pkg_templates = os.path.join(
-            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            "templates", "skills",
-        )
-        if os.path.isdir(pkg_templates):
-            self.skills_dirs.append(pkg_templates)
         if skills_dirs:
+            pkg_templates = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                "templates", "skills",
+            )
+            if os.path.isdir(pkg_templates):
+                self.skills_dirs.append(pkg_templates)
             for d in ([skills_dirs] if isinstance(skills_dirs, str) else skills_dirs):
                 if d not in self.skills_dirs:
                     self.skills_dirs.append(d)
@@ -239,6 +245,12 @@ class Agent:
         catalog = self._skill_registry.build_catalog()
         if catalog:
             parts.append(f"## Available Skills\n\n{catalog}")
+            logger.info(
+                "Skills injected into prompt: dirs=%s, skills=%d, size=%d chars",
+                self.skills_dirs, len(self._skill_registry.discover()), len(catalog),
+            )
+        else:
+            logger.info("No skills to inject (dirs=%s)", self.skills_dirs)
 
         # RAG knowledge hint
         if self.rag:
@@ -253,6 +265,17 @@ class Agent:
                 "You have web search available via the web_search tool. "
                 "Use it when you need current information."
             )
+
+        # Subagent hints
+        if self._subagent_registry:
+            agents = self._subagent_registry.list_agents()
+            if agents:
+                agent_lines = [f"- **{a.name}**: {a.description}" for a in agents]
+                parts.append(
+                    "## Subagents\n\n"
+                    "You have access to specialized subagents that can handle complex tasks:\n\n"
+                    + "\n".join(agent_lines)
+                )
 
         # Memory boot context (curated long-term memories)
         boot_ctx = self.memory.boot_context(max_chars=3000)
@@ -283,10 +306,6 @@ class Agent:
             primitive_tools,
             web_search_tool,
         )
-        from core.subagents.subagents_registry import (
-            SubAgentRegistry,
-            BaseRegistry
-        )
         # Exclude lc_send_file from primitive_tools — we build it per-session below
         tools = [t for t in primitive_tools if t.name != "lc_send_file"]
 
@@ -304,22 +323,13 @@ class Agent:
         if self._web_search_enabled:
             tools.extend(web_search_tool)
         
-        from core.subagents.subagents_registry import BaseRegistry
-
-        base_registry = BaseRegistry()  # discovers everything in agents/
-
-        if self.allow_subagents:
-            for agent in base_registry.list_agents():
+        if self._subagent_registry:
+            for agent in self._subagent_registry.list_agents():
                 tools.append(StructuredTool.from_function(
                     func=agent.func,
                     name=agent.name,
                     description=agent.description,
                 ))
-
-            
-        
-
-                
 
         # Memory tools — bound to this agent's memory manager
         memory_defs = [

@@ -542,3 +542,1145 @@ task: <Task pending name='heartbeat' coro=<HeartbeatMonitor._loop() running at /
 2026-06-11 00:50:04 [__main__] WARNING: Cron scheduler failed to start: no running event loop
 2026-06-11 00:50:04 [session_manager] INFO: [SessionManager] Creating session 'cli'
 2026-06-11 00:50:04 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 18:23:24 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 18:23:24 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:23:24 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 18:23:24 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:23:24 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 18:23:24 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 18:23:24 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 18:23:24 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 18:23:24 [core.subagents.subagents_registry] WARNING: BaseRegistry: module 'core.subagents.agents.browser_use' is missing NAME (str), DESCRIPTION (str), call (callable) — skipping.
+2026-06-11 18:23:24 [core.subagents.subagents_registry] INFO: BaseRegistry: discovered 0 agent(s) → []
+2026-06-11 18:24:09 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:28:26 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 18:28:26 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:28:26 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 18:28:26 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:28:26 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 18:28:26 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 18:28:26 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 18:28:26 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 18:28:26 [core.subagents.subagents_registry] WARNING: BaseRegistry: module 'core.subagents.agents.browser_use' is missing NAME (str), DESCRIPTION (str), call (callable) — skipping.
+2026-06-11 18:28:26 [core.subagents.subagents_registry] INFO: BaseRegistry: discovered 0 agent(s) → []
+2026-06-11 18:32:07 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 18:32:07 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:32:07 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 18:32:07 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:32:07 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 18:32:07 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 18:32:07 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 18:32:07 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 18:32:09 [core.subagents.subagents_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-11 18:32:34 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:33:07 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:33:07 [core.subagents.agents.browser_agent] INFO: browser_agent: starting task → 'Go to Gmail (mail.google.com), look for the most recent email in the inbox, and summarize its content, sender, and subje'
+2026-06-11 18:33:07 [browser_use] INFO: Auto-selected Chrome profile: Prateek (Default)
+2026-06-11 18:33:11 [browser_use.utils] INFO: Copied profile (Default) and Local State to temp directory: /var/folders/sy/1zplxgg52ts4s79qthjc08fr0000gn/T/browser-use-user-data-dir-rx89qfp0
+2026-06-11 18:33:11 [browser_use.telemetry.service] INFO: Using anonymized telemetry, see https://docs.browser-use.com/development/monitoring/telemetry.
+2026-06-11 18:33:11 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 --] INFO: 🔗 Found URL in task: https://mail.google.com, adding as initial action...
+2026-06-11 18:33:11 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 --] INFO: [34m🎯 Task: Go to Gmail (mail.google.com), look for the most recent email in the inbox, and summarize its content, sender, and subject line.
+
+Additional constraints / context from the orchestrator:
+The user wants to see their latest email. Access Gmail via Chrome and read or search for the latest incoming email.[0m
+2026-06-11 18:33:11 [httpx] INFO: HTTP Request: GET https://pypi.org/pypi/browser-use/json "HTTP/1.1 200 OK"
+2026-06-11 18:33:11 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 --] INFO: Starting a browser-use agent with version 0.13.1, with provider=openai and model=chatgpt-4o-latest
+2026-06-11 18:33:12 [httpx] INFO: HTTP Request: GET http://127.0.0.1:49425/json/version "HTTP/1.1 200 OK"
+2026-06-11 18:33:12 [cdp_use.client] INFO: Connecting to ws://127.0.0.1:49425/devtools/browser/07400aec-80b9-480e-af9e-66543cea9e1f (max frame size: 200MB)
+2026-06-11 18:33:12 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   ▶️   [34mnavigate[0m: [35murl[0m: https://mail.google.com, [35mnew_tab[0m: False
+2026-06-11 18:33:22 [browser_use.BrowserSession🅑 bd00 🅣 8E] WARNING: ⚠️ Page readiness timeout (8.0s, 9534ms) for https://mail.google.com
+2026-06-11 18:33:22 [browser_use.tools.service] INFO: 🔗 Navigated to https://mail.google.com
+2026-06-11 18:33:23 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:33:23 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 1:
+2026-06-11 18:33:39 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:33:39 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [32m👍 Eval: Navigated to Gmail inbox. Verdict: Success[0m
+2026-06-11 18:33:39 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   🧠 Memory: Opened Gmail inbox. The most recent email is from Vaibhav Sisinty with the subject 'build your info agent 101'. Now opening it.
+2026-06-11 18:33:39 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [34m🎯 Next goal: Click on the most recent email to open and read its content.[0m
+2026-06-11 18:33:39 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   ▶️   [34mclick[0m: [35mindex[0m: 1318
+2026-06-11 18:33:39 [browser_use.BrowserSession🅑 bd00 🅣 8E] WARNING: Could not get element geometry from any method, falling back to JavaScript click
+2026-06-11 18:33:39 [browser_use.BrowserSession🅑 bd00 🅣 8E] WARNING: CDP JavaScript click also failed: {'code': -32000, 'message': 'No node with given id found'}
+2026-06-11 18:33:39 [browser_use.BrowserSession🅑 bd00 🅣 8E] ERROR: 🚌 [DefaultActionWatchdog.on_ClickElementEvent(#e5c8)]    ❌ Failed (0.00s): BrowserError: Failed to click element: Element with given id not found
+2026-06-11 18:33:39 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:33:39 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 2:
+2026-06-11 18:33:55 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:33:55 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [31m⚠️ Eval: Failed to click element 1318 due to a stale index or change in the DOM. Verdict: Failure[0m
+2026-06-11 18:33:55 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   🧠 Memory: Located the most recent email from Vaibhav Sisinty. Fresh element index for the row's link is 8855. Attempting to click it to view content.
+2026-06-11 18:33:55 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [34m🎯 Next goal: Click on the link element [8855] for the most recent email from Vaibhav Sisinty to open it.[0m
+2026-06-11 18:33:55 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   ▶️   [34mclick[0m: [35mindex[0m: 8855
+2026-06-11 18:33:56 [browser_use.tools.service] INFO: 🖱️ Clicked div role=link "build your info agent 101
+ - 
+..."
+2026-06-11 18:33:57 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:33:57 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 3:
+2026-06-11 18:34:12 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:34:12 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [32m👍 Eval: Successfully opened the most recent email from Vaibhav Sisinty. Verdict: Success[0m
+2026-06-11 18:34:12 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   🧠 Memory: Opened the latest email from Vaibhav Sisinty with subject 'build your info agent 101'. The content discusses Anthropic's Claude Managed Agents and Google's recent updates regarding enterprise orchestration and individual utility. I will scroll down to make sure I don't miss anything important before completing the task.
+2026-06-11 18:34:12 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [34m🎯 Next goal: Scroll down to read more of the email content for a thorough summary.[0m
+2026-06-11 18:34:12 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   ▶️   [34mscroll[0m:
+2026-06-11 18:34:12 [browser_use.tools.service] INFO: 🔍 Scrolled down 930px
+2026-06-11 18:34:13 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:34:13 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 4:
+2026-06-11 18:34:27 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:34:27 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [32m👍 Eval: Successfully scrolled down the email page. Verdict: Success[0m
+2026-06-11 18:34:27 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   🧠 Memory: Opened the latest email from Vaibhav Sisinty (stayingahead@mail.beehiiv.com) with the subject 'build your info agent 101'. Scrolled down to see more content.
+2026-06-11 18:34:27 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [34m🎯 Next goal: Extract the complete content of the email to provide an accurate summary.[0m
+2026-06-11 18:34:27 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   ▶️   [34mextract[0m: [35mquery[0m: Full email text content and details, [35malready_collected[0m: []
+2026-06-11 18:34:44 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:34:44 [browser_use.tools.service] INFO: 📄 <url>
+https://mail.google.com/mail/u/0/#inbox/FMfcgzQgMMHLThXMrfqjPMqXSzwkJHph
+</url>
+<query>
+Full email text content and details
+</query>
+<result>
+Here is a concise extraction of all the available emails along with their details (sender, subject/content snippet, and date/time) from the provided webpage content:
+
+Sender: Vaibhav Sisinty
+
+Subject/Details: build your info agent 101 - so it can do more work for you
+
+Time: 18:16
+
+Sender: ISP Team from Inter.
+
+Subject/Details: Update: Your application status has changed - Hurry up! Deadline approaching soon...
+
+Time: 17:47
+
+Sender: Internshala Chat
+
+Subject/Details: New message from Vedron.ai - Hi Prateek, Zoraver from Vedron.ai has sent you a message on your recent application for AI Research Expert | Remote | Flexible Hours Internship.
+
+Time: 17:35
+
+Sender: Google
+
+Subject/Details: New privacy settings for Search services - prateekrastogi816@gmail.com Hello Prateek, We're updating our settings to give you even more control over saved history and personalised recommendations across Google Search services...
+
+Time: 16:13
+
+Sender: Quickhyre AI
+
+Subject/Details: Data Science Program – Remote Opportunity - Dear Candidate, I hope you are doing well. We would like to inform you about a Data Science Program currently open for applications across India...
+
+Time: 10:35
+
+Sender: Codeforces
+
+Subject/Details: Codeforces Round 1103 (Div. 3) - Hello Prateek816, You are welcome to register and compete in Codeforces Round 1103 (Div. 3). It starts on Friday, June, 12, 2026 14:35 (UTC)...
+
+Time: 05:03
+
+Sender: GitGuardian
+
+Subject/Details: [Prateek816/LANGCLAW] Telegram Bot Token exposed on GitHub - GitGuardian has detected the following Telegram Bot Token exposed within your GitHub account...
+
+Time: 00:41
+
+Sender: GitHub
+
+Subject/Details: [Prateek816/LANGCLAW] Possible valid secrets found in commits - Action needed: Secrets detected in recent commits to Prateek816/LANGCLAW Please resolve these alerts...
+
+Time: 00:35
+
+Sender: LinkedIn
+
+Subject/Details: Prateek, your profile photo was changed
+
+Date: 10 Jun
+
+Sender: Open Scout
+
+Subject/Details: The AI Doesn't Know You Exist - How AI decides who to recommend and why you're probably not on the list
+
+Date: 10 Jun
+
+Sender: GitHub
+
+Subject/Details: [GitHub] Sudo email verification code - Please verify your identity, Prateek816 Here is your GitHub sudo authentication code: 29933246 This code is valid for 15 minutes...
+
+Date: 10 Jun
+
+Sender: Internshala
+
+Subject/Details: Tracer is hiring Founding ML/AI Engineering intern and your profile matches - Prateek, earn high stipend in your preferred field and location.
+
+Date: 10 Jun
+
+Sender: Vaibhav Sisinty
+
+Subject/Details: ipo antics? - yup, the timing checks out
+
+Date: 10 Jun
+
+Sender: MathonGo
+
+Subject/Details: [Referral Earned] Sougata Ghosh used your code | MathonGo - You've earned a referral
+
+Date: 10 Jun
+
+Sender: ISP Team from Inter.
+
+Subject/Details: Update: Your application has been processed - Internshala Student Program information for B.Tech students Internshala Invitation to the Internshala Student Partner Program Dear Prateek...
+
+Date: 10 Jun
+
+Sender: YES BANK
+
+Subject/Details: Important Update on your YES Rewardz - YES BANK Dear Customer, Thank you for banking with YES BANK...
+
+Date: 10 Jun
+
+Sender: Huss from Steel
+
+Subject/Details: Week check - what are you automating? - Hi Prateek, Been a week since you started with Steel - how's it going? By now you've either: - Built something cool...
+
+Date: 9 Jun
+
+Sender: Internshala
+
+Subject/Details: Top Software Development internships around you - Prateek, earn high stipend in your preferred field and location.
+
+Date: 9 Jun
+
+Sender: YES BANK
+
+Subject/Details: YES Rewardz - Smart Statement for June 2026 - Your YES Rewardz Smart Statement for June 2026 Dear Customer, Your YES Rewardz Smart Statement for Banking transactions has been generated...
+
+Date: 9 Jun
+
+Sender: Vaibhav Sisinty
+
+Subject/Details: gpt vs qwen / winner - i didn't expect this!
+
+Date: 9 Jun
+
+Sender: MathonGo
+
+Subject/Details: [Referral Earned] Mahi Rai used your code | MathonGo - You've earned a referral
+
+Date: 9 Jun
+
+Sender: lablab.ai
+
+Subject/Details: 🤝Band of Agents Hackathon is live | Your agents can now talk to each other. Build what happens next - 7 days. 3+ agents. One mission: make them work together...
+
+Date: 9 Jun
+
+Sender: Shiksha.com Exam Ev.
+
+Subject/Details: Alert: JoSAA, JoSAA 2026 Display of Mock Seat Allocation-2 - Hi Prateek, Alert for JoSAA: JoSAA 2026 Display of Mock Seat Allocation-2 When : 10 th Jun 2026...
+
+Date: 9 Jun
+
+Sender: Internshala
+
+Subject/Details: Symonis is hiring Web Development intern | Apply Now - Prateek, earn high stipend in your preferred field and location.
+
+Date: 8 Jun
+
+Sender: YES BANK
+</result>
+2026-06-11 18:34:45 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:34:45 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 5:
+2026-06-11 18:34:45 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📋 Exploration nudge injected after 5 steps without a plan
+2026-06-11 18:35:01 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:35:01 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   ❔ Eval: The extract tool returned a list of inbox items instead of the specific opened email body text. Verdict: Uncertain
+2026-06-11 18:35:01 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   🧠 Memory: Opened the latest email from Vaibhav Sisinty with subject 'build your info agent 101'. Need to extract its specific body content accurately to summarize it.
+2026-06-11 18:35:01 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   [34m🎯 Next goal: Extract the text content of the open email body to summarize it.[0m
+2026-06-11 18:35:01 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:   ▶️   [34mextract[0m: [35mquery[0m: The complete full-text content of the opened email from Vaibhav Sisinty with subject 'build your info agent 101'., [35malready_collected[0m: []
+2026-06-11 18:35:16 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:35:16 [browser_use.tools.service] INFO: 📄 <url>
+https://mail.google.com/mail/u/0/#inbox/FMfcgzQgMMHLThXMrfqjPMqXSzwkJHph
+</url>
+<query>
+The complete full-text content of the opened email from Vaibhav Sisinty with subject 'build your info agent 101'.
+</query>
+<result>
+The complete full-text content of the opened email from Vaibhav Sisinty with the subject 'build your info agent 101' is unavailable in the webpage content. The provided page text only shows a Gmail inbox list containing a preview of the email:
+
+Sender: Vaibhav Sisinty
+
+Subject: build your info agent 101
+
+Preview Snippet: so it can do more work for you ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌
+</result>
+2026-06-11 18:35:16 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:35:16 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 6:
+2026-06-11 18:35:16 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📋 Exploration nudge injected after 6 steps without a plan
+2026-06-11 18:35:33 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:35:33 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ⚠️ LLM error (ModelProviderError: 45 validation errors for AgentOutput
+action.0.DoneActionModel.done
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DoneActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchActionModel.search
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SearchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.NavigateActionModel.navigate
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.NavigateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.GoBackActionModel.go_back
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.GoBackActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WaitActionModel.wait
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WaitActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ClickActionModel.click
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ClickActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.InputActionModel.input
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.InputActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.UploadFileActionModel.upload_file
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.UploadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SwitchActionModel.switch
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SwitchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.CloseActionModel.close
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.CloseActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ExtractActionModel.extract
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ExtractActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchPageActionModel.search_page.pattern
+  Field required [type=missing, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.find_elements
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ScrollActionModel.scroll
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ScrollActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SendKeysActionModel.send_keys
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SendKeysActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.FindTextActionModel.find_text
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindTextActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SaveAsPdfActionModel.save_as_pdf
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SaveAsPdfActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.DropdownOptionsActionModel.dropdown_options
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DropdownOptionsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SelectDropdownActionModel.select_dropdown
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SelectDropdownActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WriteFileActionModel.write_file
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WriteFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReplaceFileActionModel.replace_file
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReplaceFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReadFileActionModel.read_file
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.EvaluateActionModel.evaluate
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.EvaluateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden) but no fallback_llm configured
+2026-06-11 18:35:33 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ❌ Result failed 1/6 times: 45 validation errors for AgentOutput
+action.0.DoneActionModel.done
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DoneActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchActionModel.search
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SearchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.NavigateActionModel.navigate
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.NavigateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.GoBackActionModel.go_back
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.GoBackActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WaitActionModel.wait
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WaitActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ClickActionModel.click
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ClickActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.InputActionModel.input
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.InputActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.UploadFileActionModel.upload_file
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.UploadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SwitchActionModel.switch
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SwitchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.CloseActionModel.close
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.CloseActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ExtractActionModel.extract
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ExtractActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchPageActionModel.search_page.pattern
+  Field required [type=missing, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.find_elements
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ScrollActionModel.scroll
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ScrollActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SendKeysActionModel.send_keys
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SendKeysActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.FindTextActionModel.find_text
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindTextActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SaveAsPdfActionModel.save_as_pdf
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SaveAsPdfActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.DropdownOptionsActionModel.dropdown_options
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DropdownOptionsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SelectDropdownActionModel.select_dropdown
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SelectDropdownActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WriteFileActionModel.write_file
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WriteFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReplaceFileActionModel.replace_file
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReplaceFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReadFileActionModel.read_file
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.EvaluateActionModel.evaluate
+  Field required [type=missing, input_value={'search_page': {'query': 'info agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.EvaluateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'info agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+2026-06-11 18:35:34 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:35:34 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 7:
+2026-06-11 18:35:34 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📋 Exploration nudge injected after 7 steps without a plan
+2026-06-11 18:35:48 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:35:48 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ⚠️ LLM error (ModelProviderError: 45 validation errors for AgentOutput
+action.0.DoneActionModel.done
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DoneActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchActionModel.search
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SearchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.NavigateActionModel.navigate
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.NavigateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.GoBackActionModel.go_back
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.GoBackActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WaitActionModel.wait
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WaitActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ClickActionModel.click
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ClickActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.InputActionModel.input
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.InputActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.UploadFileActionModel.upload_file
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.UploadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SwitchActionModel.switch
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SwitchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.CloseActionModel.close
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.CloseActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ExtractActionModel.extract
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ExtractActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchPageActionModel.search_page.pattern
+  Field required [type=missing, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.find_elements
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ScrollActionModel.scroll
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ScrollActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SendKeysActionModel.send_keys
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SendKeysActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.FindTextActionModel.find_text
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindTextActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SaveAsPdfActionModel.save_as_pdf
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SaveAsPdfActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.DropdownOptionsActionModel.dropdown_options
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DropdownOptionsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SelectDropdownActionModel.select_dropdown
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SelectDropdownActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WriteFileActionModel.write_file
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WriteFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReplaceFileActionModel.replace_file
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReplaceFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReadFileActionModel.read_file
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.EvaluateActionModel.evaluate
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.EvaluateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden) but no fallback_llm configured
+2026-06-11 18:35:48 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ❌ Result failed 2/6 times: 45 validation errors for AgentOutput
+action.0.DoneActionModel.done
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DoneActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchActionModel.search
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SearchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.NavigateActionModel.navigate
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.NavigateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.GoBackActionModel.go_back
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.GoBackActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WaitActionModel.wait
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WaitActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ClickActionModel.click
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ClickActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.InputActionModel.input
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.InputActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.UploadFileActionModel.upload_file
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.UploadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SwitchActionModel.switch
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SwitchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.CloseActionModel.close
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.CloseActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ExtractActionModel.extract
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ExtractActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchPageActionModel.search_page.pattern
+  Field required [type=missing, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.find_elements
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ScrollActionModel.scroll
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ScrollActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SendKeysActionModel.send_keys
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SendKeysActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.FindTextActionModel.find_text
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindTextActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SaveAsPdfActionModel.save_as_pdf
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SaveAsPdfActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.DropdownOptionsActionModel.dropdown_options
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DropdownOptionsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SelectDropdownActionModel.select_dropdown
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SelectDropdownActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WriteFileActionModel.write_file
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WriteFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReplaceFileActionModel.replace_file
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReplaceFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReadFileActionModel.read_file
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.EvaluateActionModel.evaluate
+  Field required [type=missing, input_value={'search_page': {'query': 'agent'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.EvaluateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'agent'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+2026-06-11 18:35:49 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:35:49 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 8:
+2026-06-11 18:35:49 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📋 Exploration nudge injected after 8 steps without a plan
+2026-06-11 18:36:04 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:36:04 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ⚠️ LLM error (ModelProviderError: 1 validation error for AgentOutput
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='JSON\n{\n  "thinking": "...n      }\n    }\n  ]\n}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid) but no fallback_llm configured
+2026-06-11 18:36:04 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ❌ Result failed 3/6 times: 1 validation error for AgentOutput
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='JSON\n{\n  "thinking": "...n      }\n    }\n  ]\n}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-06-11 18:36:05 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:36:05 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 9:
+2026-06-11 18:36:05 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📋 Exploration nudge injected after 9 steps without a plan
+2026-06-11 18:36:20 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:36:20 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ⚠️ LLM error (ModelProviderError: 1 validation error for AgentOutput
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='JSON\n{\n  "thinking": "...n      }\n    }\n  ]\n}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid) but no fallback_llm configured
+2026-06-11 18:36:20 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ❌ Result failed 4/6 times: 1 validation error for AgentOutput
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='JSON\n{\n  "thinking": "...n      }\n    }\n  ]\n}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-06-11 18:36:21 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:36:21 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 10:
+2026-06-11 18:36:21 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📋 Exploration nudge injected after 10 steps without a plan
+2026-06-11 18:36:36 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:36:36 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ⚠️ LLM error (ModelProviderError: 45 validation errors for AgentOutput
+action.0.DoneActionModel.done
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DoneActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchActionModel.search
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SearchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.NavigateActionModel.navigate
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.NavigateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.GoBackActionModel.go_back
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.GoBackActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WaitActionModel.wait
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WaitActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ClickActionModel.click
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ClickActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.InputActionModel.input
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.InputActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.UploadFileActionModel.upload_file
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.UploadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SwitchActionModel.switch
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SwitchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.CloseActionModel.close
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.CloseActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ExtractActionModel.extract
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ExtractActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchPageActionModel.search_page.pattern
+  Field required [type=missing, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.find_elements
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ScrollActionModel.scroll
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ScrollActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SendKeysActionModel.send_keys
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SendKeysActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.FindTextActionModel.find_text
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindTextActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SaveAsPdfActionModel.save_as_pdf
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SaveAsPdfActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.DropdownOptionsActionModel.dropdown_options
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DropdownOptionsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SelectDropdownActionModel.select_dropdown
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SelectDropdownActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WriteFileActionModel.write_file
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WriteFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReplaceFileActionModel.replace_file
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReplaceFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReadFileActionModel.read_file
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.EvaluateActionModel.evaluate
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.EvaluateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden) but no fallback_llm configured
+2026-06-11 18:36:36 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ❌ Result failed 5/6 times: 45 validation errors for AgentOutput
+action.0.DoneActionModel.done
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DoneActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchActionModel.search
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SearchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.NavigateActionModel.navigate
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.NavigateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.GoBackActionModel.go_back
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.GoBackActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WaitActionModel.wait
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WaitActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ClickActionModel.click
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ClickActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.InputActionModel.input
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.InputActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.UploadFileActionModel.upload_file
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.UploadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SwitchActionModel.switch
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SwitchActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.CloseActionModel.close
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.CloseActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ExtractActionModel.extract
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ExtractActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SearchPageActionModel.search_page.pattern
+  Field required [type=missing, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.find_elements
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindElementsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ScrollActionModel.scroll
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ScrollActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SendKeysActionModel.send_keys
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SendKeysActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.FindTextActionModel.find_text
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.FindTextActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SaveAsPdfActionModel.save_as_pdf
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SaveAsPdfActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.DropdownOptionsActionModel.dropdown_options
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.DropdownOptionsActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.SelectDropdownActionModel.select_dropdown
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.SelectDropdownActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.WriteFileActionModel.write_file
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.WriteFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReplaceFileActionModel.replace_file
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReplaceFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.ReadFileActionModel.read_file
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.ReadFileActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+action.0.EvaluateActionModel.evaluate
+  Field required [type=missing, input_value={'search_page': {'query':...d your info agent 101'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+action.0.EvaluateActionModel.search_page
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'query': 'build your info agent 101'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden
+2026-06-11 18:36:37 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+
+2026-06-11 18:36:37 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📍 Step 11:
+2026-06-11 18:36:37 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 📋 Exploration nudge injected after 11 steps without a plan
+2026-06-11 18:36:51 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:36:51 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] WARNING: ⚠️ LLM error (ModelProviderError: 1 validation error for AgentOutput
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='JSON\n{\n  "thinking": "...n      }\n    }\n  ]\n}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid) but no fallback_llm configured
+2026-06-11 18:36:51 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] ERROR: ❌ Result failed 6/6 times: 1 validation error for AgentOutput
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='JSON\n{\n  "thinking": "...n      }\n    }\n  ]\n}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-06-11 18:36:51 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] ERROR: ❌ Stopping due to 5 consecutive failures
+2026-06-11 18:36:51 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: 
+2026-06-11 18:36:51 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO: Did the Agent not work as expected? Let us fix this!
+2026-06-11 18:36:51 [browser_use.Agent🅰 300a ⇢ 🅑 bd00 🅣 8E] INFO:    Open a short issue on GitHub: https://github.com/browser-use/browser-use/issues
+2026-06-11 18:36:51 [browser_use.BrowserSession🅑 bd00 🅣 8E] INFO: 📢 on_BrowserStopEvent - Calling reset() (force=True, keep_alive=None)
+2026-06-11 18:36:51 [browser_use.BrowserSession🅑 bd00 🅣 [91m--[0m] INFO: [SessionManager] Cleared all owned data (targets, sessions, mappings)
+2026-06-11 18:36:51 [browser_use.BrowserSession🅑 bd00 🅣 [91m--[0m] INFO: ✅ Browser session reset complete
+2026-06-11 18:36:51 [browser_use.BrowserSession🅑 bd00 🅣 [91m--[0m] INFO: ✅ Browser session reset complete
+2026-06-11 18:36:51 [browser_use.BrowserSession🅑 bd00 🅣 [91m--[0m] INFO: ✅ Browser session reset complete
+2026-06-11 18:37:05 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
