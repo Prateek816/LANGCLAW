@@ -383,3 +383,162 @@ task: <Task pending name='heartbeat' coro=<HeartbeatMonitor._loop() running at /
 2026-06-10 21:43:53 [session_manager] INFO: [SessionManager] Creating session 'cli'
 2026-06-10 21:43:53 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
 2026-06-10 21:44:08 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:36:05 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 00:36:05 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 00:36:05 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 00:36:05 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 00:36:05 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 00:36:05 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 00:36:05 [core.llm.factory] INFO: Creating LLM: provider=groq, model=openai/gpt-oss-120b
+2026-06-11 00:36:05 [__main__] INFO: Heartbeat monitor created.
+2026-06-11 00:36:05 [__main__] INFO: [Telegram] Starting bot (polling mode)...
+2026-06-11 00:36:06 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getMe "HTTP/1.1 200 OK"
+2026-06-11 00:36:06 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMyCommands "HTTP/1.1 200 OK"
+2026-06-11 00:36:07 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getMe "HTTP/1.1 200 OK"
+2026-06-11 00:36:07 [channels.telegram_bot] INFO: [Telegram] Registered 5 bot commands, username=@Prateek816_bot
+2026-06-11 00:36:07 [scheduler.heartbeat] INFO: [Heartbeat] Monitor started (interval=60s)
+2026-06-11 00:36:07 [__main__] INFO: Heartbeat monitor started.
+2026-06-11 00:36:07 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/deleteWebhook "HTTP/1.1 200 OK"
+2026-06-11 00:36:07 [apscheduler.scheduler] INFO: Scheduler started
+2026-06-11 00:36:07 [telegram.ext.Application] INFO: Application started
+2026-06-11 00:36:07 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:36:07 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=541ms
+2026-06-11 00:36:13 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:36:13 [session_manager] INFO: [SessionManager] Creating session 'telegram:5207747295'
+2026-06-11 00:36:13 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 00:36:14 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:36:15 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:36:19 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:36:24 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:36:24 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:36:28 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:36:29 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:36:29 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-11 00:36:30 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:36:34 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:36:38 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:36:39 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:36:39 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:36:44 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:36:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:36:49 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:36:52 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:36:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-11 00:36:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:36:59 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:37:08 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:37:08 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=773ms
+2026-06-11 00:37:09 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:37:19 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:37:30 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:37:31 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:37:32 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:37:33 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:37:37 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:37:41 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:37:41 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:37:46 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:37:46 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:37:46 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-11 00:37:47 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:37:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:38:02 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:38:09 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:38:09 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=862ms
+2026-06-11 00:38:12 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:38:22 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:38:33 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:38:43 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:38:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:39:03 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:39:06 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:39:07 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getFile "HTTP/1.1 200 OK"
+2026-06-11 00:39:07 [httpx] INFO: HTTP Request: GET https://api.telegram.org/file/bot8879756714%3AAAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/voice/file_0.oga "HTTP/1.1 200 OK"
+2026-06-11 00:39:09 [httpx] INFO: HTTP Request: POST https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true&punctuate=true&language=multi "HTTP/1.1 200 OK"
+2026-06-11 00:39:09 [core.stt] WARNING: [STT] Empty transcript (detected_lang=unknown, bytes=8895, mime=audio/ogg)
+2026-06-11 00:39:09 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-11 00:39:10 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:39:10 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=634ms
+2026-06-11 00:39:16 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:39:27 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:39:33 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:39:36 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getFile "HTTP/1.1 200 OK"
+2026-06-11 00:39:36 [httpx] INFO: HTTP Request: GET https://api.telegram.org/file/bot8879756714%3AAAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/voice/file_1.oga "HTTP/1.1 200 OK"
+2026-06-11 00:39:39 [httpx] INFO: HTTP Request: POST https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true&punctuate=true&language=multi "HTTP/1.1 200 OK"
+2026-06-11 00:39:39 [channels.telegram_bot] INFO: [Telegram] Voice transcribed: Hello. How are you?
+2026-06-11 00:39:39 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:39:39 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:39:43 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:39:44 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:39:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:39:52 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:39:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:39:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-11 00:39:54 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:39:54 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:40:04 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:40:10 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:40:10 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=541ms
+2026-06-11 00:40:14 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:40:17 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:40:17 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:40:18 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:40:22 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:40:27 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:40:27 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:40:31 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:40:31 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-11 00:40:32 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-11 00:40:32 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-11 00:40:37 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:40:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:40:58 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:41:08 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:41:11 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:41:11 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=700ms
+2026-06-11 00:41:18 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:41:29 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:41:39 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:41:49 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:41:59 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:42:10 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:42:12 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:42:12 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=808ms
+2026-06-11 00:42:20 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:42:31 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:42:41 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:42:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:43:02 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:43:12 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:43:12 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=655ms
+2026-06-11 00:43:12 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:43:23 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:43:33 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:43:43 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:43:54 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:44:04 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:44:13 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:44:13 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=822ms
+2026-06-11 00:44:14 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:44:24 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:44:34 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:44:45 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:44:55 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:45:05 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:45:13 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 00:45:14 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=495ms
+2026-06-11 00:45:15 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:45:22 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-11 00:45:22 [telegram.ext.Application] INFO: Application is stopping. This might take a moment.
+2026-06-11 00:45:22 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-06-11 00:45:22 [telegram.ext.Application] INFO: Application.stop() complete
+2026-06-11 00:45:23 [asyncio] ERROR: Task was destroyed but it is pending!
+task: <Task pending name='heartbeat' coro=<HeartbeatMonitor._loop() running at /Users/prateek/Desktop/langclaw/scheduler/heartbeat.py:99> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2026-06-11 00:50:04 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 00:50:04 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 00:50:04 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 00:50:04 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 00:50:04 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 00:50:04 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 00:50:04 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 00:50:04 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8

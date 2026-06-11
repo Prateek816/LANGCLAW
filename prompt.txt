@@ -1,0 +1,484 @@
+## Available tools
+### lc_run_command
+Execute a shell command. Use to run scripts, install packages, or perform system operations.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "command": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "command"
+  ],
+  "type": "object"
+}
+
+### lc_read_file
+Read the contents of a file. Use to inspect code, logs, or data.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "path": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "path"
+  ],
+  "type": "object"
+}
+
+### lc_write_file
+Write content to a file (must be within the project directory). Creates parent directories automatically.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "path": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "path",
+    "content"
+  ],
+  "type": "object"
+}
+
+### lc_list_files
+List files in a directory. Use to discover available scripts or files.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "path": {
+      "default": ".",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
+
+### lc_send_file
+Send a file to the user via the active channel. Max 100 MB.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "path": {
+      "type": "string"
+    },
+    "caption": {
+      "default": "",
+      "type": "string"
+    }
+  },
+  "required": [
+    "path"
+  ],
+  "type": "object"
+}
+
+### lc_web_search
+Search the web for real-time information using the Tavily API.
+    Use this when you need up-to-date information, current events,
+    facts you're unsure about, or anything that benefits from live web data.
+
+    Args:
+        query: The search query. Be specific for better results.
+        search_depth: 'basic' (fast) or 'advanced' (more thorough).
+        topic: 'general', 'news', or 'finance'.
+        max_results: Number of results to return (1-10). Use 2-3 for most queries.
+        time_range: Filter by recency — 'day', 'week', 'month', or 'year'. Leave None for no filter.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "query": {
+      "type": "string"
+    },
+    "search_depth": {
+      "default": "basic",
+      "type": "string"
+    },
+    "topic": {
+      "default": "general",
+      "type": "string"
+    },
+    "max_results": {
+      "default": 3,
+      "type": "integer"
+    },
+    "time_range": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "type": "object"
+}
+
+### lc_remember
+Store a fact in long-term memory.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "content": {
+      "type": "string"
+    },
+    "key": {
+      "default": "",
+      "type": "string"
+    }
+  },
+  "required": [
+    "content"
+  ],
+  "type": "object"
+}
+
+### lc_recall
+Search long-term memory for relevant facts.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "query": {
+      "default": "*",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
+
+### lc_memory_get
+Read a specific memory file by path.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "path": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "path"
+  ],
+  "type": "object"
+}
+
+### lc_memory_list_files
+List all memory files.
+Parameters (JSON Schema):
+{
+  "properties": {},
+  "type": "object"
+}
+
+### lc_forget
+Remove a memory entry by key.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "key": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "key"
+  ],
+  "type": "object"
+}
+
+### lc_update_index
+Update the memory INDEX.md file.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "content"
+  ],
+  "type": "object"
+}
+
+### lc_use_skill
+Load and use a skill by name.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "skill_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "skill_name"
+  ],
+  "type": "object"
+}
+
+### lc_list_skill_resources
+List resource files for a skill.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "skill_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "skill_name"
+  ],
+  "type": "object"
+}
+
+### lc_cron_add
+Schedule a recurring job.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "prompt": {
+      "type": "string"
+    },
+    "cron_expr": {
+      "type": "string"
+    },
+    "job_id": {
+      "default": "",
+      "type": "string"
+    }
+  },
+  "required": [
+    "prompt",
+    "cron_expr"
+  ],
+  "type": "object"
+}
+
+### lc_cron_remove
+Remove a scheduled job.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "job_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "job_id"
+  ],
+  "type": "object"
+}
+
+### lc_cron_list
+List all scheduled jobs.
+Parameters (JSON Schema):
+{
+  "properties": {},
+  "type": "object"
+}
+
+## Tool-calling rules
+- If you decide a tool should be called, output ONLY the following block
+  and nothing else — no explanation, no prose before or after:
+
+TOOL_CALL_JSON:
+{
+  "name": "<function_name>",
+  "arguments": {
+    "<param>": "<value>"
+  }
+}
+
+- Replace <function_name> with the exact tool name and fill in the
+  arguments object with the required parameters.
+- If no tool is needed, respond normally in plain text.
+- Never invent tool names that are not in the Available tools list.
+- Never call more than one tool per response.
+
+──────────────────────────────────────────────────
+CONVERSATION
+──────────────────────────────────────────────────
+
+[SYSTEM]
+## Available Skills
+
+[Communication]
+email: Send emails via SMTP. Supports plain text, HTML, attachments, slack: "Slack API integration — send/read messages, react to messag
+[Data]
+csv_analyzer: "Analyze CSV and Excel files — statistics, filtering, groupi, finance: "Fetch stock quotes, crypto prices, forex rates, and financi, news: "Search and summarize news on any topic via web_search or Du, pdf_convert: "Convert between PDF and image formats. Use when: user asks , pdf_merge: "Merge multiple PDF files into a single PDF. Use when: user , pdf_protect: "Add or remove password protection on PDF files. Use when: u, pdf_reader: "Extract text content from PDF files. Use when: user asks to, pdf_split: "Split a PDF into separate files by page ranges. Use when: u, pdf_writer: "Create PDF documents from text, Markdown, or HTML content. , web_scraper: Scrape and extract content from web pages. Supports extracti, weather: "Get current weather and forecasts via Open-Meteo and wttr.i, youtube: "Get YouTube video information, metadata, and transcripts/su
+[Developer]
+code_runner: Execute Python code snippets safely in an isolated subproces, github: GitHub operations via gh CLI or Python API. Use when: listin, http_request: Make HTTP requests (GET, POST, PUT, DELETE, PATCH) to any AP
+[Google]
+google_workspace: Google Workspace via gog CLI — Gmail, Calendar, Drive, Conta
+[Media]
+image_gen: "Generate images via OpenAI Images API (DALL-E 3, GPT-image), spotify: "Control Spotify playback — play, pause, skip, search, and q, tts: "Text-to-speech — convert text to audio using gTTS or edge-t
+[Meta]
+skill_creator: Dynamically create new skills when no existing skill can han
+[Productivity]
+notion: "Notion API for creating and managing pages, databases, and , obsidian: "Work with Obsidian vaults (plain Markdown notes). Use when:, trello: "Manage Trello boards, lists, and cards via the Trello REST 
+[System]
+change_persona: "Modify the agent's personality and role (persona.md). Use w, change_setting: "Modify pythonclaw.json configuration at runtime. Use when: , change_soul: "Modify the agent's core identity (soul.md). Use when: user , model_usage: "Track and display LLM token usage, costs, and model statist, onboarding: "First-time setup wizard that collects user name, agent pers, system_random: "Generate random numbers, UUIDs, passwords, or pick random i, session_logs: "Search and analyse your own conversation history from sessi, system_time: "Get current date, time, timezone, Unix timestamp, or conver
+[Text]
+translator: Translate text between 100+ languages with automatic source 
+[Web]
+summarize: "Summarize or extract text from URLs, articles, PDFs, and lo, tavily_search: Advanced web search using the Tavily API via built-in web_se
+
+---
+
+You have web search available via the web_search tool. Use it when you need current information.
+
+---
+
+## What You Remember
+
+### Long-Term Memory
+- **user_profile**: Prateek is a BTech student from MNNIT Allahabad (Motilal Nehru National Institute of Technology), currently pursuing Computer Science.
+
+---
+
+## Onboarding
+
+This is a new session with default identity. Your first priority is to guide the user through setting up their identity. Use the `lc_use_skill` tool to load the 'onboarding' skill and follow its instructions. Do not proceed with other tasks until onboarding is complete or the user explicitly declines.
+──────────────────────────────────────────────────
+[USER]
+Hello
+──────────────────────────────────────────────────
+[ASSISTANT]
+Hello! I'm LangClaw, your AI assistant. I see this is our first time meeting, so let me help you set up your preferences.
+
+What should I call you?
+──────────────────────────────────────────────────
+[USER]
+You can call me Prateek , i am a btech student from mnnit allahabad currently doing CS
+──────────────────────────────────────────────────
+[ASSISTANT]
+Great to meet you, Prateek! 👋
+
+MNNIT Allahabad is a solid institute — awesome choice for CS! What year are you in? And is there anything I can help you with today? Whether it's:
+
+- **Coding & DSA** prep
+- **Projects** and assignments
+- **Internship/job** preparation
+- **Research** topics
+- Or just a general question
+
+I'm here to help! 🚀
+──────────────────────────────────────────────────
+[USER]
+I want to send a email to prateekrastogi618@gmail.com on wishing on their bday can you do that
+──────────────────────────────────────────────────
+[ASSISTANT]
+I exceeded the maximum tool rounds. Please try a simpler request.
+──────────────────────────────────────────────────
+[USER]
+Hi
+──────────────────────────────────────────────────
+[ASSISTANT]
+Hi Prateek! Ready to get that birthday email sorted out, or is there something else on your mind right now?
+
+Let me know how you'd like to proceed!
+──────────────────────────────────────────────────
+[USER]
+I love you
+──────────────────────────────────────────────────
+[ASSISTANT]
+Well, I must say I'm flattered! That definitely beats getting hit with a syntax error. 😄
+
+Right back at you as a trusty, code-crunching AI companion! I'm always here to help you debug, brainstorm, or write those birthday emails.
+
+What's on your mind next, Prateek?
+──────────────────────────────────────────────────
+[USER]
+Can you write a code in python which prints fabonacci number
+──────────────────────────────────────────────────
+[ASSISTANT]
+Here is a clean and straightforward Python implementation to generate the Fibonacci sequence.
+
+I have included two approaches: a simple iterative loop (which is efficient and great for printing the sequence up to n terms) and a recursive function (which is often asked in interviews but is less efficient for large numbers).
+
+Method 1: Iterative Approach (Recommended)
+
+This approach uses a loop to generate the sequence, making it highly efficient with a time complexity of O(n).
+
+Python
+def print_fibonacci(n):
+    """
+    Prints the first n numbers in the Fibonacci sequence.
+    """
+    if n <= 0:
+        print("Please enter a positive integer.")
+        return
+    
+    # Initialize the first two terms
+    a, b = 0, 1
+    
+    print(f"First {n} Fibonacci numbers:")
+    for _ in range(n):
+        print(a, end=" ")
+        # Update values: next number is the sum of previous two
+        a, b = b, a + b
+    print()  # For a newline at the end
+
+# Example usage: Print the first 10 terms
+print_fibonacci(10)
+
+
+Output:
+
+Plaintext
+First 10 Fibonacci numbers:
+0 1 1 2 3 5 8 13 21 34 
+
+Method 2: Recursive Approach
+
+If you are practicing for CS exams or interviews, you might be asked to find the n-th Fibonacci number using recursion.
+
+Python
+def fibonacci_recursive(n):
+    """
+    Returns the n-th Fibonacci number.
+    Index starts at 0 (0th number = 0, 1st number = 1).
+    """
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+
+# Printing the first 10 terms using recursion
+terms = 10
+print(f"First {terms} Fibonacci numbers (Recursive):")
+for i in range(terms):
+    print(fibonacci_recursive(i), end=" ")
+print()
+
+
+⚠️ Note on Recursion: While elegant, the simple recursive approach has an exponential time complexity of O(2
+n
+) because it recalculates the same values multiple times. For larger values of n, you'd want to use dynamic programming (memoization) to optimize it!
+──────────────────────────────────────────────────
+[USER]
+Hello. How are you?
+──────────────────────────────────────────────────
+[ASSISTANT]
+Hey Prateek! I'm doing great, thanks for asking. Just hanging out in the digital realm, ready to crunch some more numbers, write scripts, or tackle whatever CS challenges you've got cooking up today.
+
+How are things going with you at MNNIT? What are we working on next?
+──────────────────────────────────────────────────
+[USER]
+Ok
+
+──────────────────────────────────────────────────
+[ASSISTANT]

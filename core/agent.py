@@ -85,6 +85,7 @@ class Agent:
         compaction_recent_keep: int = DEFAULT_RECENT_KEEP,
         cron_manager=None,
         session_store=None,
+        allow_subagents:bool = False
     ):
         
         #self.provider = provider
@@ -130,6 +131,7 @@ class Agent:
         self._cron_manager = cron_manager
         self._file_sender = None  # channel-specific file sender callback
         self._session_store = session_store
+        self.allow_subagents = allow_subagents
 
         # Restore persisted session history if available
         if session_store and session_id:
@@ -281,7 +283,10 @@ class Agent:
             primitive_tools,
             web_search_tool,
         )
-
+        from core.subagents.subagents_registry import (
+            SubAgentRegistry,
+            BaseRegistry
+        )
         # Exclude lc_send_file from primitive_tools — we build it per-session below
         tools = [t for t in primitive_tools if t.name != "lc_send_file"]
 
@@ -298,6 +303,23 @@ class Agent:
 
         if self._web_search_enabled:
             tools.extend(web_search_tool)
+        
+        from core.subagents.subagents_registry import BaseRegistry
+
+        base_registry = BaseRegistry()  # discovers everything in agents/
+
+        if self.allow_subagents:
+            for agent in base_registry.list_agents():
+                tools.append(StructuredTool.from_function(
+                    func=agent.func,
+                    name=agent.name,
+                    description=agent.description,
+                ))
+
+            
+        
+
+                
 
         # Memory tools — bound to this agent's memory manager
         memory_defs = [
