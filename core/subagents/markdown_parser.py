@@ -65,7 +65,7 @@ import re
 from pathlib import Path
 from typing import Iterator
 
-from model import AgentStatus, ParsedMarkdownAgent, SubAgentConfig
+from core.subagents.model import AgentStatus, ParsedMarkdownAgent, SubAgentConfig
 
 logger = logging.getLogger(__name__)
 

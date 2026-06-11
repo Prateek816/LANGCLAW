@@ -1684,3 +1684,107 @@ action.0.EvaluateActionModel.search_page
 2026-06-11 18:36:51 [browser_use.BrowserSession🅑 bd00 🅣 [91m--[0m] INFO: ✅ Browser session reset complete
 2026-06-11 18:36:51 [browser_use.BrowserSession🅑 bd00 🅣 [91m--[0m] INFO: ✅ Browser session reset complete
 2026-06-11 18:37:05 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:44:13 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 18:44:13 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:44:13 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 18:44:13 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:44:13 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 18:44:13 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 18:44:13 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 18:44:13 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 18:44:13 [core.subagents.subagents_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-11 18:44:13 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/Desktop/langclaw/templates/skills
+2026-06-11 18:44:13 [core.skill_loader] INFO:   -> 36 skill(s) found in /Users/prateek/Desktop/langclaw/templates/skills
+2026-06-11 18:44:13 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-11 18:44:13 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-11 18:44:13 [core.skill_loader] INFO: Skill discovery complete: 36 skill(s), 10 category(ies) — email, slack, csv_analyzer, finance, news, pdf_convert, pdf_merge, pdf_protect, pdf_reader, pdf_split, pdf_writer, web_scraper, weather, youtube, code_runner, github, http_request, google_workspace, image_gen, spotify, tts, skill_creator, notion, obsidian, trello, change_persona, change_setting, change_soul, model_usage, onboarding, system_random, session_logs, system_time, translator, summarize, tavily_search
+2026-06-11 18:44:13 [core.skill_loader] INFO: Skill catalog built: 10 categories, 36 skills (2732 chars)
+2026-06-11 18:44:13 [core.skill_loader] INFO: Skill Registry cache hit (36 skills)
+2026-06-11 18:44:13 [core.agent] INFO: Skills injected into prompt: dirs=['/Users/prateek/Desktop/langclaw/templates/skills', '/Users/prateek/.langclaw/context/skills'], skills=36, size=2732 chars
+2026-06-11 18:45:17 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 18:45:17 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:45:17 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 18:45:17 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 18:45:17 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 18:45:17 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 18:45:17 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 18:45:17 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 18:45:18 [core.subagents.subagents_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-11 18:45:18 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-11 18:45:18 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-11 18:45:18 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-11 18:45:18 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-11 18:45:18 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-11 18:45:49 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 18:47:06 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 22:25:43 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 22:25:43 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 22:25:43 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 22:25:43 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 22:25:43 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 22:25:43 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 22:25:43 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 22:25:43 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 22:25:44 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-11 22:25:44 [core.subagents.custom_registry] ERROR: CustomRegistry: agents directory does not exist: /Users/prateek/.langclaw/context/groups/cli/subagents
+2026-06-11 22:25:44 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-11 22:25:44 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-11 22:25:44 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-11 22:25:44 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-11 22:25:44 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-11 22:28:17 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 22:28:17 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 22:28:17 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 22:28:17 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 22:28:17 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 22:28:17 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 22:28:17 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 22:28:17 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 22:28:18 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-11 22:28:18 [core.subagents.markdown_parser] WARNING: No markdown files found in /Users/prateek/.langclaw/context/groups/cli/subagents with pattern '**/*.md'
+2026-06-11 22:28:18 [core.subagents.custom_registry] INFO: CustomRegistry: 0 agent(s) ready → []
+2026-06-11 22:28:18 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-11 22:28:18 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-11 22:28:18 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-11 22:28:18 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-11 22:28:18 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-11 22:32:40 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 22:32:40 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 22:32:40 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 22:32:40 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 22:32:40 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 22:32:40 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 22:32:40 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 22:32:40 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 22:32:40 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-11 22:32:40 [core.subagents.markdown_parser] ERROR: Failed to parse research_agent.md: [research_agent.md] Missing required '## Description' section.
+2026-06-11 22:32:40 [core.subagents.markdown_parser] INFO: Parsed 0 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-11 22:32:40 [core.subagents.custom_registry] INFO: CustomRegistry: 0 agent(s) ready → []
+2026-06-11 22:32:40 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-11 22:32:40 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-11 22:32:40 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-11 22:32:40 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-11 22:32:40 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-11 22:33:32 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-11 22:33:32 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 22:33:32 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-11 22:33:32 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-11 22:33:32 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-11 22:33:32 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-11 22:33:32 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-11 22:33:32 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 22:33:32 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-11 22:33:32 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-11 22:33:32 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-11 22:33:32 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-11 22:33:32 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-11 22:33:32 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-11 22:33:32 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-11 22:33:32 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-11 22:33:57 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 22:34:29 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 22:34:29 [core.subagents.subagent_factory] INFO: [research-agent] invoke_subagent — prompt='Provide a comprehensive, concise, fact-checked overview of Elon Musk, including '
+2026-06-11 22:34:29 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-11 22:34:42 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 22:34:42 [core.subagents.subagent_factory] INFO: [research-agent] Completed. Output length: 3540 chars
+2026-06-11 22:34:55 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"

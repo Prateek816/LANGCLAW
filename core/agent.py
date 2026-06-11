@@ -134,10 +134,14 @@ class Agent:
         self._session_store = session_store
         self.allow_subagents = allow_subagents
         if allow_subagents:
-            from core.subagents.subagents_registry import BaseRegistry
+            from core.subagents.base_registry import BaseRegistry
+            from core.subagents.custom_registry import CustomRegistry
+            self.agents_dir = os.path.join(context_dir, "subagents")
             self._subagent_registry = BaseRegistry()
+            self._custom_subagent_registry = CustomRegistry(agents_dir= self.agents_dir)
         else:
             self._subagent_registry = None
+            self._custom_subagent_registry = None
 
         # Restore persisted session history if available
         if session_store and session_id:
@@ -267,15 +271,19 @@ class Agent:
             )
 
         # Subagent hints
+        agent_lines: list[str] = []
         if self._subagent_registry:
-            agents = self._subagent_registry.list_agents()
-            if agents:
-                agent_lines = [f"- **{a.name}**: {a.description}" for a in agents]
-                parts.append(
-                    "## Subagents\n\n"
-                    "You have access to specialized subagents that can handle complex tasks:\n\n"
-                    + "\n".join(agent_lines)
-                )
+            for a in self._subagent_registry.list_agents():
+                agent_lines.append(f"- **{a.name}**: {a.description}")
+        if self._custom_subagent_registry:
+            for a in self._custom_subagent_registry.list_agents():
+                agent_lines.append(f"- **{a.name}**: {a.description}")
+        if agent_lines:
+            parts.append(
+                "## Subagents\n\n"
+                "You have access to specialized subagents that can handle complex tasks:\n\n"
+                + "\n".join(agent_lines)
+            )
 
         # Memory boot context (curated long-term memories)
         boot_ctx = self.memory.boot_context(max_chars=3000)
@@ -325,6 +333,14 @@ class Agent:
         
         if self._subagent_registry:
             for agent in self._subagent_registry.list_agents():
+                tools.append(StructuredTool.from_function(
+                    func=agent.func,
+                    name=agent.name,
+                    description=agent.description,
+                ))
+
+        if self._custom_subagent_registry:
+            for agent in self._custom_subagent_registry.list_agents():
                 tools.append(StructuredTool.from_function(
                     func=agent.func,
                     name=agent.name,

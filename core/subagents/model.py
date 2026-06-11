@@ -8,7 +8,9 @@ a single source of truth for types.
 from __future__ import annotations
 
 import enum
-from typing import Annotated, Any, Optional
+from dataclasses import dataclass, field
+from types import ModuleType
+from typing import Annotated, Any, Callable, Optional
 from typing_extensions import NotRequired, TypedDict
 
 from pydantic import BaseModel, Field, field_validator, model_validator
@@ -248,10 +250,35 @@ class ParsedMarkdownAgent(BaseModel):
 
 
 # ---------------------------------------------------------------------------
+# AgentEntry — shared descriptor consumed by StructuredTool.from_function()
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class AgentEntry:
+    """
+    Thin descriptor returned by both BaseRegistry and CustomRegistry.
+    The main agent converts these to StructuredTool instances.
+
+    Attributes
+    ----------
+    name        : unique identifier used as the LangChain tool name
+    description : human-readable description forwarded to the LLM
+    func        : the agent's call(prompt, context) callable
+    module      : the backing module (None for markdown agents)
+    """
+    name: str
+    description: str
+    func: Callable[[str, str], str]
+    module: ModuleType | None = field(default=None, repr=False)
+
+
+# ---------------------------------------------------------------------------
 # Convenience re-exports
 # ---------------------------------------------------------------------------
 
 __all__ = [
+    "AgentEntry",
     "AgentStatus",
     "ToolAccessPolicy",
     "SubAgent",
