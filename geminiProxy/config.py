@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     port: int = 8000
 
     # ── Browser ───────────────────────────────────────────────────────────
-    browser_user_data_dir: str = "./chrome_profile"
+    browser_user_data_dir: str = "./Default"
     """Path to Chrome profile that is already logged in to Gemini."""
 
     max_concurrent_pages: int = 10

@@ -12,5 +12,5 @@ test_data/
 __MACOSX/
 chrome_profile/
 .cache
-
+Default/
 *.onnx

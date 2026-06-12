@@ -17,6 +17,8 @@ An autonomous AI agent framework built in Python with LangChain. LangClaw connec
 - **Session persistence** — conversation history survives restarts
 - **Per-group isolation** — each session gets its own context directory (soul, persona, memory, skills)
 - **Dynamic skill creation** — the agent can create new skills at runtime ("God Mode")
+- **Subagent system** — main agent delegates tasks to specialized sub-agents (Python or Markdown-defined)
+- **Local Gemini proxy** — run Gemini without API keys via browser automation (geminiProxy)
 
 ## Quick Start
 
@@ -106,6 +108,14 @@ langclaw/
 │   ├── session_store.py       # Persist conversation history to disk
 │   ├── skill_loader.py        # 3-tier skill system (discover/load/resources)
 │   ├── stt.py                 # Speech-to-text (Deepgram)
+│   │
+│   ├── subagents/             # Sub-agent system
+│   │   ├── model.py           # Shared data models, enums, TypedDicts
+│   │   ├── base_registry.py   # Auto-discovers Python-module agents
+│   │   ├── custom_registry.py # Discovers Markdown-defined agents
+│   │   ├── markdown_parser.py # Parses .md files into SubAgentConfig
+│   │   ├── subagent_factory.py # Builds and runs isolated LangChain agents
+│   │   └── agents/            # Built-in sub-agents (e.g. browser_agent)
 │   │
 │   ├── llm/                   # Multi-provider LLM abstraction
 │   │   ├── config.py          # LLMConfig dataclass
@@ -252,7 +262,94 @@ Instructions for the agent on how to use this skill...
 
 The agent can also create skills at runtime using the `create_skill` tool ("God Mode").
 
+## Subagents
+
+The main agent can delegate tasks to specialized sub-agents. Each sub-agent runs in isolation with its own memory and tool set.
+
+### Two Registry Paths
+
+| Registry | Source | How to define |
+|----------|--------|---------------|
+| **BaseRegistry** | Python modules in `core/subagents/agents/` | Expose `NAME`, `DESCRIPTION`, and `call(prompt, context)` at module level |
+| **CustomRegistry** | Markdown files in `~/.langclaw/context/subagents/` | Write a `.md` file with `## Description` and `## Prompt` sections |
+
+### How It Works
+
+1. The orchestrator LLM sees available sub-agents in its system prompt (name + description).
+2. When it calls a sub-agent tool, `subagent_factory.py` spins up an isolated LangChain agent.
+3. The sub-agent gets its own `ConversationBufferWindowMemory`, resolved tools (based on `ToolAccessPolicy`), and the prompt + orchestrator context.
+4. Result is returned as a string to the main agent.
+
+### Creating a Custom Sub-agent
+
+Create a markdown file in `~/.langclaw/context/subagents/`:
+
+```markdown
+## Name
+research_agent
+
+## Description
+Searches the web and summarizes findings on a given topic.
+
+## Prompt
+You are a research assistant. Given a topic, search the web for relevant information and provide a concise summary with sources.
+
+## Tools
+web_search, read_file
+
+## Max Iterations
+5
+```
+
+Built-in agents (like `browser_agent`) are auto-discovered from `core/subagents/agents/`.
+
+## Local Gemini Proxy (No API Keys)
+
+The `geminiProxy/` directory contains a local OpenAI-compatible proxy that uses the **free Gemini web UI** as its backend via Playwright browser automation. No Google API key needed.
+
+### How It Works
+
+1. Launches a real Chrome browser with your saved Google login session.
+2. Automates `gemini.google.com/app` — types prompts, reads responses from the DOM.
+3. Exposes an OpenAI-compatible `POST /v1/chat/completions` endpoint.
+4. Supports tool/function calling via `TOOL_CALL_JSON:` sentinel parsing.
+
+### Setup
+
+```bash
+# 1. Start Chrome with remote debugging (must be logged into Google)
+cd geminiProxy
+./start_chrome.sh
+
+# 2. Start the proxy server
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+### Configure LangClaw to Use It
+
+In `langclaw.json`:
+
+```json5
+{
+  "llm": {
+    "provider": "openai",
+    "model": "gemini-web",
+    "baseUrl": "http://localhost:8000/v1"
+  }
+}
+```
+
+No API key required — authentication comes from the Chrome browser session.
+
+### Trade-offs
+
+- Responses scraped from DOM after fixed wait (not streaming)
+- Concurrency limited by browser tabs (default: 10)
+- Gemini UI CSS selector changes can break the proxy until selectors updated
+
 ## Project Structure: Key Directories
+
+All persistent data lives under `~/.langclaw/` (override with `LANGCLAW_HOME` env var).
 
 | Path | Purpose |
 |---|---|
@@ -267,6 +364,9 @@ The agent can also create skills at runtime using the `create_skill` tool ("God 
 | `~/.langclaw/context/cron/` | Cron job definitions |
 | `~/.langclaw/context/files/` | Shared working directory |
 | `~/.langclaw/context/groups/` | Per-session isolated contexts |
+| `~/.langclaw/context/subagents/` | Custom sub-agent markdown definitions |
+| `~/.langclaw/context/compaction/` | Compaction audit logs (`history.jsonl`) |
+| `~/.langclaw/context/logs/` | Heartbeat and other rotating logs |
 
 ## Telegram Commands
 
