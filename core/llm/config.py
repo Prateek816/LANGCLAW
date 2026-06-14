@@ -37,13 +37,14 @@ Provider = Literal[
     "anthropic",
     "ollama",
     "groq",
+    "openrouter"
     "custom",
     "openai_compatible",
 ]
 
 # Providers that ship with a known base URL — no base_url required from the user.
 _BUILTIN_PROVIDERS: frozenset[str] = frozenset(
-    {"openai", "gemini", "anthropic", "ollama", "groq"}
+    {"openai", "gemini", "anthropic", "ollama", "groq","openrouter"}
 )
 
 # Providers that route through ChatOpenAI and require the user to supply base_url.
@@ -57,6 +58,7 @@ _PROVIDER_DEFAULTS: dict[str, dict] = {
     "anthropic": {"model": "claude-3-5-haiku-20241022"},
     "ollama":    {"model": "llama3.2"},
     "groq":      {"model": "llama-3.3-70b-versatile"},
+    "openrouter":{"model": "nousresearch/hermes-3-llama-3.1-405b:free"}
 }
 
 

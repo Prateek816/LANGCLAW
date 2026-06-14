@@ -113,6 +113,22 @@ def _build_openai(config: LLMConfig) -> BaseChatModel:
         **config.extra,
     )
 
+@_register("openrouter")
+def _build_openrouter(config: LLMConfig) -> BaseChatModel:
+    from langchain_openrouter import ChatOpenRouter
+
+    api_key = _require_api_key("OPENROUTER_API_KEY","openrouter")
+
+    return ChatOpenRouter(
+        model=config.model,
+        temperature=config.temperature,
+        max_tokens=config.max_tokens,
+        streaming=config.streaming,
+        api_key=api_key,
+        # Allow optional base_url override (e.g. Azure OpenAI or a proxy)
+        **({"base_url": config.base_url} if config.base_url else {}),
+        **config.extra,
+    )
 
 @_register("gemini")
 def _build_gemini(config: LLMConfig) -> BaseChatModel:

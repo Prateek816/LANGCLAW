@@ -1819,3 +1819,480 @@ action.0.EvaluateActionModel.search_page
 2026-06-12 01:39:12 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-12 01:39:25 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
 2026-06-12 01:39:39 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:56:41 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-12 14:56:41 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-12 14:56:41 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-12 14:56:41 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-12 14:56:41 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-12 14:56:41 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-12 14:56:41 [core.llm.factory] INFO: Creating LLM: provider=groq, model=openai/gpt-oss-120b
+2026-06-12 14:56:41 [__main__] INFO: Heartbeat monitor created.
+2026-06-12 14:56:41 [__main__] INFO: [Telegram] Starting bot (polling mode)...
+2026-06-12 14:56:41 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getMe "HTTP/1.1 200 OK"
+2026-06-12 14:56:42 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMyCommands "HTTP/1.1 200 OK"
+2026-06-12 14:56:42 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getMe "HTTP/1.1 200 OK"
+2026-06-12 14:56:42 [channels.telegram_bot] INFO: [Telegram] Registered 5 bot commands, username=@Prateek816_bot
+2026-06-12 14:56:42 [scheduler.heartbeat] INFO: [Heartbeat] Monitor started (interval=60s)
+2026-06-12 14:56:42 [__main__] INFO: Heartbeat monitor started.
+2026-06-12 14:56:43 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/deleteWebhook "HTTP/1.1 200 OK"
+2026-06-12 14:56:43 [apscheduler.scheduler] INFO: Scheduler started
+2026-06-12 14:56:43 [telegram.ext.Application] INFO: Application started
+2026-06-12 14:56:43 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:56:43 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=704ms
+2026-06-12 14:56:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:57:03 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:57:09 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:57:09 [session_manager] INFO: [SessionManager] Creating session 'telegram:5207747295'
+2026-06-12 14:57:09 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-12 14:57:10 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-12 14:57:10 [core.subagents.custom_registry] ERROR: CustomRegistry: agents directory does not exist: /Users/prateek/.langclaw/context/groups/telegram_5207747295/subagents
+2026-06-12 14:57:10 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-12 14:57:10 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-12 14:57:10 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-12 14:57:10 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-12 14:57:10 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-12 14:57:11 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 14:57:11 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:57:16 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:57:20 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:57:20 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:57:24 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:57:26 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:57:26 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-12 14:57:27 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 14:57:30 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:57:41 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:57:44 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:57:44 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=605ms
+2026-06-12 14:57:49 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:57:50 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 14:57:50 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:57:55 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:57:59 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:57:59 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:58:03 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:58:03 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:58:08 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:58:10 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:58:12 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:58:17 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:58:19 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:58:19 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-12 14:58:20 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 14:58:20 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:58:30 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:58:40 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:58:44 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:58:44 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=392ms
+2026-06-12 14:58:51 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:59:01 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:59:11 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:59:15 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:59:16 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 14:59:17 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:59:21 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:59:25 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:59:26 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:59:30 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:59:30 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:59:31 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-12 14:59:31 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 14:59:33 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:59:33 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 14:59:34 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:59:38 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:59:43 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:59:43 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 14:59:44 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:59:44 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=518ms
+2026-06-12 14:59:47 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 14:59:48 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 14:59:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-12 14:59:49 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 14:59:54 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:00:04 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:00:14 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:00:25 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:00:35 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:00:45 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 15:00:45 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=499ms
+2026-06-12 15:00:45 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:00:55 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:01:06 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:01:16 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:01:26 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:01:36 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:01:45 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 15:01:45 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=512ms
+2026-06-12 15:01:47 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:01:57 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:02:07 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:02:18 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:02:28 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:02:38 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:02:46 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 15:02:46 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=620ms
+2026-06-12 15:02:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:02:59 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:03:09 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:03:19 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:13:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:13:49 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 15:13:49 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=557ms
+2026-06-12 15:17:06 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:17:17 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:17:27 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:17:37 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:17:43 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 15:17:43 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=526ms
+2026-06-12 15:17:47 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:17:58 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:18:08 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:18:18 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:18:29 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:18:39 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:18:43 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 15:18:43 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=595ms
+2026-06-12 15:18:50 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:19:00 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:19:10 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:19:21 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:29:44 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 15:29:44 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=748ms
+2026-06-12 15:29:46 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:39:57 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:40:08 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:40:18 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:42:48 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 15:42:50 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 15:42:50 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=518ms
+2026-06-12 15:53:13 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 16:12:50 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 16:12:50 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=546ms
+2026-06-12 16:36:48 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 16:36:48 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=1302ms
+2026-06-12 16:36:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 16:44:00 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 16:44:11 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 16:44:21 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 16:44:30 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 16:44:30 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=513ms
+2026-06-12 16:44:31 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 16:44:41 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 16:44:41 [telegram.ext.Application] INFO: Application is stopping. This might take a moment.
+2026-06-12 16:44:41 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-06-12 16:44:41 [telegram.ext.Application] INFO: Application.stop() complete
+2026-06-12 16:44:41 [asyncio] ERROR: Task was destroyed but it is pending!
+task: <Task pending name='heartbeat' coro=<HeartbeatMonitor._loop() running at /Users/prateek/Desktop/langclaw/scheduler/heartbeat.py:99> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2026-06-12 20:14:52 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-12 20:14:52 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-12 20:14:52 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-12 20:14:52 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-12 20:14:52 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-12 20:14:52 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-12 20:14:52 [core.llm.factory] INFO: Creating LLM: provider=groq, model=openai/gpt-oss-120b
+2026-06-12 20:14:52 [__main__] INFO: Heartbeat monitor created.
+2026-06-12 20:14:52 [__main__] INFO: [Telegram] Starting bot (polling mode)...
+2026-06-12 20:14:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getMe "HTTP/1.1 200 OK"
+2026-06-12 20:14:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMyCommands "HTTP/1.1 200 OK"
+2026-06-12 20:14:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getMe "HTTP/1.1 200 OK"
+2026-06-12 20:14:53 [channels.telegram_bot] INFO: [Telegram] Registered 5 bot commands, username=@Prateek816_bot
+2026-06-12 20:14:53 [scheduler.heartbeat] INFO: [Heartbeat] Monitor started (interval=60s)
+2026-06-12 20:14:53 [__main__] INFO: Heartbeat monitor started.
+2026-06-12 20:14:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/deleteWebhook "HTTP/1.1 200 OK"
+2026-06-12 20:14:53 [apscheduler.scheduler] INFO: Scheduler started
+2026-06-12 20:14:53 [telegram.ext.Application] INFO: Application started
+2026-06-12 20:14:53 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:14:53 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=602ms
+2026-06-12 20:15:03 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:15:14 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:15:19 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:15:19 [session_manager] INFO: [SessionManager] Creating session 'telegram:5207747295'
+2026-06-12 20:15:19 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-12 20:15:21 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-12 20:15:21 [core.subagents.custom_registry] ERROR: CustomRegistry: agents directory does not exist: /Users/prateek/.langclaw/context/groups/telegram_5207747295/subagents
+2026-06-12 20:15:21 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-12 20:15:21 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-12 20:15:21 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-12 20:15:21 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-12 20:15:21 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-12 20:15:21 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 20:15:22 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:15:26 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:15:30 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:15:31 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:15:34 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:15:35 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:15:36 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:15:36 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-12 20:15:37 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 20:15:37 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 20:15:38 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:15:42 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:15:45 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:15:46 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:15:51 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:15:51 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:15:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-12 20:15:52 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 20:15:54 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:15:54 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=523ms
+2026-06-12 20:15:55 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:15:57 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:15:58 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 20:15:59 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:03 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:08 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:16:08 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:10 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 502 Bad Gateway"
+2026-06-12 20:16:10 [openai._base_client] INFO: Retrying request to /chat/completions in 0.418098 seconds
+2026-06-12 20:16:12 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:17 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:18 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:16:21 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:24 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:16:25 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-12 20:16:25 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 20:16:28 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:16:38 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:16:38 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:16:39 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 20:16:40 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:44 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:49 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:49 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:16:53 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendChatAction "HTTP/1.1 200 OK"
+2026-06-12 20:16:53 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:16:54 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/sendMessage "HTTP/1.1 200 OK"
+2026-06-12 20:16:54 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/setMessageReaction "HTTP/1.1 200 OK"
+2026-06-12 20:16:54 [httpx] INFO: HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:16:54 [langclaw.heartbeat.file] INFO: [Heartbeat] OK | latency=510ms
+2026-06-12 20:16:59 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:17:03 [httpx] INFO: HTTP Request: POST https://api.telegram.org/bot8879756714:AAGr5gOy1mBZ7ZpKP4lQBYn4rlVPzcP-fFA/getUpdates "HTTP/1.1 200 OK"
+2026-06-12 20:17:03 [telegram.ext.Application] INFO: Application is stopping. This might take a moment.
+2026-06-12 20:17:03 [apscheduler.scheduler] INFO: Scheduler has been shut down
+2026-06-12 20:17:03 [telegram.ext.Application] INFO: Application.stop() complete
+2026-06-12 20:17:04 [asyncio] ERROR: Task was destroyed but it is pending!
+task: <Task pending name='heartbeat' coro=<HeartbeatMonitor._loop() running at /Users/prateek/Desktop/langclaw/scheduler/heartbeat.py:99> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+2026-06-12 20:17:30 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-12 20:17:30 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-12 20:17:30 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-12 20:17:30 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-12 20:17:30 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-12 20:17:30 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-12 20:17:30 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-12 20:17:30 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=anthropic/claude-opus-4-8
+2026-06-12 20:17:31 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-12 20:17:31 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-12 20:17:31 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-12 20:17:31 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-12 20:17:31 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-12 20:17:31 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-12 20:17:31 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-12 20:17:31 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-12 20:17:47 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:18:03 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 502 Bad Gateway"
+2026-06-12 20:18:03 [openai._base_client] INFO: Retrying request to /chat/completions in 0.468037 seconds
+2026-06-12 20:18:19 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:18:45 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:19:06 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:19:32 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-12 20:19:57 [httpx] INFO: HTTP Request: POST http://localhost:8000/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:20:53 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-13 09:20:53 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:20:53 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-13 09:20:53 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:20:53 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-13 09:20:53 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-13 09:20:53 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-13 09:20:53 [core.llm.factory] INFO: Creating LLM: provider=openai_compatible, model=nousresearch/hermes-3-llama-3.1-405b:free
+2026-06-13 09:20:54 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-13 09:20:54 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-13 09:20:54 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-13 09:20:54 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-13 09:20:54 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-13 09:20:54 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-13 09:20:54 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-13 09:20:54 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-13 09:20:57 [openai._base_client] INFO: Retrying request to /chat/completions in 0.375988 seconds
+2026-06-13 09:20:58 [openai._base_client] INFO: Retrying request to /chat/completions in 0.912102 seconds
+2026-06-13 09:21:01 [openai._base_client] INFO: Retrying request to /chat/completions in 0.463863 seconds
+2026-06-13 09:21:01 [openai._base_client] INFO: Retrying request to /chat/completions in 0.885711 seconds
+2026-06-13 09:26:20 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-13 09:26:20 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:26:20 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-13 09:26:20 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:26:20 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-13 09:26:20 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-13 09:26:20 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-13 09:26:20 [core.llm.factory] INFO: Creating LLM: provider=openrouter, model=nousresearch/hermes-3-llama-3.1-405b:free
+2026-06-13 09:26:21 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-13 09:26:21 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-13 09:26:21 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-13 09:26:21 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-13 09:26:21 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-13 09:26:21 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-13 09:26:21 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-13 09:26:21 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-13 09:27:01 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-13 09:27:01 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:27:01 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-13 09:27:01 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:27:01 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-13 09:27:01 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-13 09:27:01 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-13 09:27:01 [core.llm.factory] INFO: Creating LLM: provider=openrouter, model=nousresearch/hermes-3-llama-3.1-405b:free
+2026-06-13 09:27:02 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-13 09:27:02 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-13 09:27:02 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-13 09:27:02 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-13 09:27:02 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-13 09:27:02 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-13 09:27:02 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-13 09:27:02 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-13 09:27:04 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 404 Not Found"
+2026-06-13 09:28:45 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-13 09:28:45 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:28:45 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-13 09:28:45 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:28:45 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-13 09:28:45 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-13 09:28:45 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-13 09:28:45 [core.llm.factory] INFO: Creating LLM: provider=openrouter, model=nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+2026-06-13 09:28:46 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-13 09:28:46 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-13 09:28:46 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-13 09:28:46 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-13 09:28:46 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-13 09:28:46 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-13 09:28:46 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-13 09:28:46 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-13 09:28:48 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:28:56 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:31:12 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-13 09:31:12 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:31:12 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-13 09:31:12 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:31:12 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-13 09:31:12 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-13 09:31:12 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-13 09:31:12 [core.llm.factory] INFO: Creating LLM: provider=openrouter, model=nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+2026-06-13 09:31:13 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-13 09:31:13 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-13 09:31:13 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-13 09:31:13 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-13 09:31:13 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-13 09:31:13 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-13 09:31:13 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-13 09:31:13 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-13 09:31:26 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:31:27 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:31:54 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:31:59 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:32:05 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:32:08 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:32:21 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:32:41 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:32:46 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:33:23 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:33:28 [core.skill_loader] INFO: Skill Registry cache hit (0 skills)
+2026-06-13 09:33:29 [httpx] INFO: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-13 09:33:32 [core.subagents.agents.browser_agent] INFO: browser_agent: starting task → 'Open Chrome browser, navigate to Gmail (gmail.com), log in using credentials for Prateek Rastogi (prateekrastogi618@gmai'
+2026-06-13 09:33:32 [browser_use] INFO: Auto-selected Chrome profile: Prateek (Default)
+2026-06-13 09:33:34 [browser_use.utils] INFO: Copied profile (Default) and Local State to temp directory: /var/folders/sy/1zplxgg52ts4s79qthjc08fr0000gn/T/browser-use-user-data-dir-dkyvq577
+2026-06-13 09:33:34 [browser_use.telemetry.service] INFO: Using anonymized telemetry, see https://docs.browser-use.com/development/monitoring/telemetry.
+2026-06-13 09:33:34 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 --] INFO: 🔗 Found URL in task: https://gmail.com, adding as initial action...
+2026-06-13 09:33:34 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 --] INFO: [34m🎯 Task: Open Chrome browser, navigate to Gmail (gmail.com), log in using credentials for Prateek Rastogi (prateekrastogi618@gmail.com), wait for inbox to load, then check the latest email in the inbox.
+
+Additional constraints / context from the orchestrator:
+Only read email content, do not send or modify anything[0m
+2026-06-13 09:33:35 [httpx] INFO: HTTP Request: GET https://pypi.org/pypi/browser-use/json "HTTP/1.1 200 OK"
+2026-06-13 09:33:35 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 --] INFO: Starting a browser-use agent with version 0.13.1, with provider=openai and model=chatgpt-4o-latest
+2026-06-13 09:33:36 [httpx] INFO: HTTP Request: GET http://127.0.0.1:61450/json/version "HTTP/1.1 200 OK"
+2026-06-13 09:33:37 [cdp_use.client] INFO: Connecting to ws://127.0.0.1:61450/devtools/browser/a78bba19-1139-4aa7-a000-d7d9cceb3ca4 (max frame size: 200MB)
+2026-06-13 09:33:37 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO:   ▶️   [34mnavigate[0m: [35murl[0m: https://gmail.com, [35mnew_tab[0m: False
+2026-06-13 09:33:45 [browser_use.tools.service] INFO: 🔗 Navigated to https://gmail.com
+2026-06-13 09:33:46 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 
+
+2026-06-13 09:33:46 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 📍 Step 1:
+2026-06-13 09:33:46 [openai._base_client] INFO: Retrying request to /chat/completions in 0.497915 seconds
+2026-06-13 09:33:46 [openai._base_client] INFO: Retrying request to /chat/completions in 0.873606 seconds
+2026-06-13 09:33:47 [openai._base_client] INFO: Retrying request to /chat/completions in 1.623353 seconds
+2026-06-13 09:33:49 [openai._base_client] INFO: Retrying request to /chat/completions in 3.368003 seconds
+2026-06-13 09:33:52 [openai._base_client] INFO: Retrying request to /chat/completions in 7.231603 seconds
+2026-06-13 09:33:59 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] WARNING: ⚠️ LLM error (ModelProviderError: Connection error.) but no fallback_llm configured
+2026-06-13 09:33:59 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] WARNING: ❌ Result failed 1/6 times: Connection error.
+2026-06-13 09:34:00 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 
+
+2026-06-13 09:34:00 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 📍 Step 2:
+2026-06-13 09:34:00 [openai._base_client] INFO: Retrying request to /chat/completions in 0.490835 seconds
+2026-06-13 09:34:00 [openai._base_client] INFO: Retrying request to /chat/completions in 0.912892 seconds
+2026-06-13 09:34:01 [openai._base_client] INFO: Retrying request to /chat/completions in 1.557261 seconds
+2026-06-13 09:34:03 [openai._base_client] INFO: Retrying request to /chat/completions in 3.513798 seconds
+2026-06-13 09:34:06 [openai._base_client] INFO: Retrying request to /chat/completions in 6.053665 seconds
+2026-06-13 09:34:12 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] WARNING: ⚠️ LLM error (ModelProviderError: Connection error.) but no fallback_llm configured
+2026-06-13 09:34:12 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] WARNING: ❌ Result failed 2/6 times: Connection error.
+2026-06-13 09:34:13 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 
+
+2026-06-13 09:34:13 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 📍 Step 3:
+2026-06-13 09:34:13 [openai._base_client] INFO: Retrying request to /chat/completions in 0.488575 seconds
+2026-06-13 09:34:14 [openai._base_client] INFO: Retrying request to /chat/completions in 0.898011 seconds
+2026-06-13 09:34:14 [openai._base_client] INFO: Retrying request to /chat/completions in 1.532090 seconds
+2026-06-13 09:34:16 [openai._base_client] INFO: Retrying request to /chat/completions in 3.618472 seconds
+2026-06-13 09:34:20 [openai._base_client] INFO: Retrying request to /chat/completions in 6.822271 seconds
+2026-06-13 09:34:26 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] WARNING: ⚠️ LLM error (ModelProviderError: Connection error.) but no fallback_llm configured
+2026-06-13 09:34:26 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] WARNING: ❌ Result failed 3/6 times: Connection error.
+2026-06-13 09:34:27 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 
+
+2026-06-13 09:34:27 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 📍 Step 4:
+2026-06-13 09:34:27 [openai._base_client] INFO: Retrying request to /chat/completions in 0.444577 seconds
+2026-06-13 09:34:27 [openai._base_client] INFO: Retrying request to /chat/completions in 0.950668 seconds
+2026-06-13 09:34:28 [openai._base_client] INFO: Retrying request to /chat/completions in 1.798552 seconds
+2026-06-13 09:34:30 [openai._base_client] INFO: Retrying request to /chat/completions in 3.027677 seconds
+2026-06-13 09:34:33 [openai._base_client] INFO: Retrying request to /chat/completions in 6.386680 seconds
+2026-06-13 09:34:40 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] WARNING: ⚠️ LLM error (ModelProviderError: Connection error.) but no fallback_llm configured
+2026-06-13 09:34:40 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] WARNING: ❌ Result failed 4/6 times: Connection error.
+2026-06-13 09:34:40 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 
+
+2026-06-13 09:34:40 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 📍 Step 5:
+2026-06-13 09:34:40 [browser_use.Agent🅰 6ea9 ⇢ 🅑 7559 🅣 16] INFO: 📋 Exploration nudge injected after 5 steps without a plan
+2026-06-13 09:34:40 [openai._base_client] INFO: Retrying request to /chat/completions in 0.487162 seconds
+2026-06-13 09:34:41 [openai._base_client] INFO: Retrying request to /chat/completions in 0.802678 seconds
+2026-06-13 09:34:41 [openai._base_client] INFO: Retrying request to /chat/completions in 1.815430 seconds
+2026-06-13 09:34:43 [openai._base_client] INFO: Retrying request to /chat/completions in 3.646468 seconds
+2026-06-13 09:34:44 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: [SessionManager] Agent focus target FB5A2185... detached! Current focus: None (already cleared). Auto-recovering by switching to another target...
+2026-06-13 09:34:44 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: [SessionManager] No tabs remain! Creating new tab for agent...
+2026-06-13 09:34:44 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: Cannot navigate - browser not connected
+2026-06-13 09:34:44 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] INFO: [SessionManager] Created new tab 19D9A108... for agent
+2026-06-13 09:34:45 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] INFO: [SessionManager] ✅ Agent focus recovered: 19D9A108...
+2026-06-13 09:34:47 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: [SessionManager] Agent focus target 19D9A108... detached! Current focus: None (already cleared). Auto-recovering by switching to another target...
+2026-06-13 09:34:47 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: [SessionManager] No tabs remain! Creating new tab for agent...
+2026-06-13 09:34:47 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: Cannot navigate - browser not connected
+2026-06-13 09:34:47 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] ERROR: [SessionManager] ❌ Error during agent_focus recovery: RuntimeError: {'code': -32000, 'message': 'Failed to open a new tab'}
+2026-06-13 09:34:47 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: 🔌 CDP WebSocket message handler exited unexpectedly (connection closed)
+2026-06-13 09:34:47 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: 🔄 WebSocket reconnection attempt 1/3...
+2026-06-13 09:34:47 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] INFO: [SessionManager] Cleared all owned data (targets, sessions, mappings)
+2026-06-13 09:34:47 [cdp_use.client] INFO: Connecting to ws://127.0.0.1:61450/devtools/browser/a78bba19-1139-4aa7-a000-d7d9cceb3ca4 (max frame size: 200MB)
+2026-06-13 09:34:47 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: 🔄 Reconnection attempt 1 failed: ConnectionRefusedError: [Errno 61] Connect call failed ('127.0.0.1', 61450)
+2026-06-13 09:34:47 [openai._base_client] INFO: Retrying request to /chat/completions in 7.721501 seconds
+2026-06-13 09:34:48 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: 🔄 WebSocket reconnection attempt 2/3...
+2026-06-13 09:34:48 [cdp_use.client] INFO: Connecting to ws://127.0.0.1:61450/devtools/browser/a78bba19-1139-4aa7-a000-d7d9cceb3ca4 (max frame size: 200MB)
+2026-06-13 09:34:48 [browser_use.BrowserSession🅑 7559 🅣 [91m--[0m] WARNING: 🔄 Reconnection attempt 2 failed: ConnectionRefusedError: [Errno 61] Connect call failed ('127.0.0.1', 61450)
+2026-06-13 09:36:04 [scheduler.cron] INFO: [CronScheduler] No jobs file found at /Users/prateek/.langclaw/context/cron/jobs.yaml — skipping.
+2026-06-13 09:36:04 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:36:04 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'job_3fbd6b5d'
+2026-06-13 09:36:04 [apscheduler.scheduler] INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-13 09:36:04 [scheduler.cron] INFO: [CronScheduler] Restored dynamic job 'daily-news-1120am'
+2026-06-13 09:36:04 [__main__] WARNING: Cron scheduler failed to start: no running event loop
+2026-06-13 09:36:04 [session_manager] INFO: [SessionManager] Creating session 'cli'
+2026-06-13 09:36:04 [core.llm.factory] INFO: Creating LLM: provider=gemini, model=gemini-3.1-flash-lite
+2026-06-13 09:36:05 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-13 09:36:05 [core.subagents.markdown_parser] INFO: Parsed 1 agent(s) from /Users/prateek/.langclaw/context/groups/cli/subagents (1 file(s) scanned)
+2026-06-13 09:36:05 [core.subagents.custom_registry] INFO: CustomRegistry: 1 agent(s) ready → ['research-agent']
+2026-06-13 09:36:05 [core.skill_loader] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-13 09:36:05 [core.skill_loader] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-13 09:36:05 [core.skill_loader] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-13 09:36:05 [core.skill_loader] INFO: No skills found — catalog empty
+2026-06-13 09:36:05 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-13 09:36:09 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-06-13 09:36:13 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent "HTTP/1.1 200 OK"
