@@ -21,6 +21,7 @@ import os
 
 from browser_use import Agent, Browser
 from browser_use.llm import ChatOpenAI
+import config as _cfg
 
 logger = logging.getLogger(__name__)
 

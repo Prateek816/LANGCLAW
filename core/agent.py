@@ -15,7 +15,7 @@ from langsmith import traceable
 from core.RAG.rag import KnowledgeRAG
 from core.llm.factory import get_llm
 from core.memory.manager import MemoryManager
-from core.skill_loader import SkillRegistry
+from core.skill import SkillRegistry
 
 import config as _cfg
 
