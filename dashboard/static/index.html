@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangClaw Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: { 950: '#0a0a0f', 900: '#0f1018', 800: '#161822', 700: '#1e2030', 600: '#272a3a' },
+                        accent: { 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2' }
+                    }
+                }
+            }
+        }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+        .fade-in { animation: fadeIn 0.2s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .cursor-blink { animation: blink 1s infinite; }
+        .chat-msg pre { background: #1e2030; border-radius: 8px; padding: 12px; overflow-x: auto; margin: 8px 0; }
+        .chat-msg code { color: #22d3ee; font-size: 0.875rem; }
+        .chat-msg pre code { color: #e5e7eb; }
+        .chat-msg p { margin: 6px 0; }
+        .chat-msg ul, .chat-msg ol { margin: 6px 0; padding-left: 20px; }
+        .chat-msg h1, .chat-msg h2, .chat-msg h3 { margin: 12px 0 6px; font-weight: 600; }
+        .chat-msg a { color: #22d3ee; text-decoration: underline; }
+        .chat-msg table { border-collapse: collapse; margin: 8px 0; }
+        .chat-msg th, .chat-msg td { border: 1px solid #374151; padding: 6px 10px; }
+        .chat-msg th { background: #1e2030; }
+        .chat-msg blockquote { border-left: 3px solid #374151; padding-left: 12px; margin: 8px 0; color: #9ca3af; }
+        input[type="range"] { -webkit-appearance: none; height: 4px; background: #374151; border-radius: 2px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: #06b6d4; border-radius: 50%; cursor: pointer; }
+    </style>
+</head>
+<body class="bg-dark-950 text-gray-100 font-sans antialiased">
+<div x-data="dashboard()" x-init="init()" x-cloak class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-60 bg-dark-900 border-r border-dark-700 flex flex-col shrink-0">
+        <!-- Logo -->
+        <div class="p-4 border-b border-dark-700">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-accent-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">LC</div>
+                <div>
+                    <div class="font-semibold text-sm">LangClaw</div>
+                    <div class="text-[10px] text-gray-500">Dashboard</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav -->
+        <nav class="flex-1 p-2 space-y-0.5 overflow-y-auto">
+            <template x-for="item in navItems" :key="item.id">
+                <button
+                    @click="currentView = item.id"
+                    :class="currentView === item.id
+                        ? 'bg-dark-700 text-accent-400 border-accent-500/30'
+                        : 'text-gray-400 hover:text-gray-200 hover:bg-dark-800 border-transparent'"
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm border transition-colors"
+                >
+                    <span x-html="item.icon" class="w-5 h-5 shrink-0"></span>
+                    <span x-text="item.label"></span>
+                </button>
+            </template>
+        </nav>
+
+        <!-- Footer -->
+        <div class="p-3 border-t border-dark-700 text-[10px] text-gray-600">
+            v1.0 &middot; localhost only
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+
+        <!-- Header -->
+        <header class="h-12 bg-dark-900 border-b border-dark-700 flex items-center px-5 shrink-0">
+            <h1 class="text-sm font-medium" x-text="navItems.find(i => i.id === currentView)?.label || 'Dashboard'"></h1>
+        </header>
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto">
+
+            <!-- ==================== CHAT VIEW ==================== -->
+            <div x-show="currentView === 'chat'" class="flex flex-col h-full">
+                <!-- Session bar -->
+                <div class="h-10 bg-dark-900 border-b border-dark-700 flex items-center px-4 gap-3 shrink-0">
+                    <select x-model="currentSessionId" @change="loadHistory()"
+                        class="bg-dark-800 border border-dark-600 rounded px-2 py-1 text-xs text-gray-300">
+                        <option value="web:dashboard">web:dashboard</option>
+                        <template x-for="s in sessions" :key="s">
+                            <option :value="s" x-text="s"></option>
+                        </template>
+                    </select>
+                    <button @click="resetSession()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">Reset</button>
+                    <div class="flex-1"></div>
+                    <span x-show="isStreaming" class="text-xs text-accent-400 flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 bg-accent-400 rounded-full cursor-blink"></span> streaming
+                    </span>
+                </div>
+
+                <!-- Messages -->
+                <div x-ref="chatContainer" class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <template x-if="messages.length === 0">
+                        <div class="flex flex-col items-center justify-center h-full text-gray-600">
+                            <svg class="w-12 h-12 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                            <p class="text-sm">Send a message to start chatting</p>
+                        </div>
+                    </template>
+                    <template x-for="(msg, idx) in messages" :key="idx">
+                        <div class="fade-in" :class="msg.role === 'user' ? 'flex justify-end' : 'flex justify-start'">
+                            <div :class="msg.role === 'user'
+                                ? 'bg-accent-600/20 border-accent-500/20 max-w-[70%]'
+                                : 'bg-dark-800 border-dark-600 max-w-[85%]'"
+                                class="rounded-xl px-4 py-2.5 border text-sm">
+                                <template x-if="msg.role === 'user'">
+                                    <p class="whitespace-pre-wrap" x-text="msg.content"></p>
+                                </template>
+                                <template x-if="msg.role === 'assistant'">
+                                    <div class="chat-msg" x-html="renderMarkdown(msg.content)"></div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Input -->
+                <div class="border-t border-dark-700 p-3 bg-dark-900 shrink-0">
+                    <div class="flex gap-2 max-w-4xl mx-auto">
+                        <textarea x-model="inputMessage"
+                            @keydown.enter.prevent="if(!$event.shiftKey) sendMessage()"
+                            placeholder="Type a message..."
+                            rows="1"
+                            class="flex-1 bg-dark-800 border border-dark-600 rounded-xl px-4 py-2.5 text-sm resize-none focus:outline-none focus:border-accent-500/50 transition-colors placeholder-gray-600"
+                            :disabled="isStreaming"></textarea>
+                        <button @click="sendMessage()"
+                            :disabled="isStreaming || !inputMessage.trim()"
+                            class="px-4 py-2 bg-accent-600 hover:bg-accent-500 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl text-sm font-medium transition-colors">
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== LLM VIEW ==================== -->
+            <div x-show="currentView === 'llm'" class="p-6 max-w-2xl mx-auto space-y-6 fade-in">
+                <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 space-y-5">
+                    <h2 class="text-sm font-medium text-gray-300">LLM Configuration</h2>
+
+                    <!-- Provider -->
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1.5">Provider</label>
+                        <select x-model="llmConfig.provider" @change="onProviderChange()"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                            <template x-for="p in providers" :key="p">
+                                <option :value="p" x-text="p"></option>
+                            </template>
+                        </select>
+                    </div>
+
+                    <!-- Model -->
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1.5">Model</label>
+                        <input x-model="llmConfig.model" type="text"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50"
+                            placeholder="e.g. gpt-4o-mini">
+                    </div>
+
+                    <!-- Temperature -->
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1.5">
+                            Temperature: <span class="text-accent-400" x-text="llmConfig.temperature"></span>
+                        </label>
+                        <input x-model.number="llmConfig.temperature" type="range" min="0" max="2" step="0.1"
+                            class="w-full">
+                    </div>
+
+                    <!-- Max Tokens -->
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1.5">Max Tokens</label>
+                        <input x-model.number="llmConfig.max_tokens" type="number" min="1" max="128000"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    </div>
+
+                    <!-- Base URL -->
+                    <div x-show="['custom', 'openai_compatible'].includes(llmConfig.provider)">
+                        <label class="block text-xs text-gray-500 mb-1.5">Base URL</label>
+                        <input x-model="llmConfig.base_url" type="text"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50"
+                            placeholder="https://api.example.com/v1">
+                    </div>
+
+                    <!-- Streaming -->
+                    <div class="flex items-center gap-3">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" x-model="llmConfig.streaming" class="sr-only peer">
+                            <div class="w-9 h-5 bg-dark-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-400 after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-accent-600 peer-checked:after:bg-white"></div>
+                        </label>
+                        <span class="text-xs text-gray-400">Enable streaming</span>
+                    </div>
+
+                    <button @click="saveLLM()" :disabled="saving"
+                        class="w-full py-2 bg-accent-600 hover:bg-accent-500 disabled:opacity-50 rounded-lg text-sm font-medium transition-colors">
+                        <span x-text="saving ? 'Saving...' : 'Save Configuration'"></span>
+                    </button>
+                    <p x-show="savedMsg" class="text-xs text-green-400 text-center" x-text="savedMsg"></p>
+                </div>
+            </div>
+
+            <!-- ==================== MCP VIEW ==================== -->
+            <div x-show="currentView === 'mcp'" class="p-6 max-w-3xl mx-auto space-y-4 fade-in">
+                <!-- Server list -->
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-sm font-medium text-gray-300">MCP Servers</h2>
+                    <button @click="showMcpForm = !showMcpForm; editingMcp = null; resetMcpForm()"
+                        class="text-xs px-3 py-1.5 bg-accent-600 hover:bg-accent-500 rounded-lg transition-colors">
+                        + Add Server
+                    </button>
+                </div>
+
+                <!-- Add/Edit form -->
+                <div x-show="showMcpForm" x-transition class="bg-dark-800 border border-dark-700 rounded-xl p-5 space-y-4 fade-in">
+                    <h3 class="text-xs font-medium text-gray-400" x-text="editingMcp ? 'Edit Server' : 'New Server'"></h3>
+                    <input x-model="mcpForm.name" type="text" placeholder="Server name"
+                        :disabled="!!editingMcp"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50 disabled:opacity-50">
+
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
+                            <input type="radio" x-model="mcpForm.transport" value="stdio" class="accent-cyan-500"> stdio
+                        </label>
+                        <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
+                            <input type="radio" x-model="mcpForm.transport" value="websocket" class="accent-cyan-500"> websocket
+                        </label>
+                    </div>
+
+                    <template x-if="mcpForm.transport === 'stdio'">
+                        <div class="space-y-3">
+                            <input x-model="mcpForm.command" type="text" placeholder="Command (e.g. python)"
+                                class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                            <input x-model="mcpForm.args" type="text" placeholder="Args (comma-separated, e.g. -m, my_server)"
+                                class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                            <input x-model="mcpForm.cwd" type="text" placeholder="Working directory (optional)"
+                                class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                        </div>
+                    </template>
+                    <template x-if="mcpForm.transport === 'websocket'">
+                        <input x-model="mcpForm.uri" type="text" placeholder="ws://localhost:8765"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    </template>
+
+                    <div class="flex gap-2">
+                        <button @click="saveMcpServer()" class="px-4 py-2 bg-accent-600 hover:bg-accent-500 rounded-lg text-sm transition-colors">
+                            <span x-text="editingMcp ? 'Update' : 'Add'"></span>
+                        </button>
+                        <button @click="showMcpForm = false; editingMcp = null" class="px-4 py-2 bg-dark-600 hover:bg-dark-700 rounded-lg text-sm transition-colors">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Server cards -->
+                <template x-for="(srv, name) in mcpServers" :key="name">
+                    <div class="bg-dark-800 border border-dark-700 rounded-xl p-4 flex items-center justify-between">
+                        <div>
+                            <div class="text-sm font-medium" x-text="name"></div>
+                            <div class="text-xs text-gray-500 mt-1">
+                                <span class="px-1.5 py-0.5 bg-dark-600 rounded text-[10px]" x-text="srv.transport"></span>
+                                <span class="ml-2" x-text="srv.transport === 'stdio' ? (srv.command + (srv.args ? ' ' + srv.args.join(' ') : '')) : srv.uri"></span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button @click="editMcpServer(name, srv)" class="text-xs text-gray-500 hover:text-accent-400 transition-colors">Edit</button>
+                            <button @click="deleteMcpServer(name)" class="text-xs text-gray-500 hover:text-red-400 transition-colors">Delete</button>
+                        </div>
+                    </div>
+                </template>
+                <template x-if="Object.keys(mcpServers).length === 0 && !showMcpForm">
+                    <div class="text-center text-gray-600 text-sm py-10">No MCP servers configured</div>
+                </template>
+            </div>
+
+            <!-- ==================== SKILLS VIEW ==================== -->
+            <div x-show="currentView === 'skills'" class="p-6 max-w-4xl mx-auto fade-in">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-medium text-gray-300">Skills</h2>
+                    <button @click="showSkillForm = !showSkillForm; selectedSkill = null"
+                        class="text-xs px-3 py-1.5 bg-accent-600 hover:bg-accent-500 rounded-lg transition-colors">
+                        + Create Skill
+                    </button>
+                </div>
+
+                <!-- Create form -->
+                <div x-show="showSkillForm" x-transition class="bg-dark-800 border border-dark-700 rounded-xl p-5 space-y-4 mb-4 fade-in">
+                    <h3 class="text-xs font-medium text-gray-400">New Skill</h3>
+                    <input x-model="skillForm.name" type="text" placeholder="Skill name"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    <input x-model="skillForm.category" type="text" placeholder="Category (optional)"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    <input x-model="skillForm.description" type="text" placeholder="Short description"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    <textarea x-model="skillForm.instructions" placeholder="Skill instructions (markdown)..." rows="8"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-accent-500/50"></textarea>
+                    <div class="flex gap-2">
+                        <button @click="createSkill()" class="px-4 py-2 bg-accent-600 hover:bg-accent-500 rounded-lg text-sm transition-colors">Create</button>
+                        <button @click="showSkillForm = false" class="px-4 py-2 bg-dark-600 hover:bg-dark-700 rounded-lg text-sm transition-colors">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Skill detail -->
+                <div x-show="selectedSkill" x-transition class="bg-dark-800 border border-dark-700 rounded-xl p-5 mb-4 fade-in">
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <h3 class="text-sm font-medium" x-text="selectedSkill?.name"></h3>
+                            <p class="text-xs text-gray-500" x-text="selectedSkill?.description"></p>
+                        </div>
+                        <button @click="selectedSkill = null" class="text-xs text-gray-500 hover:text-gray-300">Close</button>
+                    </div>
+                    <div x-show="!editingSkill">
+                        <div class="chat-msg text-sm bg-dark-900 rounded-lg p-4 max-h-96 overflow-y-auto" x-html="renderMarkdown(selectedSkill?.instructions || '')"></div>
+                        <button @click="startEditSkill()" class="mt-3 text-xs text-accent-400 hover:text-accent-300">Edit</button>
+                    </div>
+                    <div x-show="editingSkill" class="space-y-3">
+                        <textarea x-model="editSkillInstructions" rows="12"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-accent-500/50"></textarea>
+                        <div class="flex gap-2">
+                            <button @click="saveSkill()" class="px-4 py-2 bg-accent-600 hover:bg-accent-500 rounded-lg text-sm transition-colors">Save</button>
+                            <button @click="editingSkill = false" class="px-4 py-2 bg-dark-600 hover:bg-dark-700 rounded-lg text-sm transition-colors">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <template x-for="skill in skills" :key="skill.name">
+                        <button @click="viewSkill(skill)"
+                            class="bg-dark-800 border border-dark-700 rounded-xl p-4 text-left hover:border-accent-500/30 transition-colors group">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span x-show="skill.emoji" x-text="skill.emoji" class="text-lg"></span>
+                                <span class="text-sm font-medium group-hover:text-accent-400 transition-colors" x-text="skill.name"></span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2" x-text="skill.description"></p>
+                            <div class="mt-2 flex gap-1.5 flex-wrap">
+                                <span x-show="skill.category" class="text-[10px] px-1.5 py-0.5 bg-dark-600 rounded" x-text="skill.category"></span>
+                                <template x-for="dep in (skill.dependencies || []).slice(0, 3)" :key="dep">
+                                    <span class="text-[10px] px-1.5 py-0.5 bg-dark-600/50 rounded text-gray-500" x-text="dep"></span>
+                                </template>
+                            </div>
+                        </button>
+                    </template>
+                </div>
+                <template x-if="skills.length === 0 && !showSkillForm">
+                    <div class="text-center text-gray-600 text-sm py-10">No skills discovered</div>
+                </template>
+            </div>
+
+            <!-- ==================== SUBAGENTS VIEW ==================== -->
+            <div x-show="currentView === 'subagents'" class="p-6 max-w-3xl mx-auto space-y-4 fade-in">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-sm font-medium text-gray-300">Subagents</h2>
+                    <button @click="showSubagentForm = !showSubagentForm; editingSubagent = null; resetSubagentForm()"
+                        class="text-xs px-3 py-1.5 bg-accent-600 hover:bg-accent-500 rounded-lg transition-colors">
+                        + Create Agent
+                    </button>
+                </div>
+
+                <!-- Create/Edit form -->
+                <div x-show="showSubagentForm" x-transition class="bg-dark-800 border border-dark-700 rounded-xl p-5 space-y-4 fade-in">
+                    <h3 class="text-xs font-medium text-gray-400" x-text="editingSubagent ? 'Edit Agent' : 'New Agent'"></h3>
+                    <input x-model="subagentForm.name" type="text" placeholder="Agent name (slug)"
+                        :disabled="!!editingSubagent"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50 disabled:opacity-50">
+                    <textarea x-model="subagentForm.description" placeholder="Description (one sentence)" rows="2"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50"></textarea>
+                    <textarea x-model="subagentForm.prompt" placeholder="System prompt..." rows="6"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-accent-500/50"></textarea>
+                    <input x-model="subagentForm.tools" type="text" placeholder="Tools (comma-separated, e.g. web_search, read_file)"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    <div class="grid grid-cols-3 gap-3">
+                        <select x-model="subagentForm.status"
+                            class="bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                            <option value="active">active</option>
+                            <option value="disabled">disabled</option>
+                            <option value="deprecated">deprecated</option>
+                        </select>
+                        <input x-model="subagentForm.version" type="text" placeholder="Version"
+                            class="bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                        <input x-model.number="subagentForm.max_iterations" type="number" min="1" max="50" placeholder="Max iter"
+                            class="bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    </div>
+                    <input x-model="subagentForm.tags" type="text" placeholder="Tags (comma-separated)"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    <div class="flex gap-2">
+                        <button @click="saveSubagent()" class="px-4 py-2 bg-accent-600 hover:bg-accent-500 rounded-lg text-sm transition-colors">
+                            <span x-text="editingSubagent ? 'Update' : 'Create'"></span>
+                        </button>
+                        <button @click="showSubagentForm = false; editingSubagent = null" class="px-4 py-2 bg-dark-600 hover:bg-dark-700 rounded-lg text-sm transition-colors">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Agent cards -->
+                <template x-for="agent in subagents" :key="agent.name">
+                    <div class="bg-dark-800 border border-dark-700 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm font-medium" x-text="agent.name"></span>
+                                <span class="text-[10px] px-1.5 py-0.5 rounded"
+                                    :class="agent.status === 'active' ? 'bg-green-900/30 text-green-400' : 'bg-yellow-900/30 text-yellow-400'"
+                                    x-text="agent.status"></span>
+                                <span class="text-[10px] text-gray-600" x-text="'v' + agent.version"></span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button @click="editSubagent(agent)" class="text-xs text-gray-500 hover:text-accent-400 transition-colors">Edit</button>
+                                <button @click="deleteSubagent(agent.name)" class="text-xs text-gray-500 hover:text-red-400 transition-colors">Delete</button>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500" x-text="agent.description"></p>
+                        <div class="mt-2 flex gap-1.5 flex-wrap">
+                            <template x-for="tag in (agent.tags || [])" :key="tag">
+                                <span class="text-[10px] px-1.5 py-0.5 bg-dark-600 rounded text-gray-500" x-text="tag"></span>
+                            </template>
+                            <span x-show="agent.tools?.length" class="text-[10px] text-gray-600" x-text="(agent.tools?.length || 0) + ' tools'"></span>
+                        </div>
+                    </div>
+                </template>
+                <template x-if="subagents.length === 0 && !showSubagentForm">
+                    <div class="text-center text-gray-600 text-sm py-10">No subagents defined</div>
+                </template>
+            </div>
+
+            <!-- ==================== CHANNELS VIEW ==================== -->
+            <div x-show="currentView === 'channels'" class="p-6 max-w-2xl mx-auto space-y-6 fade-in">
+                <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 space-y-5">
+                    <h2 class="text-sm font-medium text-gray-300">Telegram</h2>
+
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1.5">Bot Token</label>
+                        <div class="relative">
+                            <input x-model="telegram.token" :type="showToken ? 'text' : 'password'"
+                                class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 pr-10 text-sm focus:outline-none focus:border-accent-500/50"
+                                placeholder="123456:ABC-DEF...">
+                            <button @click="showToken = !showToken" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
+                                <span x-text="showToken ? 'Hide' : 'Show'" class="text-xs"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1.5">Allowed Users (comma-separated IDs)</label>
+                        <input x-model="telegram.allowedUsers" type="text"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50"
+                            placeholder="123456789, 987654321">
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" x-model="telegram.requireMention" class="sr-only peer">
+                            <div class="w-9 h-5 bg-dark-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-400 after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-accent-600 peer-checked:after:bg-white"></div>
+                        </label>
+                        <span class="text-xs text-gray-400">Require @mention in groups</span>
+                    </div>
+
+                    <button @click="saveTelegram()" :disabled="saving"
+                        class="w-full py-2 bg-accent-600 hover:bg-accent-500 disabled:opacity-50 rounded-lg text-sm font-medium transition-colors">
+                        <span x-text="saving ? 'Saving...' : 'Save Telegram Config'"></span>
+                    </button>
+                    <p x-show="savedMsg" class="text-xs text-green-400 text-center" x-text="savedMsg"></p>
+                </div>
+            </div>
+
+            <!-- ==================== GENERAL VIEW ==================== -->
+            <div x-show="currentView === 'general'" class="p-6 max-w-2xl mx-auto space-y-6 fade-in">
+                <!-- Agent -->
+                <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 space-y-4">
+                    <h2 class="text-sm font-medium text-gray-300">Agent</h2>
+                    <div class="flex items-center gap-3">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" x-model="agentConfig.verbose" class="sr-only peer">
+                            <div class="w-9 h-5 bg-dark-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-400 after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-accent-600 peer-checked:after:bg-white"></div>
+                        </label>
+                        <span class="text-xs text-gray-400">Verbose mode</span>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1.5">Max Parallel Skills</label>
+                        <input x-model.number="agentConfig.maxParallelSkills" type="number" min="1" max="20"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    </div>
+                    <button @click='saveGeneral("agent", agentConfig)' class="w-full py-2 bg-accent-600 hover:bg-accent-500 rounded-lg text-sm transition-colors">Save Agent Config</button>
+                </div>
+
+                <!-- Concurrency -->
+                <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 space-y-4">
+                    <h2 class="text-sm font-medium text-gray-300">Concurrency</h2>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1.5">Max Agents</label>
+                        <input x-model.number="concurrencyConfig.maxAgents" type="number" min="1" max="50"
+                            class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                    </div>
+                    <button @click='saveGeneral("concurrency", concurrencyConfig)' class="w-full py-2 bg-accent-600 hover:bg-accent-500 rounded-lg text-sm transition-colors">Save Concurrency Config</button>
+                </div>
+
+                <!-- Logging -->
+                <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 space-y-4">
+                    <h2 class="text-sm font-medium text-gray-300">Logging</h2>
+                    <select x-model="loggingConfig.level"
+                        class="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent-500/50">
+                        <option value="DEBUG">DEBUG</option>
+                        <option value="INFO">INFO</option>
+                        <option value="WARNING">WARNING</option>
+                        <option value="ERROR">ERROR</option>
+                    </select>
+                    <button @click='saveGeneral("logging", loggingConfig)' class="w-full py-2 bg-accent-600 hover:bg-accent-500 rounded-lg text-sm transition-colors">Save Logging Config</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script>
+function dashboard() {
+    return {
+        // Navigation
+        currentView: 'chat',
+        navItems: [
+            { id: 'chat', label: 'Chat', icon: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>' },
+            { id: 'llm', label: 'LLM', icon: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>' },
+            { id: 'mcp', label: 'MCP Servers', icon: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>' },
+            { id: 'skills', label: 'Skills', icon: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>' },
+            { id: 'subagents', label: 'Subagents', icon: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' },
+            { id: 'channels', label: 'Channels', icon: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>' },
+            { id: 'general', label: 'General', icon: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>' },
+        ],
+
+        // Chat
+        messages: [],
+        inputMessage: '',
+        isStreaming: false,
+        currentSessionId: 'web:dashboard',
+        sessions: [],
+
+        // LLM
+        providers: [],
+        providerDefaults: {},
+        llmConfig: { provider: 'openai', model: '', temperature: 0.7, max_tokens: 2048, base_url: '', streaming: true },
+
+        // MCP
+        mcpServers: {},
+        showMcpForm: false,
+        editingMcp: null,
+        mcpForm: { name: '', transport: 'stdio', command: '', args: '', cwd: '', uri: '' },
+
+        // Skills
+        skills: [],
+        showSkillForm: false,
+        selectedSkill: null,
+        editingSkill: false,
+        editSkillInstructions: '',
+        skillForm: { name: '', description: '', category: '', instructions: '' },
+
+        // Subagents
+        subagents: [],
+        showSubagentForm: false,
+        editingSubagent: null,
+        subagentForm: { name: '', description: '', prompt: '', tools: '', status: 'active', version: '1.0.0', tags: '', max_iterations: 10 },
+
+        // Channels
+        telegram: { token: '', allowedUsers: '', requireMention: false },
+        showToken: false,
+
+        // General
+        agentConfig: { verbose: false, maxParallelSkills: 5 },
+        concurrencyConfig: { maxAgents: 4 },
+        loggingConfig: { level: 'INFO' },
+
+        // State
+        saving: false,
+        savedMsg: '',
+
+        // Init
+        async init() {
+            await Promise.all([
+                this.loadConfig(),
+                this.loadProviders(),
+                this.loadSessions(),
+                this.loadSkills(),
+                this.loadSubagents(),
+            ]);
+        },
+
+        // ---- Config ----
+        async loadConfig() {
+            try {
+                const data = await fetch('/api/config').then(r => r.json());
+                // LLM
+                if (data.llm) {
+                    this.llmConfig = {
+                        provider: data.llm.provider || 'openai',
+                        model: data.llm.model || '',
+                        temperature: data.llm.temperature ?? 0.7,
+                        max_tokens: data.llm.max_tokens ?? 2048,
+                        base_url: data.llm.base_url || '',
+                        streaming: data.llm.streaming ?? true,
+                    };
+                }
+                // MCP
+                if (data.mcp?.servers) this.mcpServers = data.mcp.servers;
+                // Telegram
+                if (data.channels?.telegram) {
+                    this.telegram = {
+                        token: data.channels.telegram.token || '',
+                        allowedUsers: Array.isArray(data.channels.telegram.allowedUsers)
+                            ? data.channels.telegram.allowedUsers.join(', ')
+                            : (data.channels.telegram.allowedUsers || ''),
+                        requireMention: data.channels.telegram.requireMention ?? false,
+                    };
+                }
+                // Agent
+                if (data.agent) {
+                    this.agentConfig = {
+                        verbose: data.agent.verbose ?? false,
+                        maxParallelSkills: data.agent.maxParallelSkills ?? 5,
+                    };
+                }
+                // Concurrency
+                if (data.concurrency) {
+                    this.concurrencyConfig = { maxAgents: data.concurrency.maxAgents ?? 4 };
+                }
+                // Logging
+                if (data.logging) {
+                    this.loggingConfig = { level: data.logging.level || 'INFO' };
+                }
+            } catch (e) { console.error('loadConfig:', e); }
+        },
+
+        async loadProviders() {
+            try {
+                const data = await fetch('/api/llm/providers').then(r => r.json());
+                this.providers = data.providers || [];
+                this.providerDefaults = data.defaults || {};
+            } catch (e) { console.error('loadProviders:', e); }
+        },
+
+        onProviderChange() {
+            const def = this.providerDefaults[this.llmConfig.provider];
+            if (def?.model && !this.llmConfig.model) this.llmConfig.model = def.model;
+        },
+
+        async saveLLM() {
+            this.saving = true; this.savedMsg = '';
+            try {
+                const body = { ...this.llmConfig };
+                if (!['custom', 'openai_compatible'].includes(body.provider)) delete body.base_url;
+                await fetch('/api/config/llm', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+                this.savedMsg = 'Saved!';
+                setTimeout(() => this.savedMsg = '', 2000);
+            } catch (e) { this.savedMsg = 'Error: ' + e.message; }
+            finally { this.saving = false; }
+        },
+
+        // ---- MCP ----
+        resetMcpForm() {
+            this.mcpForm = { name: '', transport: 'stdio', command: '', args: '', cwd: '', uri: '' };
+        },
+        editMcpServer(name, srv) {
+            this.editingMcp = name;
+            this.showMcpForm = true;
+            this.mcpForm = {
+                name,
+                transport: srv.transport || 'stdio',
+                command: srv.command || '',
+                args: Array.isArray(srv.args) ? srv.args.join(', ') : (srv.args || ''),
+                cwd: srv.cwd || '',
+                uri: srv.uri || '',
+            };
+        },
+        async saveMcpServer() {
+            const name = this.mcpForm.name.trim();
+            if (!name) return;
+            const body = {
+                name,
+                transport: this.mcpForm.transport,
+                command: this.mcpForm.command,
+                args: this.mcpForm.args,
+                cwd: this.mcpForm.cwd,
+                uri: this.mcpForm.uri,
+            };
+            const url = this.editingMcp ? `/api/mcp/servers/${this.editingMcp}` : '/api/mcp/servers';
+            const method = this.editingMcp ? 'PUT' : 'POST';
+            try {
+                await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+                await this.loadConfig();
+                this.showMcpForm = false;
+                this.editingMcp = null;
+                this.resetMcpForm();
+            } catch (e) { alert('Error: ' + e.message); }
+        },
+        async deleteMcpServer(name) {
+            if (!confirm(`Delete server "${name}"?`)) return;
+            await fetch(`/api/mcp/servers/${name}`, { method: 'DELETE' });
+            await this.loadConfig();
+        },
+
+        // ---- Skills ----
+        async loadSkills() {
+            try { this.skills = await fetch('/api/skills').then(r => r.json()); }
+            catch (e) { console.error('loadSkills:', e); }
+        },
+        async viewSkill(skill) {
+            try {
+                const data = await fetch(`/api/skills/${skill.name}`).then(r => r.json());
+                this.selectedSkill = data;
+                this.editingSkill = false;
+            } catch (e) { console.error('viewSkill:', e); }
+        },
+        startEditSkill() {
+            this.editSkillInstructions = this.selectedSkill?.instructions || '';
+            this.editingSkill = true;
+        },
+        async saveSkill() {
+            try {
+                await fetch(`/api/skills/${this.selectedSkill.name}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ instructions: this.editSkillInstructions, description: this.selectedSkill.description }),
+                });
+                this.editingSkill = false;
+                this.selectedSkill.instructions = this.editSkillInstructions;
+            } catch (e) { alert('Error: ' + e.message); }
+        },
+        async createSkill() {
+            const { name, description, category, instructions } = this.skillForm;
+            if (!name.trim()) return;
+            try {
+                await fetch('/api/skills', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, description, category, instructions }),
+                });
+                this.showSkillForm = false;
+                this.skillForm = { name: '', description: '', category: '', instructions: '' };
+                await this.loadSkills();
+            } catch (e) { alert('Error: ' + e.message); }
+        },
+
+        // ---- Subagents ----
+        async loadSubagents() {
+            try { this.subagents = await fetch('/api/subagents').then(r => r.json()); }
+            catch (e) { console.error('loadSubagents:', e); }
+        },
+        resetSubagentForm() {
+            this.subagentForm = { name: '', description: '', prompt: '', tools: '', status: 'active', version: '1.0.0', tags: '', max_iterations: 10 };
+        },
+        editSubagent(agent) {
+            this.editingSubagent = agent.name;
+            this.showSubagentForm = true;
+            this.subagentForm = {
+                name: agent.name,
+                description: agent.description || '',
+                prompt: agent.prompt || '',
+                tools: (agent.tools || []).join(', '),
+                status: agent.status || 'active',
+                version: agent.version || '1.0.0',
+                tags: (agent.tags || []).join(', '),
+                max_iterations: agent.max_iterations || 10,
+            };
+        },
+        async saveSubagent() {
+            const { name, description, prompt } = this.subagentForm;
+            if (!name.trim() || !description.trim() || !prompt.trim()) {
+                alert('Name, description, and prompt are required');
+                return;
+            }
+            const url = this.editingSubagent ? `/api/subagents/${this.editingSubagent}` : '/api/subagents';
+            const method = this.editingSubagent ? 'PUT' : 'POST';
+            try {
+                await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.subagentForm) });
+                this.showSubagentForm = false;
+                this.editingSubagent = null;
+                this.resetSubagentForm();
+                await this.loadSubagents();
+            } catch (e) { alert('Error: ' + e.message); }
+        },
+        async deleteSubagent(name) {
+            if (!confirm(`Delete agent "${name}"?`)) return;
+            await fetch(`/api/subagents/${name}`, { method: 'DELETE' });
+            await this.loadSubagents();
+        },
+
+        // ---- Telegram ----
+        async saveTelegram() {
+            this.saving = true; this.savedMsg = '';
+            try {
+                const allowed = this.telegram.allowedUsers
+                    ? this.telegram.allowedUsers.split(',').map(s => s.trim()).filter(Boolean)
+                    : [];
+                await fetch('/api/config/channels', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        telegram: {
+                            token: this.telegram.token,
+                            allowedUsers: allowed,
+                            requireMention: this.telegram.requireMention,
+                        }
+                    }),
+                });
+                this.savedMsg = 'Saved!';
+                setTimeout(() => this.savedMsg = '', 2000);
+            } catch (e) { this.savedMsg = 'Error: ' + e.message; }
+            finally { this.saving = false; }
+        },
+
+        // ---- General ----
+        async saveGeneral(section, body) {
+            try {
+                await fetch(`/api/config/${section}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+            } catch (e) { alert('Error: ' + e.message); }
+        },
+
+        // ---- Chat ----
+        async loadSessions() {
+            try {
+                const data = await fetch('/api/sessions').then(r => r.json());
+                this.sessions = [...new Set([...(data.active || []), ...(data.persisted || [])])];
+            } catch (e) { console.error('loadSessions:', e); }
+        },
+        async loadHistory() {
+            try {
+                const data = await fetch(`/api/sessions/${encodeURIComponent(this.currentSessionId)}/history`).then(r => r.json());
+                this.messages = data.messages || [];
+                this.$nextTick(() => this.scrollChat());
+            } catch (e) { console.error('loadHistory:', e); }
+        },
+        async resetSession() {
+            if (!confirm('Reset this session? All history will be lost.')) return;
+            await fetch(`/api/sessions/${encodeURIComponent(this.currentSessionId)}/reset`, { method: 'POST' });
+            this.messages = [];
+        },
+        async sendMessage() {
+            const msg = this.inputMessage.trim();
+            if (!msg || this.isStreaming) return;
+
+            this.messages.push({ role: 'user', content: msg });
+            this.inputMessage = '';
+            this.isStreaming = true;
+
+            const assistantIdx = this.messages.length;
+            this.messages.push({ role: 'assistant', content: '' });
+            this.$nextTick(() => this.scrollChat());
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg, session_id: this.currentSessionId }),
+                });
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const text = decoder.decode(value, { stream: true });
+                    for (const line of text.split('\n')) {
+                        if (line.startsWith('data: ')) {
+                            try {
+                                const data = JSON.parse(line.slice(6));
+                                if (data.token) {
+                                    this.messages[assistantIdx].content += data.token;
+                                    this.$nextTick(() => this.scrollChat());
+                                }
+                            } catch {}
+                        }
+                    }
+                }
+            } catch (err) {
+                this.messages[assistantIdx].content = `Error: ${err.message}`;
+            } finally {
+                this.isStreaming = false;
+            }
+        },
+        scrollChat() {
+            const el = this.$refs.chatContainer;
+            if (el) el.scrollTop = el.scrollHeight;
+        },
+        renderMarkdown(text) {
+            if (!text) return '';
+            try {
+                return marked.parse(text, { breaks: true, gfm: true });
+            } catch { return text; }
+        },
+    };
+}
+</script>
+</body>
+</html>

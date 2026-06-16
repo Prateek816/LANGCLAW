@@ -7,6 +7,7 @@ Usage
     python main.py --no-cron          # skip cron scheduler
     python main.py --no-heartbeat     # skip heartbeat monitor
     python main.py --repl             # interactive REPL mode (no Telegram)
+    python main.py --dashboard        # web UI (localhost:8080)
 """
 
 from __future__ import annotations
@@ -112,6 +113,7 @@ def run_telegram(sm: SessionManager, *, cron: bool, heartbeat: bool) -> None:
             cron_scheduler.stop()
         if hb:
             hb.stop()
+        sm.shutdown()
 
 
 def run_repl(sm: SessionManager) -> None:
@@ -172,12 +174,28 @@ def run_repl(sm: SessionManager) -> None:
     finally:
         if _cron_scheduler:
             _cron_scheduler.stop()
+        sm.shutdown()
+
+
+def run_dashboard(sm: SessionManager) -> None:
+    """Start the web dashboard on localhost:8080."""
+    import uvicorn
+    from dashboard.app import app, _get_session_manager
+
+    # Inject our session manager into the dashboard
+    import dashboard.app as dash_app
+    dash_app._session_manager = sm
+    dash_app._session_store = _session_store
+
+    logging.getLogger(__name__).info("Starting LangClaw Dashboard on http://127.0.0.1:8080")
+    uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
 
 
 def main() -> None:
     load_dotenv()
     parser = argparse.ArgumentParser(description="LangClaw agent framework")
     parser.add_argument("--repl", action="store_true", help="Interactive REPL mode (no Telegram)")
+    parser.add_argument("--dashboard", action="store_true", help="Start web UI dashboard (localhost:8080)")
     parser.add_argument("--no-cron", action="store_true", help="Disable cron scheduler")
     parser.add_argument("--no-heartbeat", action="store_true", help="Disable heartbeat monitor")
     args = parser.parse_args()
@@ -193,7 +211,9 @@ def main() -> None:
     # Ensure cron directory exists
     os.makedirs(os.path.join(str(config.LANGCLAW_HOME), "context", "cron"), exist_ok=True)
 
-    if args.repl:
+    if args.dashboard:
+        run_dashboard(sm)
+    elif args.repl:
         run_repl(sm)
     else:
         run_telegram(sm, cron=not args.no_cron, heartbeat=not args.no_heartbeat)

@@ -150,6 +150,20 @@ class SessionManager:
 
     # ── Dunder ───────────────────────────────────────────────────────────────
 
+    def shutdown(self) -> None:
+        """Clean up all sessions (close MCP connections, etc.)."""
+        for session_id, agent in self._sessions.items():
+            mcp = getattr(agent, '_mcp_provider', None)
+            if mcp:
+                try:
+                    mcp.close_all()
+                except Exception as exc:
+                    logger.warning(
+                        "[SessionManager] MCP cleanup failed for %s: %s",
+                        session_id, exc,
+                    )
+        self._sessions.clear()
+
     def __len__(self) -> int:
         return len(self._sessions)
 

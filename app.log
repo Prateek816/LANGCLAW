@@ -2296,3 +2296,32 @@ Only read email content, do not send or modify anything[0m
 2026-06-13 09:36:05 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
 2026-06-13 09:36:09 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent "HTTP/1.1 200 OK"
 2026-06-13 09:36:13 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-06-16 19:28:10 [__main__] INFO: Starting LangClaw Dashboard on http://127.0.0.1:8080
+2026-06-16 19:28:15 [config] INFO: Config loaded from /Users/prateek/.langclaw/langclaw.json
+2026-06-16 19:28:15 [core.skill.skill_registry] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-16 19:28:15 [core.skill.skill_registry] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-16 19:28:15 [core.skill.skill_registry] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-16 19:28:15 [core.skill.skill_registry] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-16 19:28:15 [core.skill.skill_registry] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-16 19:28:15 [core.skill.skill_registry] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-16 19:28:15 [core.subagents.markdown_parser] WARNING: No markdown files found in /Users/prateek/.langclaw/context/subagents with pattern '**/*.md'
+2026-06-16 19:28:15 [core.subagents.markdown_parser] WARNING: No markdown files found in /Users/prateek/.langclaw/context/subagents with pattern '**/*.md'
+2026-06-16 19:28:15 [config] INFO: Config loaded from /Users/prateek/.langclaw/langclaw.json
+2026-06-16 19:28:30 [config] INFO: Config loaded from /Users/prateek/.langclaw/langclaw.json
+2026-06-16 19:28:30 [config] INFO: Config loaded from /Users/prateek/.langclaw/langclaw.json
+2026-06-16 19:28:34 [session_manager] INFO: [SessionManager] Creating session 'web:dashboard'
+2026-06-16 19:28:34 [core.llm.factory] INFO: Creating LLM: provider=gemini, model=gemini-3.1-flash-lite
+2026-06-16 19:28:35 [core.subagents.base_registry] INFO: BaseRegistry: discovered 1 agent(s) → ['browser_agent']
+2026-06-16 19:28:35 [core.subagents.custom_registry] ERROR: CustomRegistry: agents directory does not exist: /Users/prateek/.langclaw/context/groups/web_dashboard/subagents
+2026-06-16 19:28:35 [core.skill.skill_registry] INFO: Scanning skill dir: /Users/prateek/.langclaw/context/skills
+2026-06-16 19:28:35 [core.skill.skill_registry] INFO:   -> 0 skill(s) found in /Users/prateek/.langclaw/context/skills
+2026-06-16 19:28:35 [core.skill.skill_registry] INFO: Skill discovery complete: 0 skill(s), 0 category(ies) — (none)
+2026-06-16 19:28:35 [core.skill.skill_registry] INFO: No skills found — catalog empty
+2026-06-16 19:28:35 [core.agent] INFO: No skills to inject (dirs=['/Users/prateek/.langclaw/context/skills'])
+2026-06-16 19:28:37 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:streamGenerateContent?alt=sse "HTTP/1.1 200 OK"
+2026-06-16 19:28:37 [core.skill.skill_registry] INFO: Skill Registry cache hit (0 skills)
+2026-06-16 19:28:37 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:streamGenerateContent?alt=sse "HTTP/1.1 200 OK"
+2026-06-16 19:29:07 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:streamGenerateContent?alt=sse "HTTP/1.1 200 OK"
+2026-06-16 19:29:52 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:streamGenerateContent?alt=sse "HTTP/1.1 200 OK"
+2026-06-16 19:30:16 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:streamGenerateContent?alt=sse "HTTP/1.1 200 OK"
+2026-06-16 19:30:31 [httpx] INFO: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:streamGenerateContent?alt=sse "HTTP/1.1 200 OK"
