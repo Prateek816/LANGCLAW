@@ -24,9 +24,9 @@ class TransportError(MCPError):
         self.cause = cause
 
 
-class ConnectionError(MCPError):
+class MCPConnectionError(MCPError):
     """Raised when MCP connection fails (handshake, state machine violation)"""
-    
+
     def __init__(self, message: str, state: str = None):
         super().__init__(message)
         self.state = state
