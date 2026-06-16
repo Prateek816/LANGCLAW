@@ -6,7 +6,7 @@ import logging
 import os
 
 from .models import CategoryMetadata, Skill, SkillMetadata
-from .utils import parse_frontmatter
+from ..utils import parse_frontmatter
 
 logger = logging.getLogger(__name__)
 
