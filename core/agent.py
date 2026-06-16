@@ -211,6 +211,32 @@ class Agent:
 
         self._init_system_prompt()
 
+    def _get_mcp_provider(self):
+        """Lazy-initialize and return the MCP tool provider, or None."""
+        if hasattr(self, '_mcp_provider'):
+            return self._mcp_provider
+
+        mcp_enabled = bool(_cfg.get("mcp", "servers"))
+        if not mcp_enabled:
+            self._mcp_provider = None
+            return None
+
+        try:
+            from core.mcp.integration import MCPToolProvider
+            provider = MCPToolProvider()
+            provider.initialize()
+            self._mcp_provider = provider
+            if self.verbose:
+                logger.info(
+                    "[Agent] MCP initialized with %d server(s)",
+                    len(provider._connected_servers),
+                )
+            return provider
+        except Exception as exc:
+            logger.warning("[Agent] MCP initialization failed: %s", exc)
+            self._mcp_provider = None
+            return None
+
     @staticmethod
     def _has_user_identity(soul_path: str | None, persona_path: str | None) -> bool:
         """Return True if the user has customized soul or persona files."""
@@ -268,6 +294,15 @@ class Agent:
             parts.append(
                 "You have web search available via the web_search tool. "
                 "Use it when you need current information."
+            )
+
+        # MCP tools hint
+        mcp_servers = _cfg.get("mcp", "servers", default={})
+        if mcp_servers:
+            parts.append(
+                f"You have access to external MCP tools from servers: "
+                f"{', '.join(mcp_servers)}. "
+                "Tools prefixed with 'mcp_' are from these external servers."
             )
 
         # Subagent hints
@@ -404,6 +439,11 @@ class Agent:
                 func=retrieve_knowledge, name="retrieve_knowledge",
                 description="Search the knowledge base for relevant documents.",
             ))
+
+        # MCP tools
+        mcp_provider = self._get_mcp_provider()
+        if mcp_provider:
+            tools.extend(mcp_provider.build_tools())
 
         return tools
 
