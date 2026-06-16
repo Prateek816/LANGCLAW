@@ -146,6 +146,25 @@ Parameters (JSON Schema):
   "type": "object"
 }
 
+### research-agent
+Searches the web and synthesizes a concise, fact-checked answer to any research question.
+Parameters (JSON Schema):
+{
+  "properties": {
+    "prompt": {
+      "type": "string"
+    },
+    "context": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "prompt",
+    "context"
+  ],
+  "type": "object"
+}
+
 ### lc_remember
 Store a fact in long-term memory.
 Parameters (JSON Schema):
@@ -339,6 +358,7 @@ You have web search available via the web_search tool. Use it when you need curr
 You have access to specialized subagents that can handle complex tasks:
 
 - **browser_agent**: Controls a real Chrome browser to complete any web-based task autonomously. Use this when the task requires navigating websites, filling forms, reading live web content, interacting with web apps (Gmail, GitHub, etc.), or doing anything that needs an actual browser session. Pass the full task description as `prompt`. Use `context` to supply any extra constraints (e.g. 'only read, do not send').
+- **research-agent**: Searches the web and synthesizes a concise, fact-checked answer to any research question.
 
 ---
 
@@ -372,26 +392,6 @@ You have access to specialized subagents that can handle complex tasks:
 ## Onboarding
 
 This is a new session with default identity. Your first priority is to guide the user through setting up their identity. Use the `lc_use_skill` tool to load the 'onboarding' skill and follow its instructions. Do not proceed with other tasks until onboarding is complete or the user explicitly declines.
-──────────────────────────────────────────────────
-[USER]
-hello
-──────────────────────────────────────────────────
-[ASSISTANT]
-Hey Prateek! Great to see you back.
-
-It looks like the onboarding memory is already flagged as complete in my logs, so we don't need to go through the whole first-time setup ritual again. We can dive straight into whatever you need.
-
-Last time we were chatting, we were pulling up some stock market data for major tech companies like Tesla and NVIDIA, and we left off right before looking into Apple (AAPL).
-
-Are we jumping back into the AAPL numbers, or did you have something else on your mind today?
-──────────────────────────────────────────────────
-[USER]
-hi
-──────────────────────────────────────────────────
-[ASSISTANT]
-Hey! Ready when you are.
-
-What are we diving into today? We can pick up where we left off with Apple (AAPL)'s stock info, or pivot to something entirely new. Your call!
 ──────────────────────────────────────────────────
 [USER]
 hi
@@ -464,6 +464,24 @@ Ah, looks like my browser agent timed out while trying to open up Chrome and loa
 So we're back to manual mode! If you pull up your inbox in another tab and grab the sender, subject, or a quick copy-paste of the text, I can help you break it down, write a solid reply, or figure out next steps.
 
 What's the email about?
+──────────────────────────────────────────────────
+[USER]
+hello
+──────────────────────────────────────────────────
+[ASSISTANT]
+Hey! Looks like we're back to "hello."
+
+I'm ready whenever you are to jump into something substantial. Let me know what you've got going on—whether you grabbed that email text from your inbox, want to check out some CSE coding problems, or want to look up that Apple stock data we missed earlier!
+──────────────────────────────────────────────────
+[USER]
+what is your name
+──────────────────────────────────────────────────
+[ASSISTANT]
+My name is Jarvis!
+
+I'm your AI collaborator, ready to help you tackle everything from coding problems for your CSE classes to tracking down stock market trends.
+
+What can I help you jump into today?
 ──────────────────────────────────────────────────
 [USER]
 hello
