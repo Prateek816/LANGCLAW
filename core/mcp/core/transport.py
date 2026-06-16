@@ -8,7 +8,7 @@ import json
 import asyncio
 from abc import ABC, abstractmethod
 from typing import Optional
-from error import TransportError
+from .error import TransportError
 
 
 class BaseTransport(ABC):
